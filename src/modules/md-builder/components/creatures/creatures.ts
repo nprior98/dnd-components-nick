@@ -1,3 +1,6 @@
+// Creature class to create a creature object from json
+// Is this a good pattern in typescript ¯\_(͡° ͜ʖ ͡°)_/¯
+
 import { titleCase } from "../../utils/titleCase";
 import type { Creature, Skills, Speed, NamedBlock } from "./CreatureTypes";
 
