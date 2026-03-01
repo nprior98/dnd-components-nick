@@ -1,4 +1,4 @@
-// CreatureTypes.ts
+// Creature Type generated from data/monsters/*.json
 
 export interface Creature {
   slug: string;
