@@ -30,4 +30,5 @@
 .btn-custom-primary:hover {
     background-color: #4D6867;
     border-color: #4D6867;
+    color: white;
 }
