@@ -14,72 +14,72 @@ import { classesRetrieve } from "../../modules/open5e/sdk.gen";
 
 const char = classJson;
 
-// async function parseMarkdown(markdown: string) {
-//   const file = await unified()
-//     .use(remarkParse)
-//     .use(remarkGfm)
-//     .use(remarkRehype)
-//     .use(rehypeStringify)
-//     .process(markdown);
+async function parseMarkdown(markdown: string) {
+  const file = await unified()
+    .use(remarkParse)
+    .use(remarkGfm)
+    .use(remarkRehype)
+    .use(rehypeStringify)
+    .process(markdown);
 
-//   return String(file);
-// }
-// type ParsedContent = {
-//   table: string;
-//   desc: string;
-// };
+  return String(file);
+}
+type ParsedContent = {
+  table: string;
+  desc: string;
+};
 
 export default function ClassPage() {
-  
   let { stub } = useParams();
 
   const [charClass, setClass] = useState<CharacterClass | null>(null);
-  
-  // Idk what this is yet 
-  // const [content, setContent] = useState<ParsedContent>({
-  //   table: "",
-  //   desc: "",
-  // });
 
-  // useEffect(() => {
-  //   let cancelled = false;
+  const [content, setContent] = useState<ParsedContent>({
+    table: "",
+    desc: "",
+  });
 
-  //   async function parseAll() {
-  //     const [table, desc] = await Promise.all([
-  //       parseMarkdown(char.table ?? ""),
-  //       parseMarkdown(char.desc ?? ""),
-  //     ]);
+  useEffect(() => {
+    let cancelled = false;
 
-  //     if (!cancelled) {
-  //       setContent({
-  //         table,
-  //         desc,
-  //       });
-  //     }
-  //   }
-  //   parseAll();
+    async function parseAll() {
+      const [table, desc] = await Promise.all([
+        parseMarkdown(char.table ?? ""),
+        parseMarkdown(char.desc ?? ""),
+      ]);
 
-  //   return () => {
-  //     cancelled = true;
-  //   };
-  // }, []);
+      if (!cancelled) {
+        setContent({
+          table,
+          desc,
+        });
+      }
+    }
+    parseAll();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [stub]);
 
   useEffect(() => {
     async function load() {
       const resClass = await classesRetrieve({
         path: {
           key: stub || "",
-        }
+        },
       });
       setClass(resClass.data as CharacterClass);
     }
     load();
   }, [stub]);
-console.log({charClass})
+  console.log({ charClass });
   if (!charClass) {
-    return <div>
-      <p>...loading</p>
-    </div>
+    return (
+      <div>
+        <p>...loading</p>
+      </div>
+    );
   } else {
     return (
       <Container className="phb page soft">
@@ -89,11 +89,14 @@ console.log({charClass})
           <div
             className="classDescription"
             // dangerouslySetInnerHTML={{ __html: content.desc }}
-          >{charClass.desc}</div>
+          >
+            {charClass.desc}
+          </div>
           <div
             className="wide classTable"
             // dangerouslySetInnerHTML={{ __html: content.table }}
-          />{charClass.name}
+          />
+          {charClass.name}
         </div>
         <a className="artist" href={char.document__url}>
           {char.document__slug}
@@ -104,7 +107,5 @@ console.log({charClass})
         <div className="pageNumber auto"></div>
       </Container>
     );
-
   }
-
 }

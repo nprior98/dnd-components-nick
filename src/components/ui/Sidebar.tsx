@@ -17,7 +17,7 @@ import {
 import { Link } from "react-router";
 
 const listFunctions = {
-  monsters: creaturesList,
+  creatures: creaturesList,
   spells: spellsList,
   items: itemsList,
   armor: armorList,
@@ -40,15 +40,22 @@ type AnyPaginatedList = {
 };
 
 export default function Sidebar() {
-  const [category, setCategory] = useState("monsters");
+  const [category, setCategory] = useState("creatures");
   const [data, setData] = useState<AnyPaginatedList | null>(null);
+  let isSubClass = false;
+
+  if (category === "classes") {
+    isSubClass = false;
+  } else if (category === "subclasses") {
+    isSubClass = true;
+  }
 
   const handleSelect = async (category: string) => {
     const result = await listFunctions[category as Category]({
       query: {
         page: 1,
         document__key__in: ["srd-2014", "srd-2024"],
-        is_subclass: false,
+        is_subclass: isSubClass,
       },
     });
     setData(result.data as AnyPaginatedList);
@@ -112,11 +119,12 @@ export default function Sidebar() {
                 <DropdownItem eventKey="armor">Armor</DropdownItem>
                 <DropdownItem eventKey="Backgrounds">Backgrounds</DropdownItem>
                 <DropdownItem eventKey="classes">Classes</DropdownItem>
+                <DropdownItem eventKey="subclasses">Subclasses</DropdownItem>
                 <DropdownItem>Conditions</DropdownItem>
                 <DropdownItem>Documents</DropdownItem>
                 <DropdownItem>Feats</DropdownItem>
                 <DropdownItem>Magic Items</DropdownItem>
-                <DropdownItem eventKey="monsters">Monsters</DropdownItem>
+                <DropdownItem eventKey="creatures">Creatures</DropdownItem>
                 <DropdownItem>Planes</DropdownItem>
                 <DropdownItem>Races</DropdownItem>
                 <DropdownItem>Sections</DropdownItem>
