@@ -10,6 +10,7 @@ import {
 import {
   armorList,
   classesList,
+  conditionsList,
   creaturesList,
   itemsList,
   spellsList,
@@ -24,6 +25,7 @@ const listFunctions = {
   armor: armorList,
   weapons: weaponsList,
   classes: classesList,
+  conditions: conditionsList,
 };
 
 type Category = keyof typeof listFunctions;
@@ -121,7 +123,7 @@ export default function Sidebar() {
                 <DropdownItem eventKey="Backgrounds">Backgrounds</DropdownItem>
                 <DropdownItem eventKey="classes">Classes</DropdownItem>
                 <DropdownItem eventKey="subclasses">Subclasses</DropdownItem>
-                <DropdownItem>Conditions</DropdownItem>
+                <DropdownItem eventKey="conditions">Conditions</DropdownItem>
                 <DropdownItem>Documents</DropdownItem>
                 <DropdownItem>Feats</DropdownItem>
                 <DropdownItem>Magic Items</DropdownItem>

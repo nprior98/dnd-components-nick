@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { creaturesList, creaturesRetrieve } from "../../modules/open5e/sdk.gen";
+import { creaturesRetrieve } from "../../modules/open5e/sdk.gen";
 import {
   Creature,
   CreatureAction,

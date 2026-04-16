@@ -12,6 +12,7 @@ export default function Router() {
         <Route path="armor/:stub" element={<Armor />} />
         <Route path="classes/:stub" element={<Class />} />
         <Route path="subclasses/:stub" element={<Class />} />
+        <Route ptah="conditions/:stub" element={<Class />} />
         <Route path="track" element={<EncounterTracker />} />
       </Route>
     </Routes>
