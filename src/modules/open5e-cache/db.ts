@@ -21,3 +21,5 @@ export async function setCategory(name: Category, entries: unknown[]) {
   const db = await dbPromise;
   await db.put("categories", { key: name, entries, fetchedAt: Date.now() });
 }
+
+export type { CategoryRecord }
