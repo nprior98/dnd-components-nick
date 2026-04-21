@@ -5048,7 +5048,6 @@ components:
           readOnly: true
       required:
         - name
-        - url
     Alignment:
       type: object
       description: |-
@@ -5450,20 +5449,27 @@ components:
             * `PROFICIENCY_BONUS` - PROFICIENCY_BONUS
             * `STARTING_EQUIPMENT` - STARTING_EQUIPMENT
             * `SPELL_SLOTS` - SPELL_SLOTS
-        feature_items:
+        gained_at:
           type: array
           items:
-            $ref: "#/components/schemas/ClassFeaturePrefetch"
+            $ref: "#/components/schemas/ClassGainedAtItem"
           readOnly: true
+          description: Levels at which this feature is gained (for CLASS_LEVEL_FEATURE).
+        data_for_class_table:
+          type: array
+          items:
+            $ref: "#/components/schemas/ClassTableColumnItem"
+          readOnly: true
+          description: Per-level column values when this feature is a column in the class
+            progression table.
       required:
-        - feature_items
         - key
         - name
-    ClassFeaturePrefetch:
+    ClassGainedAtItem:
       type: object
       description: |-
-        Much of the logic included in the GameContentSerializer is intended to
-        support manipulating data returned by the serializer via query parameters.
+        Represents a level at which a CLASS_LEVEL_FEATURE is acquired, optionally
+        with a per-level detail string (e.g. "2 dice" for Brutal Critical).
       properties:
         level:
           type: integer
@@ -5473,11 +5479,22 @@ components:
           type: string
           nullable: true
           maxLength: 100
+      required:
+        - level
+    ClassTableColumnItem:
+      type: object
+      description: |-
+        One cell of the class progression table — the value shown for a given
+        level in a column feature (e.g. Proficiency Bonus, Rage Damage).
+      properties:
+        level:
+          type: integer
+          maximum: 20
+          minimum: 0
         column_value:
           type: string
           nullable: true
-          description: The value that should be displayed in the table column (where
-            applicable).
+          description: The value that should be displayed in the table column.
           maxLength: 20
       required:
         - level
@@ -8830,14 +8847,17 @@ components:
       type: object
       properties:
         hit_dice:
-          type: integer
+          type: string
+          description: Dice notation for the class hit die (e.g. "D12").
         hit_dice_name:
           type: string
           readOnly: true
         hit_points_at_1st_level:
-          type: integer
+          type: string
+          description: Formula for HP at 1st level (e.g. "12 + your Constitution modifier").
         hit_points_at_higher_levels:
-          type: integer
+          type: string
+          description: Formula for HP gained per level after 1st.
       required:
         - hit_dice
         - hit_dice_name
