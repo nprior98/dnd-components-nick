@@ -182,24 +182,23 @@ function EncounterTracker() {
 
         <br />
 
-        <button onClick={nextTurn}>Next Turn</button>
+        <button className="next-turn-btn" onClick={nextTurn}>
+          Next Turn
+        </button>
 
-        <div>
+        <div className="action-status">
           {currentCombatant.hp <= 0 ? (
-            <div>Cannot act</div>
+            <div className="dead-status">⚠️ Cannot act (Dead)</div>
           ) : (
             <>
-              <div>Acting: {currentCombatant.id}</div>
-
+              <div>
+                Acting: <span className="acting-label">{currentCombatant.id}</span>
+              </div>
               <button onClick={startAttack}>Attack</button>
-
-              {/* <button onClick={)}>
-                                Move
-                            </button> */}
             </>
           )}
+            </div>
         </div>
-      </div>
 
       <div className="combatArea">
         <h2>Encounter Tracker</h2>
