@@ -8,7 +8,14 @@ Install dependencies from the project root, then migrate and start the API:
 
 ```bash
 npm install
+
+// Create database tables if they don't exist
 npm run migrate
+
+// Generate interactive websocket documentation
+npm run docs:asyncapi
+
+// Run dev server
 npm run dev:server
 ```
 
