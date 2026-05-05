@@ -2,29 +2,20 @@ import express from "express";
 import http, { createServer } from "node:http";
 import { encounterRoutes } from "./encounters/encounter.routes";
 import { attachEncounterWebSocket } from "./encounters/encounter.websocket";
+import { openApiSpec } from "./openapi";
 
 import swaggerUi from "swagger-ui-express";
-import swaggerJsdoc from "swagger-jsdoc";
 
 const app = express();
 
 // Parse JSON request bodies before requests reach any API routers.
 app.use(express.json());
 
-// Generate documentation based on express routes
-const spec = swaggerJsdoc({
-  definition: {
-    openapi: "3.0.0",
-    info: {
-      title: "Encounter API",
-      version: "0.1.0",
-    },
-  },
-  apis: ["server/**/*.routes.ts"],
-});
-
 // Serve swagger documentation
-app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(spec));
+app.get("/api/openapi.json", (_req, res) => {
+  res.json(openApiSpec);
+});
+app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(openApiSpec));
 
 // Serve generated AsyncAPI WebSocket documentation.
 app.use("/api/async-docs", express.static("dist/asyncapi"));

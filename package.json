@@ -22,6 +22,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
     "gen-api": "openapi-ts",
+    "gen-server-api": "openapi-ts -f openapi-ts.server.config.ts",
     "docs:asyncapi": "asyncapi generate fromTemplate server/encounters/asyncapi.yaml @asyncapi/html-template@3.5.4 -o dist/asyncapi --force-write"
   },
   "dependencies": {
