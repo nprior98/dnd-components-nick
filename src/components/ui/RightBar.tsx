@@ -14,6 +14,14 @@ const creatureParty: NormalizedCreature[] = [];
 
 export default function RightBar({ isOpen, onClose }: RightBarProps) {
 
+  return (
+    <aside
+      id="sidebar-right"
+      className={`sidebar sidebar-right${isOpen ? " open" : ""}`}
+    >
+      
+    </aside>
+  )
     
 
 }
