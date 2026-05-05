@@ -8,8 +8,6 @@ type RightBarProps = {
   onClose: () => void;
 };
 
-// all of this page is just one mega stub
-
 export default function RightSideBar({ isOpen, onClose }: RightBarProps) {
   const [encounters, setEncounters] = useState<Encounter[] | null>(null);
   const [encounter, setEncounter] = useState<Encounter | null>(null);

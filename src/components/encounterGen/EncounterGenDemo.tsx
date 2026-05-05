@@ -246,7 +246,7 @@ function EncounterResultView({
             <div className="h5">{result.poolSize}</div>
           </Col>
           <Col>
-            <Button size="sm">Create Encounter</Button>
+            <Button size="sm">Save Encounter</Button>
           </Col>
         </Row>
 
