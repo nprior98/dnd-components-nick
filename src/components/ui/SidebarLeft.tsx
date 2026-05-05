@@ -24,7 +24,7 @@ type SidebarProps = {
   onClose: () => void;
 };
 
-export default function Sidebar({ isOpen, onClose }: SidebarProps) {
+export default function LeftSidebar({ isOpen, onClose }: SidebarProps) {
   const [category, setCategory] = useState<Category>("creatures");
   const [items, setItems] = useState<ListableItem[] | null>(null);
 

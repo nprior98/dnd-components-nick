@@ -1,8 +1,8 @@
 import { Container } from "react-bootstrap";
 import { ReactNode, useState } from "react";
-import Sidebar from "./ui/Sidebar";
 import Topbar from "./ui/Topbar";
-import RightBar from "./ui/RightBar";
+import LeftSidebar from "./ui/SidebarLeft";
+import RightSideBar from "./ui/SidebarRight";
 
 export default function MainLayout({ children }: { children: ReactNode }) {
   const [libraryOpen, setLibraryOpen] = useState(false);
@@ -16,11 +16,11 @@ export default function MainLayout({ children }: { children: ReactNode }) {
         onToggleLibrary={() => setLibraryOpen((o) => !o)}
         onToggleCatalogue={() => setCatalogueOpen((o) => !o)}
       />
-      <Sidebar
+      <LeftSidebar
         isOpen={libraryOpen}
         onClose={() => setLibraryOpen(false)}
       />
-      <RightBar
+      <RightSideBar
         isOpen={catalogueOpen}
         onClose={() => setCatalogueOpen(false)}
       />
