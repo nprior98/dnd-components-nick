@@ -51,13 +51,16 @@ export default function EncounterGenDemo() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  async function onGenerate(e: React.FormEvent) {
+  async function onGenerate(e: React.SubmitEvent) {
     e.preventDefault();
     setError(null);
     setResults([]);
 
     const partyLevels = parseLevels(levelsInput);
-    if (partyLevels.length === 0 || partyLevels.some((n) => !Number.isFinite(n))) {
+    if (
+      partyLevels.length === 0 ||
+      partyLevels.some((n) => !Number.isFinite(n))
+    ) {
       setError("Enter at least one valid character level (e.g. 3,3,3,4).");
       return;
     }
@@ -87,13 +90,13 @@ export default function EncounterGenDemo() {
 
   return (
     <div className="p-3">
-      <h2>Encounter Generator — Demo</h2>
-      <p className="text-muted">
-        Pulls creatures from open5e, filtered by CR (and optionally type), then
-        fills an encounter to the DMG 2014 XP budget for the party.
-      </p>
-
       <Card className="mb-4">
+        <h2>Encounter Generator</h2>
+        <p className="text-muted">
+          Pulls creatures from open5e, filtered by CR (and optionally type),
+          then fills an encounter to the DMG 2014 XP budget for the party.
+        </p>
+
         <Card.Body>
           <Form onSubmit={onGenerate}>
             <Row className="g-3">
@@ -113,7 +116,9 @@ export default function EncounterGenDemo() {
                   <Form.Label>Difficulty</Form.Label>
                   <Form.Select
                     value={difficulty}
-                    onChange={(e) => setDifficulty(e.target.value as Difficulty)}
+                    onChange={(e) =>
+                      setDifficulty(e.target.value as Difficulty)
+                    }
                   >
                     {DIFFICULTIES.map((d) => (
                       <option key={d} value={d}>
@@ -239,6 +244,9 @@ function EncounterResultView({
           <Col>
             <div className="text-muted small">Pool size</div>
             <div className="h5">{result.poolSize}</div>
+          </Col>
+          <Col>
+            <Button size="sm">Create Encounter</Button>
           </Col>
         </Row>
 
