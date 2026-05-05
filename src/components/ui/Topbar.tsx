@@ -49,7 +49,7 @@ export default function Topbar({ libraryOpen, onToggleLibrary, catalogueOpen, on
 					aria-expanded={catalogueOpen}
 					aria-controls="sidebar-right"
 				>
-					☰ Catalogue
+					☰ Encounters
 				</Button>
 			</div>
 		</header>
