@@ -46,6 +46,22 @@ export type AddCombatantRequest = {
     maxHp: number;
 };
 
+export type GetApiEncountersData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/encounters';
+};
+
+export type GetApiEncountersResponses = {
+    /**
+     * Encounter list.
+     */
+    200: Array<Encounter>;
+};
+
+export type GetApiEncountersResponse = GetApiEncountersResponses[keyof GetApiEncountersResponses];
+
 export type PostApiEncountersData = {
     body?: CreateEncounterRequest;
     path?: never;

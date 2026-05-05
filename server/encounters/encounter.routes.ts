@@ -174,6 +174,26 @@ encounterRoutes.post("/", (req, res) => {
   const encounter = repo.createEncounter(req.body.name ?? "Untitled Encounter");
   res.status(201).json(encounter);
 });
+/**
+ * @openapi
+ * /api/encounters:
+ *   get:
+ *     summary: List encounters
+ *     tags:
+ *       - Encounters
+ *     responses:
+ *       "200":
+ *         description: Encounter list.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: "#/components/schemas/Encounter"
+ */
+encounterRoutes.get("/", (_req, res) => {
+  res.json(repo.listEncounters());
+});
 
 /**
  * @openapi

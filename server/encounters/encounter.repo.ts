@@ -18,7 +18,7 @@ export function createEncounter(name: string) {
     insert into encounters
     (id, name, status, created_at)
     values (@id, @name, @status, @createdAt)
-`,
+`
   ).run(encounter);
 
   return encounter;
@@ -39,9 +39,17 @@ export function getEncounter(id: string) {
         created_at as createdAt
       from encounters
       where id = ?
-`,
+`
     )
     .get(id);
+}
+
+export function listEncounters() {
+  return db
+    .prepare(
+      sql` select id, name, status, round_number as roundNumber, active_turn_index as activeTurnIndex, version, created_at as createdAt from encounters`
+    )
+    .all();
 }
 
 // Return combatants in their current initiative order with JSON fields decoded.
@@ -65,7 +73,7 @@ export function listCombatants(encounterID: string) {
     from encounter_combatants
     where encounter_id = ?
     order by initiative_order asc
-`,
+`
     )
     .all(encounterID);
   return rows.map((row: any) => ({
@@ -118,7 +126,7 @@ export function addCombatant(input: {
       )
       values
       (@id, @encounterId, @kind, @displayName, @initiative, @initiativeOrder, @currentHp, @maxHp, @armorClass, @attackBonus, @conditions, @isDefeated)
-    `,
+    `
   ).run(combatant);
 
   return combatant;

@@ -2,7 +2,7 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { GetApiEncountersByEncounterIdStateData, GetApiEncountersByEncounterIdStateErrors, GetApiEncountersByEncounterIdStateResponses, PostApiEncountersByEncounterIdCombatantsData, PostApiEncountersByEncounterIdCombatantsResponses, PostApiEncountersData, PostApiEncountersResponses } from './types.gen';
+import type { GetApiEncountersByEncounterIdStateData, GetApiEncountersByEncounterIdStateErrors, GetApiEncountersByEncounterIdStateResponses, GetApiEncountersData, GetApiEncountersResponses, PostApiEncountersByEncounterIdCombatantsData, PostApiEncountersByEncounterIdCombatantsResponses, PostApiEncountersData, PostApiEncountersResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -17,6 +17,11 @@ export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends 
      */
     meta?: Record<string, unknown>;
 };
+
+/**
+ * List encounters
+ */
+export const getApiEncounters = <ThrowOnError extends boolean = false>(options?: Options<GetApiEncountersData, ThrowOnError>) => (options?.client ?? client).get<GetApiEncountersResponses, unknown, ThrowOnError>({ url: '/api/encounters', ...options });
 
 /**
  * Create an encounter

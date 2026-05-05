@@ -50,7 +50,7 @@ const monsters: Combatant[] = [
   {
     id: "Gleeb",
     name: "Goblin",
-    initiative: 12,
+    initiative: 15,
     hp: 10,
     maxHp: 10,
     strength: 14,
@@ -117,8 +117,8 @@ function EncounterTracker() {
       prev.map((c) =>
         c.id === targetId
           ? { ...c, hp: Math.max(0, c.hp - selectedAttacker.attack) }
-          : c,
-      ),
+          : c
+      )
     );
 
     setSelectedAttackerId(null);
@@ -192,13 +192,14 @@ function EncounterTracker() {
           ) : (
             <>
               <div>
-                Acting: <span className="acting-label">{currentCombatant.id}</span>
+                Acting:{" "}
+                <span className="acting-label">{currentCombatant.id}</span>
               </div>
               <button onClick={startAttack}>Attack</button>
             </>
           )}
-            </div>
         </div>
+      </div>
 
       <div className="combatArea">
         <h2>Encounter Tracker</h2>
