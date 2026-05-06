@@ -1,6 +1,13 @@
 import type { Server } from "node:http";
 import { WebSocketServer, WebSocket } from "ws";
-import { damageCombatant, getSnapshot } from "./encounter.service";
+import {
+  advanceTurn,
+  attackCombatant,
+  damageCombatant,
+  endEncounter,
+  getSnapshot,
+  rollInitiative,
+} from "./encounter.service";
 import { registerEncounterBroadcaster } from "./encounter.realtime";
 import type { EncounterCommand } from "./encounter.commands";
 import type { EncounterEvent } from "./encounter.events";
@@ -54,6 +61,59 @@ export function attachEncounterWebSocket(server: Server) {
           encounterId,
           combatantId: msg.payload.combatantId,
           amount: msg.payload.amount,
+          expectedVersion: msg.expectedVersion,
+        });
+
+        if (result.type?.startsWith("error.")) {
+          socket.send(JSON.stringify(result));
+          return;
+        }
+        broadcast(encounterId, result);
+      }
+
+      if (msg.type === "command.next_turn") {
+        const result = advanceTurn({
+          encounterId,
+          expectedVersion: msg.expectedVersion,
+        });
+
+        if (result.type?.startsWith("error.")) {
+          socket.send(JSON.stringify(result));
+          return;
+        }
+        broadcast(encounterId, result);
+      }
+
+      if (msg.type === "command.roll_initiative") {
+        const result = rollInitiative({
+          encounterId,
+          expectedVersion: msg.expectedVersion,
+        });
+
+        if (result.type?.startsWith("error.")) {
+          socket.send(JSON.stringify(result));
+          return;
+        }
+        broadcast(encounterId, result);
+      }
+
+      if (msg.type === "command.attack") {
+        const result = attackCombatant({
+          encounterId,
+          targetId: msg.payload.targetId,
+          expectedVersion: msg.expectedVersion,
+        });
+
+        if (result.type?.startsWith("error.")) {
+          socket.send(JSON.stringify(result));
+          return;
+        }
+        broadcast(encounterId, result);
+      }
+
+      if (msg.type === "command.end_encounter") {
+        const result = endEncounter({
+          encounterId,
           expectedVersion: msg.expectedVersion,
         });
 

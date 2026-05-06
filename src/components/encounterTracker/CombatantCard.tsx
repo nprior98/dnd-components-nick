@@ -1,21 +1,32 @@
-import { Card, Col, Row } from "react-bootstrap";
+import { Badge, Button, Card, Col, Row } from "react-bootstrap";
 import { Combatant } from "../../modules/encounter-api/types.gen";
 
 type CombatantProps = {
   combatant: Combatant;
+  isActive: boolean;
+  isTargetable: boolean;
 };
-export default function CombatantCard({ combatant }: CombatantProps) {
+export default function CombatantCard({
+  combatant,
+  isActive,
+  isTargetable,
+}: CombatantProps) {
   return (
-    <Card>
+    <Card border={isTargetable ? "danger" : isActive ? "warning" : ""}>
       <Card.Body>
-        <Card.Title>{combatant.displayName}</Card.Title>
+        <Card.Title>
+          {combatant.displayName}{" "}
+          {isActive && <Badge bg="warning" text="dark">Turn</Badge>}{" "}
+          {isTargetable && <Badge bg="danger">Target</Badge>}
+        </Card.Title>
         <Card.Subtitle>{combatant.kind}</Card.Subtitle>
         <Row>
           <Col>
+            <Button variant="primary">
+              HP{" "}
+              <Badge bg="secondary">{`${combatant.currentHp} / ${combatant.maxHp}`}</Badge>
+            </Button>
             <p>{combatant.maxHp}</p>
-          </Col>
-          <Col>
-            <p>{combatant.kind}</p>
           </Col>
           <Col>
             <p>{combatant.currentHp}</p>
