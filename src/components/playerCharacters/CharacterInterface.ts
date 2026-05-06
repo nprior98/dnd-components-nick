@@ -1,18 +1,18 @@
 export interface Character {
 	charID: string;
 	name: string;
-	level: string;
+	level: number;
 	characterClass: string;
 	background: string;
 	armorClass: string;
-	initiative: string;
-	speed: string;
+	initiative: number;
+	speed: number;
 	maxHP: number;
 	currentHP: number;
-	strength: string;
-	dexterity: string;
-	constitution: string;
-	intelligence: string;
-	wisdom: string;
-	charisma: string;
+	strength: number;
+	dexterity: number;
+	constitution: number;
+	intelligence: number;
+	wisdom: number;
+	charisma: number;
 }
