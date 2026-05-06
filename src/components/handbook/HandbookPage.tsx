@@ -14,9 +14,12 @@ export default function HandbookPage({
   modifier,
 }: HandbookPageProps) {
   const className = ["phb", "page", modifier].filter(Boolean).join(" ");
+
   return (
     <div className="handbook-page-wrapper">
-      <div className={className}>{children}</div>
+      <div className="handbook-page-scaler">
+        <div className={className}>{children}</div>
+      </div>
     </div>
   );
 }

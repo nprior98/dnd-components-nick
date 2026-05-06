@@ -26,6 +26,7 @@
     "docs:asyncapi": "asyncapi generate fromTemplate server/encounters/asyncapi.yaml @asyncapi/html-template@3.5.4 -o dist/asyncapi --force-write"
   },
   "dependencies": {
+    "axios": "^1.16.0",
     "better-sqlite3": "^12.9.0",
     "bootstrap": "^5.3.8",
     "express": "^5.2.1",

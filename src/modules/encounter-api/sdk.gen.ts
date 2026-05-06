@@ -2,7 +2,7 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { GetApiEncountersByEncounterIdStateData, GetApiEncountersByEncounterIdStateErrors, GetApiEncountersByEncounterIdStateResponses, GetApiEncountersData, GetApiEncountersResponses, PostApiEncountersByEncounterIdCombatantsData, PostApiEncountersByEncounterIdCombatantsResponses, PostApiEncountersData, PostApiEncountersResponses } from './types.gen';
+import type { GetApiCharactersByCharacterIdData, GetApiCharactersByCharacterIdResponses, GetApiCharactersData, GetApiCharactersResponses, GetApiEncountersByEncounterIdStateData, GetApiEncountersByEncounterIdStateErrors, GetApiEncountersByEncounterIdStateResponses, GetApiEncountersData, GetApiEncountersResponses, PostApiCharactersData, PostApiCharactersResponses, PostApiEncountersByEncounterIdCombatantsData, PostApiEncountersByEncounterIdCombatantsResponses, PostApiEncountersData, PostApiEncountersResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -19,14 +19,50 @@ export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends 
 };
 
 /**
+ * List characters
+ */
+export const getApiCharacters = <ThrowOnError extends boolean = false>(options?: Options<GetApiCharactersData, ThrowOnError>) => (options?.client ?? client).get<GetApiCharactersResponses, unknown, ThrowOnError>({
+    responseType: 'json',
+    url: '/api/characters',
+    ...options
+});
+
+/**
+ * Create a character
+ */
+export const postApiCharacters = <ThrowOnError extends boolean = false>(options: Options<PostApiCharactersData, ThrowOnError>) => (options.client ?? client).post<PostApiCharactersResponses, unknown, ThrowOnError>({
+    responseType: 'json',
+    url: '/api/characters',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Get a character
+ */
+export const getApiCharactersByCharacterId = <ThrowOnError extends boolean = false>(options: Options<GetApiCharactersByCharacterIdData, ThrowOnError>) => (options.client ?? client).get<GetApiCharactersByCharacterIdResponses, unknown, ThrowOnError>({
+    responseType: 'json',
+    url: '/api/characters/{characterId}',
+    ...options
+});
+
+/**
  * List encounters
  */
-export const getApiEncounters = <ThrowOnError extends boolean = false>(options?: Options<GetApiEncountersData, ThrowOnError>) => (options?.client ?? client).get<GetApiEncountersResponses, unknown, ThrowOnError>({ url: '/api/encounters', ...options });
+export const getApiEncounters = <ThrowOnError extends boolean = false>(options?: Options<GetApiEncountersData, ThrowOnError>) => (options?.client ?? client).get<GetApiEncountersResponses, unknown, ThrowOnError>({
+    responseType: 'json',
+    url: '/api/encounters',
+    ...options
+});
 
 /**
  * Create an encounter
  */
 export const postApiEncounters = <ThrowOnError extends boolean = false>(options?: Options<PostApiEncountersData, ThrowOnError>) => (options?.client ?? client).post<PostApiEncountersResponses, unknown, ThrowOnError>({
+    responseType: 'json',
     url: '/api/encounters',
     ...options,
     headers: {
@@ -38,12 +74,17 @@ export const postApiEncounters = <ThrowOnError extends boolean = false>(options?
 /**
  * Get encounter state
  */
-export const getApiEncountersByEncounterIdState = <ThrowOnError extends boolean = false>(options: Options<GetApiEncountersByEncounterIdStateData, ThrowOnError>) => (options.client ?? client).get<GetApiEncountersByEncounterIdStateResponses, GetApiEncountersByEncounterIdStateErrors, ThrowOnError>({ url: '/api/encounters/{encounterId}/state', ...options });
+export const getApiEncountersByEncounterIdState = <ThrowOnError extends boolean = false>(options: Options<GetApiEncountersByEncounterIdStateData, ThrowOnError>) => (options.client ?? client).get<GetApiEncountersByEncounterIdStateResponses, GetApiEncountersByEncounterIdStateErrors, ThrowOnError>({
+    responseType: 'json',
+    url: '/api/encounters/{encounterId}/state',
+    ...options
+});
 
 /**
  * Add a combatant to an encounter
  */
 export const postApiEncountersByEncounterIdCombatants = <ThrowOnError extends boolean = false>(options: Options<PostApiEncountersByEncounterIdCombatantsData, ThrowOnError>) => (options.client ?? client).post<PostApiEncountersByEncounterIdCombatantsResponses, unknown, ThrowOnError>({
+    responseType: 'json',
     url: '/api/encounters/{encounterId}/combatants',
     ...options,
     headers: {
