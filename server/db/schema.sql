@@ -42,3 +42,23 @@ create table if not exists encounter_events (
   created_at text not null,
   foreign key (encounter_id) references encounters(id) on delete cascade
 );
+
+-- Characters are player characters
+create table if not exists characters (
+id text primary key,
+character_id text not null,
+name text not null,
+level integer default 1,
+character_class text not null,
+background text not null,
+armor_class integer default 10,
+intiative integer default 0,
+speed integer default 30,
+max_hp integer not null,
+strength integer not null default 10,
+dexterity integer not null default 10,
+constitution integer not null default 10,
+intelligence integer not null default 10,
+wisdom integer not null default 10,
+charisma integer not null default 10
+);

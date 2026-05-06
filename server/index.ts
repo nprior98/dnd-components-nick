@@ -35,6 +35,7 @@ app.use("/api/async-docs", express.static("dist/asyncapi"));
 
 // Encounters are the only mounted API module at the moment.
 app.use("/api/encounters", encounterRoutes);
+app.use("/api/characters")
 
 const server = http.createServer(app);
 
