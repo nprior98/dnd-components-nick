@@ -4,4 +4,5 @@ import { openApiSpec } from "./server/openapi";
 export default defineConfig({
   input: openApiSpec,
   output: "src/modules/encounter-api/",
+  plugins: ["@hey-api/client-axios"],
 });

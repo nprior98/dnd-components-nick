@@ -30,7 +30,7 @@ export default function SidebarRight({
       const result = await getApiEncounters();
       if (cancelled) return;
 
-      if (result.response.status === 200) {
+      if (result.status === 200) {
         setEncounters(result.data ?? []);
         setLoadError(null);
       } else {

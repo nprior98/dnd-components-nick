@@ -34,6 +34,7 @@ export const itemsList = <ThrowOnError extends boolean = false>(options?: Option
             document__key__in: { array: { explode: false } },
             document__gamesystem__key__in: { array: { explode: false } }
         } },
+    responseType: 'json',
     url: '/v2/items/',
     ...options
 });
@@ -43,7 +44,11 @@ export const itemsList = <ThrowOnError extends boolean = false>(options?: Option
  *
  * retrieve: API endpoint for returning a particular item.
  */
-export const itemsRetrieve = <ThrowOnError extends boolean = false>(options: Options<ItemsRetrieveData, ThrowOnError>) => (options.client ?? client).get<ItemsRetrieveResponses, unknown, ThrowOnError>({ url: '/v2/items/{key}/', ...options });
+export const itemsRetrieve = <ThrowOnError extends boolean = false>(options: Options<ItemsRetrieveData, ThrowOnError>) => (options.client ?? client).get<ItemsRetrieveResponses, unknown, ThrowOnError>({
+    responseType: 'json',
+    url: '/v2/items/{key}/',
+    ...options
+});
 
 /**
  * list: API endpoint for returning a list of magic items.
@@ -61,6 +66,7 @@ export const magicitemsList = <ThrowOnError extends boolean = false>(options?: O
             document__key__in: { array: { explode: false } },
             document__gamesystem__key__in: { array: { explode: false } }
         } },
+    responseType: 'json',
     url: '/v2/magicitems/',
     ...options
 });
@@ -70,7 +76,11 @@ export const magicitemsList = <ThrowOnError extends boolean = false>(options?: O
  *
  * retrieve: API endpoint for returning a particular magic item.
  */
-export const magicitemsRetrieve = <ThrowOnError extends boolean = false>(options: Options<MagicitemsRetrieveData, ThrowOnError>) => (options.client ?? client).get<MagicitemsRetrieveResponses, unknown, ThrowOnError>({ url: '/v2/magicitems/{key}/', ...options });
+export const magicitemsRetrieve = <ThrowOnError extends boolean = false>(options: Options<MagicitemsRetrieveData, ThrowOnError>) => (options.client ?? client).get<MagicitemsRetrieveResponses, unknown, ThrowOnError>({
+    responseType: 'json',
+    url: '/v2/magicitems/{key}/',
+    ...options
+});
 
 /**
  * "
@@ -84,6 +94,7 @@ export const itemsetsList = <ThrowOnError extends boolean = false>(options?: Opt
             document__key__in: { array: { explode: false } },
             document__gamesystem__key__in: { array: { explode: false } }
         } },
+    responseType: 'json',
     url: '/v2/itemsets/',
     ...options
 });
@@ -94,7 +105,11 @@ export const itemsetsList = <ThrowOnError extends boolean = false>(options?: Opt
  *
  * retrieve: API endpoint for return a particular itemset.
  */
-export const itemsetsRetrieve = <ThrowOnError extends boolean = false>(options: Options<ItemsetsRetrieveData, ThrowOnError>) => (options.client ?? client).get<ItemsetsRetrieveResponses, unknown, ThrowOnError>({ url: '/v2/itemsets/{key}/', ...options });
+export const itemsetsRetrieve = <ThrowOnError extends boolean = false>(options: Options<ItemsetsRetrieveData, ThrowOnError>) => (options.client ?? client).get<ItemsetsRetrieveResponses, unknown, ThrowOnError>({
+    responseType: 'json',
+    url: '/v2/itemsets/{key}/',
+    ...options
+});
 
 /**
  * "
@@ -102,7 +117,11 @@ export const itemsetsRetrieve = <ThrowOnError extends boolean = false>(options: 
  *
  * retrieve: API endpoint for return a particular item categories.
  */
-export const itemcategoriesList = <ThrowOnError extends boolean = false>(options?: Options<ItemcategoriesListData, ThrowOnError>) => (options?.client ?? client).get<ItemcategoriesListResponses, unknown, ThrowOnError>({ url: '/v2/itemcategories/', ...options });
+export const itemcategoriesList = <ThrowOnError extends boolean = false>(options?: Options<ItemcategoriesListData, ThrowOnError>) => (options?.client ?? client).get<ItemcategoriesListResponses, unknown, ThrowOnError>({
+    responseType: 'json',
+    url: '/v2/itemcategories/',
+    ...options
+});
 
 /**
  * "
@@ -110,43 +129,71 @@ export const itemcategoriesList = <ThrowOnError extends boolean = false>(options
  *
  * retrieve: API endpoint for return a particular item categories.
  */
-export const itemcategoriesRetrieve = <ThrowOnError extends boolean = false>(options: Options<ItemcategoriesRetrieveData, ThrowOnError>) => (options.client ?? client).get<ItemcategoriesRetrieveResponses, unknown, ThrowOnError>({ url: '/v2/itemcategories/{key}/', ...options });
+export const itemcategoriesRetrieve = <ThrowOnError extends boolean = false>(options: Options<ItemcategoriesRetrieveData, ThrowOnError>) => (options.client ?? client).get<ItemcategoriesRetrieveResponses, unknown, ThrowOnError>({
+    responseType: 'json',
+    url: '/v2/itemcategories/{key}/',
+    ...options
+});
 
 /**
  * list: API endpoint for returning a list of documents.
  * retrieve: API endpoint for returning a particular document.
  */
-export const documentsList = <ThrowOnError extends boolean = false>(options?: Options<DocumentsListData, ThrowOnError>) => (options?.client ?? client).get<DocumentsListResponses, unknown, ThrowOnError>({ url: '/v2/documents/', ...options });
+export const documentsList = <ThrowOnError extends boolean = false>(options?: Options<DocumentsListData, ThrowOnError>) => (options?.client ?? client).get<DocumentsListResponses, unknown, ThrowOnError>({
+    responseType: 'json',
+    url: '/v2/documents/',
+    ...options
+});
 
 /**
  * list: API endpoint for returning a list of documents.
  * retrieve: API endpoint for returning a particular document.
  */
-export const documentsRetrieve = <ThrowOnError extends boolean = false>(options: Options<DocumentsRetrieveData, ThrowOnError>) => (options.client ?? client).get<DocumentsRetrieveResponses, unknown, ThrowOnError>({ url: '/v2/documents/{key}/', ...options });
+export const documentsRetrieve = <ThrowOnError extends boolean = false>(options: Options<DocumentsRetrieveData, ThrowOnError>) => (options.client ?? client).get<DocumentsRetrieveResponses, unknown, ThrowOnError>({
+    responseType: 'json',
+    url: '/v2/documents/{key}/',
+    ...options
+});
 
 /**
  * list: API endpoint for returning a list of licenses.
  * retrieve: API endpoint for returning a particular license.
  */
-export const licensesList = <ThrowOnError extends boolean = false>(options?: Options<LicensesListData, ThrowOnError>) => (options?.client ?? client).get<LicensesListResponses, unknown, ThrowOnError>({ url: '/v2/licenses/', ...options });
+export const licensesList = <ThrowOnError extends boolean = false>(options?: Options<LicensesListData, ThrowOnError>) => (options?.client ?? client).get<LicensesListResponses, unknown, ThrowOnError>({
+    responseType: 'json',
+    url: '/v2/licenses/',
+    ...options
+});
 
 /**
  * list: API endpoint for returning a list of licenses.
  * retrieve: API endpoint for returning a particular license.
  */
-export const licensesRetrieve = <ThrowOnError extends boolean = false>(options: Options<LicensesRetrieveData, ThrowOnError>) => (options.client ?? client).get<LicensesRetrieveResponses, unknown, ThrowOnError>({ url: '/v2/licenses/{key}/', ...options });
+export const licensesRetrieve = <ThrowOnError extends boolean = false>(options: Options<LicensesRetrieveData, ThrowOnError>) => (options.client ?? client).get<LicensesRetrieveResponses, unknown, ThrowOnError>({
+    responseType: 'json',
+    url: '/v2/licenses/{key}/',
+    ...options
+});
 
 /**
  * list: API endpoint for returning a list of publishers.
  * retrieve: API endpoint for returning a particular publisher.
  */
-export const publishersList = <ThrowOnError extends boolean = false>(options?: Options<PublishersListData, ThrowOnError>) => (options?.client ?? client).get<PublishersListResponses, unknown, ThrowOnError>({ url: '/v2/publishers/', ...options });
+export const publishersList = <ThrowOnError extends boolean = false>(options?: Options<PublishersListData, ThrowOnError>) => (options?.client ?? client).get<PublishersListResponses, unknown, ThrowOnError>({
+    responseType: 'json',
+    url: '/v2/publishers/',
+    ...options
+});
 
 /**
  * list: API endpoint for returning a list of publishers.
  * retrieve: API endpoint for returning a particular publisher.
  */
-export const publishersRetrieve = <ThrowOnError extends boolean = false>(options: Options<PublishersRetrieveData, ThrowOnError>) => (options.client ?? client).get<PublishersRetrieveResponses, unknown, ThrowOnError>({ url: '/v2/publishers/{key}/', ...options });
+export const publishersRetrieve = <ThrowOnError extends boolean = false>(options: Options<PublishersRetrieveData, ThrowOnError>) => (options.client ?? client).get<PublishersRetrieveResponses, unknown, ThrowOnError>({
+    responseType: 'json',
+    url: '/v2/publishers/{key}/',
+    ...options
+});
 
 /**
  * list: API endpoint for returning a list of weapons.
@@ -159,6 +206,7 @@ export const weaponsList = <ThrowOnError extends boolean = false>(options?: Opti
             document__gamesystem__key__in: { array: { explode: false } },
             damage_dice__in: { array: { explode: false } }
         } },
+    responseType: 'json',
     url: '/v2/weapons/',
     ...options
 });
@@ -167,7 +215,11 @@ export const weaponsList = <ThrowOnError extends boolean = false>(options?: Opti
  * list: API endpoint for returning a list of weapons.
  * retrieve: API endpoint for returning a particular weapon.
  */
-export const weaponsRetrieve = <ThrowOnError extends boolean = false>(options: Options<WeaponsRetrieveData, ThrowOnError>) => (options.client ?? client).get<WeaponsRetrieveResponses, unknown, ThrowOnError>({ url: '/v2/weapons/{key}/', ...options });
+export const weaponsRetrieve = <ThrowOnError extends boolean = false>(options: Options<WeaponsRetrieveData, ThrowOnError>) => (options.client ?? client).get<WeaponsRetrieveResponses, unknown, ThrowOnError>({
+    responseType: 'json',
+    url: '/v2/weapons/{key}/',
+    ...options
+});
 
 /**
  * list: API endpoint for returning a list of armor.
@@ -179,6 +231,7 @@ export const armorList = <ThrowOnError extends boolean = false>(options?: Option
             document__key__in: { array: { explode: false } },
             document__gamesystem__key__in: { array: { explode: false } }
         } },
+    responseType: 'json',
     url: '/v2/armor/',
     ...options
 });
@@ -187,7 +240,11 @@ export const armorList = <ThrowOnError extends boolean = false>(options?: Option
  * list: API endpoint for returning a list of armor.
  * retrieve: API endpoint for returning a particular armor.
  */
-export const armorRetrieve = <ThrowOnError extends boolean = false>(options: Options<ArmorRetrieveData, ThrowOnError>) => (options.client ?? client).get<ArmorRetrieveResponses, unknown, ThrowOnError>({ url: '/v2/armor/{key}/', ...options });
+export const armorRetrieve = <ThrowOnError extends boolean = false>(options: Options<ArmorRetrieveData, ThrowOnError>) => (options.client ?? client).get<ArmorRetrieveResponses, unknown, ThrowOnError>({
+    responseType: 'json',
+    url: '/v2/armor/{key}/',
+    ...options
+});
 
 /**
  * "
@@ -195,7 +252,11 @@ export const armorRetrieve = <ThrowOnError extends boolean = false>(options: Opt
  *
  * retrieve: API endpoint for return a particular gamesystem.
  */
-export const gamesystemsList = <ThrowOnError extends boolean = false>(options?: Options<GamesystemsListData, ThrowOnError>) => (options?.client ?? client).get<GamesystemsListResponses, unknown, ThrowOnError>({ url: '/v2/gamesystems/', ...options });
+export const gamesystemsList = <ThrowOnError extends boolean = false>(options?: Options<GamesystemsListData, ThrowOnError>) => (options?.client ?? client).get<GamesystemsListResponses, unknown, ThrowOnError>({
+    responseType: 'json',
+    url: '/v2/gamesystems/',
+    ...options
+});
 
 /**
  * "
@@ -203,7 +264,11 @@ export const gamesystemsList = <ThrowOnError extends boolean = false>(options?: 
  *
  * retrieve: API endpoint for return a particular gamesystem.
  */
-export const gamesystemsRetrieve = <ThrowOnError extends boolean = false>(options: Options<GamesystemsRetrieveData, ThrowOnError>) => (options.client ?? client).get<GamesystemsRetrieveResponses, unknown, ThrowOnError>({ url: '/v2/gamesystems/{key}/', ...options });
+export const gamesystemsRetrieve = <ThrowOnError extends boolean = false>(options: Options<GamesystemsRetrieveData, ThrowOnError>) => (options.client ?? client).get<GamesystemsRetrieveResponses, unknown, ThrowOnError>({
+    responseType: 'json',
+    url: '/v2/gamesystems/{key}/',
+    ...options
+});
 
 /**
  * list: API endpoint for returning a list of backgrounds.
@@ -215,6 +280,7 @@ export const backgroundsList = <ThrowOnError extends boolean = false>(options?: 
             document__key__in: { array: { explode: false } },
             document__gamesystem__key__in: { array: { explode: false } }
         } },
+    responseType: 'json',
     url: '/v2/backgrounds/',
     ...options
 });
@@ -223,7 +289,11 @@ export const backgroundsList = <ThrowOnError extends boolean = false>(options?: 
  * list: API endpoint for returning a list of backgrounds.
  * retrieve: API endpoint for returning a particular background.
  */
-export const backgroundsRetrieve = <ThrowOnError extends boolean = false>(options: Options<BackgroundsRetrieveData, ThrowOnError>) => (options.client ?? client).get<BackgroundsRetrieveResponses, unknown, ThrowOnError>({ url: '/v2/backgrounds/{key}/', ...options });
+export const backgroundsRetrieve = <ThrowOnError extends boolean = false>(options: Options<BackgroundsRetrieveData, ThrowOnError>) => (options.client ?? client).get<BackgroundsRetrieveResponses, unknown, ThrowOnError>({
+    responseType: 'json',
+    url: '/v2/backgrounds/{key}/',
+    ...options
+});
 
 /**
  * list: API endpoint for returning a list of feats.
@@ -235,6 +305,7 @@ export const featsList = <ThrowOnError extends boolean = false>(options?: Option
             document__key__in: { array: { explode: false } },
             document__gamesystem__key__in: { array: { explode: false } }
         } },
+    responseType: 'json',
     url: '/v2/feats/',
     ...options
 });
@@ -243,7 +314,11 @@ export const featsList = <ThrowOnError extends boolean = false>(options?: Option
  * list: API endpoint for returning a list of feats.
  * retrieve: API endpoint for returning a particular feat.
  */
-export const featsRetrieve = <ThrowOnError extends boolean = false>(options: Options<FeatsRetrieveData, ThrowOnError>) => (options.client ?? client).get<FeatsRetrieveResponses, unknown, ThrowOnError>({ url: '/v2/feats/{key}/', ...options });
+export const featsRetrieve = <ThrowOnError extends boolean = false>(options: Options<FeatsRetrieveData, ThrowOnError>) => (options.client ?? client).get<FeatsRetrieveResponses, unknown, ThrowOnError>({
+    responseType: 'json',
+    url: '/v2/feats/{key}/',
+    ...options
+});
 
 /**
  * list: API endpoint for returning a list of species.
@@ -256,6 +331,7 @@ export const speciesList = <ThrowOnError extends boolean = false>(options?: Opti
             document__gamesystem__key__in: { array: { explode: false } },
             subspecies_of__key__in: { array: { explode: false } }
         } },
+    responseType: 'json',
     url: '/v2/species/',
     ...options
 });
@@ -264,7 +340,11 @@ export const speciesList = <ThrowOnError extends boolean = false>(options?: Opti
  * list: API endpoint for returning a list of species.
  * retrieve: API endpoint for returning a particular species.
  */
-export const speciesRetrieve = <ThrowOnError extends boolean = false>(options: Options<SpeciesRetrieveData, ThrowOnError>) => (options.client ?? client).get<SpeciesRetrieveResponses, unknown, ThrowOnError>({ url: '/v2/species/{key}/', ...options });
+export const speciesRetrieve = <ThrowOnError extends boolean = false>(options: Options<SpeciesRetrieveData, ThrowOnError>) => (options.client ?? client).get<SpeciesRetrieveResponses, unknown, ThrowOnError>({
+    responseType: 'json',
+    url: '/v2/species/{key}/',
+    ...options
+});
 
 /**
  * list: API endpoint for returning a list of creatures.
@@ -276,6 +356,7 @@ export const creaturesList = <ThrowOnError extends boolean = false>(options?: Op
             document__key__in: { array: { explode: false } },
             document__gamesystem__key__in: { array: { explode: false } }
         } },
+    responseType: 'json',
     url: '/v2/creatures/',
     ...options
 });
@@ -284,7 +365,11 @@ export const creaturesList = <ThrowOnError extends boolean = false>(options?: Op
  * list: API endpoint for returning a list of creatures.
  * retrieve: API endpoint for returning a particular creature.
  */
-export const creaturesRetrieve = <ThrowOnError extends boolean = false>(options: Options<CreaturesRetrieveData, ThrowOnError>) => (options.client ?? client).get<CreaturesRetrieveResponses, unknown, ThrowOnError>({ url: '/v2/creatures/{key}/', ...options });
+export const creaturesRetrieve = <ThrowOnError extends boolean = false>(options: Options<CreaturesRetrieveData, ThrowOnError>) => (options.client ?? client).get<CreaturesRetrieveResponses, unknown, ThrowOnError>({
+    responseType: 'json',
+    url: '/v2/creatures/{key}/',
+    ...options
+});
 
 /**
  * list: API endpoint for returning a list of creatures types.
@@ -296,6 +381,7 @@ export const creaturetypesList = <ThrowOnError extends boolean = false>(options?
             document__key__in: { array: { explode: false } },
             document__gamesystem__key__in: { array: { explode: false } }
         } },
+    responseType: 'json',
     url: '/v2/creaturetypes/',
     ...options
 });
@@ -304,7 +390,11 @@ export const creaturetypesList = <ThrowOnError extends boolean = false>(options?
  * list: API endpoint for returning a list of creatures types.
  * retrieve: API endpoint for returning a particular creature type.
  */
-export const creaturetypesRetrieve = <ThrowOnError extends boolean = false>(options: Options<CreaturetypesRetrieveData, ThrowOnError>) => (options.client ?? client).get<CreaturetypesRetrieveResponses, unknown, ThrowOnError>({ url: '/v2/creaturetypes/{key}/', ...options });
+export const creaturetypesRetrieve = <ThrowOnError extends boolean = false>(options: Options<CreaturetypesRetrieveData, ThrowOnError>) => (options.client ?? client).get<CreaturetypesRetrieveResponses, unknown, ThrowOnError>({
+    responseType: 'json',
+    url: '/v2/creaturetypes/{key}/',
+    ...options
+});
 
 /**
  * list: API endpoint for returning a list of creature sets, which is similar to tags.
@@ -316,6 +406,7 @@ export const creaturesetsList = <ThrowOnError extends boolean = false>(options?:
             document__key__in: { array: { explode: false } },
             document__gamesystem__key__in: { array: { explode: false } }
         } },
+    responseType: 'json',
     url: '/v2/creaturesets/',
     ...options
 });
@@ -324,7 +415,11 @@ export const creaturesetsList = <ThrowOnError extends boolean = false>(options?:
  * list: API endpoint for returning a list of creature sets, which is similar to tags.
  * retrieve: API endpoint for returning a particular creature set.
  */
-export const creaturesetsRetrieve = <ThrowOnError extends boolean = false>(options: Options<CreaturesetsRetrieveData, ThrowOnError>) => (options.client ?? client).get<CreaturesetsRetrieveResponses, unknown, ThrowOnError>({ url: '/v2/creaturesets/{key}/', ...options });
+export const creaturesetsRetrieve = <ThrowOnError extends boolean = false>(options: Options<CreaturesetsRetrieveData, ThrowOnError>) => (options.client ?? client).get<CreaturesetsRetrieveResponses, unknown, ThrowOnError>({
+    responseType: 'json',
+    url: '/v2/creaturesets/{key}/',
+    ...options
+});
 
 /**
  * list: API endpoint for returning a list of damage types.
@@ -336,6 +431,7 @@ export const damagetypesList = <ThrowOnError extends boolean = false>(options?: 
             document__key__in: { array: { explode: false } },
             document__gamesystem__key__in: { array: { explode: false } }
         } },
+    responseType: 'json',
     url: '/v2/damagetypes/',
     ...options
 });
@@ -344,7 +440,11 @@ export const damagetypesList = <ThrowOnError extends boolean = false>(options?: 
  * list: API endpoint for returning a list of damage types.
  * retrieve: API endpoint for returning a particular damage type.
  */
-export const damagetypesRetrieve = <ThrowOnError extends boolean = false>(options: Options<DamagetypesRetrieveData, ThrowOnError>) => (options.client ?? client).get<DamagetypesRetrieveResponses, unknown, ThrowOnError>({ url: '/v2/damagetypes/{key}/', ...options });
+export const damagetypesRetrieve = <ThrowOnError extends boolean = false>(options: Options<DamagetypesRetrieveData, ThrowOnError>) => (options.client ?? client).get<DamagetypesRetrieveResponses, unknown, ThrowOnError>({
+    responseType: 'json',
+    url: '/v2/damagetypes/{key}/',
+    ...options
+});
 
 /**
  * list: API endpoint for returning a list of feats.
@@ -356,6 +456,7 @@ export const languagesList = <ThrowOnError extends boolean = false>(options?: Op
             document__key__in: { array: { explode: false } },
             document__gamesystem__key__in: { array: { explode: false } }
         } },
+    responseType: 'json',
     url: '/v2/languages/',
     ...options
 });
@@ -364,7 +465,11 @@ export const languagesList = <ThrowOnError extends boolean = false>(options?: Op
  * list: API endpoint for returning a list of feats.
  * retrieve: API endpoint for returning a particular feat.
  */
-export const languagesRetrieve = <ThrowOnError extends boolean = false>(options: Options<LanguagesRetrieveData, ThrowOnError>) => (options.client ?? client).get<LanguagesRetrieveResponses, unknown, ThrowOnError>({ url: '/v2/languages/{key}/', ...options });
+export const languagesRetrieve = <ThrowOnError extends boolean = false>(options: Options<LanguagesRetrieveData, ThrowOnError>) => (options.client ?? client).get<LanguagesRetrieveResponses, unknown, ThrowOnError>({
+    responseType: 'json',
+    url: '/v2/languages/{key}/',
+    ...options
+});
 
 /**
  * list: API endpoint for returning a list of alignments.
@@ -376,6 +481,7 @@ export const alignmentsList = <ThrowOnError extends boolean = false>(options?: O
             document__key__in: { array: { explode: false } },
             document__gamesystem__key__in: { array: { explode: false } }
         } },
+    responseType: 'json',
     url: '/v2/alignments/',
     ...options
 });
@@ -384,7 +490,11 @@ export const alignmentsList = <ThrowOnError extends boolean = false>(options?: O
  * list: API endpoint for returning a list of alignments.
  * retrieve: API endpoint for returning a particular alignment.
  */
-export const alignmentsRetrieve = <ThrowOnError extends boolean = false>(options: Options<AlignmentsRetrieveData, ThrowOnError>) => (options.client ?? client).get<AlignmentsRetrieveResponses, unknown, ThrowOnError>({ url: '/v2/alignments/{key}/', ...options });
+export const alignmentsRetrieve = <ThrowOnError extends boolean = false>(options: Options<AlignmentsRetrieveData, ThrowOnError>) => (options.client ?? client).get<AlignmentsRetrieveResponses, unknown, ThrowOnError>({
+    responseType: 'json',
+    url: '/v2/alignments/{key}/',
+    ...options
+});
 
 /**
  * list: API endpoint for returning a list of conditions.
@@ -396,6 +506,7 @@ export const conditionsList = <ThrowOnError extends boolean = false>(options?: O
             document__key__in: { array: { explode: false } },
             document__gamesystem__key__in: { array: { explode: false } }
         } },
+    responseType: 'json',
     url: '/v2/conditions/',
     ...options
 });
@@ -404,7 +515,11 @@ export const conditionsList = <ThrowOnError extends boolean = false>(options?: O
  * list: API endpoint for returning a list of conditions.
  * retrieve: API endpoint for returning a particular condition.
  */
-export const conditionsRetrieve = <ThrowOnError extends boolean = false>(options: Options<ConditionsRetrieveData, ThrowOnError>) => (options.client ?? client).get<ConditionsRetrieveResponses, unknown, ThrowOnError>({ url: '/v2/conditions/{key}/', ...options });
+export const conditionsRetrieve = <ThrowOnError extends boolean = false>(options: Options<ConditionsRetrieveData, ThrowOnError>) => (options.client ?? client).get<ConditionsRetrieveResponses, unknown, ThrowOnError>({
+    responseType: 'json',
+    url: '/v2/conditions/{key}/',
+    ...options
+});
 
 /**
  * list: API endpoint for returning a list of spells.
@@ -423,6 +538,7 @@ export const spellsList = <ThrowOnError extends boolean = false>(options?: Optio
             duration__in: { array: { explode: false } },
             casting_time__in: { array: { explode: false } }
         } },
+    responseType: 'json',
     url: '/v2/spells/',
     ...options
 });
@@ -431,7 +547,11 @@ export const spellsList = <ThrowOnError extends boolean = false>(options?: Optio
  * list: API endpoint for returning a list of spells.
  * retrieve: API endpoint for returning a particular spell.
  */
-export const spellsRetrieve = <ThrowOnError extends boolean = false>(options: Options<SpellsRetrieveData, ThrowOnError>) => (options.client ?? client).get<SpellsRetrieveResponses, unknown, ThrowOnError>({ url: '/v2/spells/{key}/', ...options });
+export const spellsRetrieve = <ThrowOnError extends boolean = false>(options: Options<SpellsRetrieveData, ThrowOnError>) => (options.client ?? client).get<SpellsRetrieveResponses, unknown, ThrowOnError>({
+    responseType: 'json',
+    url: '/v2/spells/{key}/',
+    ...options
+});
 
 export const spellschoolsList = <ThrowOnError extends boolean = false>(options?: Options<SpellschoolsListData, ThrowOnError>) => (options?.client ?? client).get<SpellschoolsListResponses, unknown, ThrowOnError>({
     querySerializer: { parameters: {
@@ -439,11 +559,16 @@ export const spellschoolsList = <ThrowOnError extends boolean = false>(options?:
             document__key__in: { array: { explode: false } },
             document__gamesystem__key__in: { array: { explode: false } }
         } },
+    responseType: 'json',
     url: '/v2/spellschools/',
     ...options
 });
 
-export const spellschoolsRetrieve = <ThrowOnError extends boolean = false>(options: Options<SpellschoolsRetrieveData, ThrowOnError>) => (options.client ?? client).get<SpellschoolsRetrieveResponses, unknown, ThrowOnError>({ url: '/v2/spellschools/{key}/', ...options });
+export const spellschoolsRetrieve = <ThrowOnError extends boolean = false>(options: Options<SpellschoolsRetrieveData, ThrowOnError>) => (options.client ?? client).get<SpellschoolsRetrieveResponses, unknown, ThrowOnError>({
+    responseType: 'json',
+    url: '/v2/spellschools/{key}/',
+    ...options
+});
 
 /**
  * list: API endpoint for returning a list of classes.
@@ -455,6 +580,7 @@ export const classesList = <ThrowOnError extends boolean = false>(options?: Opti
             document__key__in: { array: { explode: false } },
             document__gamesystem__key__in: { array: { explode: false } }
         } },
+    responseType: 'json',
     url: '/v2/classes/',
     ...options
 });
@@ -463,7 +589,11 @@ export const classesList = <ThrowOnError extends boolean = false>(options?: Opti
  * list: API endpoint for returning a list of classes.
  * retrieve: API endpoint for returning a particular class.
  */
-export const classesRetrieve = <ThrowOnError extends boolean = false>(options: Options<ClassesRetrieveData, ThrowOnError>) => (options.client ?? client).get<ClassesRetrieveResponses, unknown, ThrowOnError>({ url: '/v2/classes/{key}/', ...options });
+export const classesRetrieve = <ThrowOnError extends boolean = false>(options: Options<ClassesRetrieveData, ThrowOnError>) => (options.client ?? client).get<ClassesRetrieveResponses, unknown, ThrowOnError>({
+    responseType: 'json',
+    url: '/v2/classes/{key}/',
+    ...options
+});
 
 /**
  * list: API endpoint for returning a list of damage types.
@@ -475,6 +605,7 @@ export const sizesList = <ThrowOnError extends boolean = false>(options?: Option
             document__key__in: { array: { explode: false } },
             document__gamesystem__key__in: { array: { explode: false } }
         } },
+    responseType: 'json',
     url: '/v2/sizes/',
     ...options
 });
@@ -483,21 +614,33 @@ export const sizesList = <ThrowOnError extends boolean = false>(options?: Option
  * list: API endpoint for returning a list of damage types.
  * retrieve: API endpoint for returning a particular damage type.
  */
-export const sizesRetrieve = <ThrowOnError extends boolean = false>(options: Options<SizesRetrieveData, ThrowOnError>) => (options.client ?? client).get<SizesRetrieveResponses, unknown, ThrowOnError>({ url: '/v2/sizes/{key}/', ...options });
+export const sizesRetrieve = <ThrowOnError extends boolean = false>(options: Options<SizesRetrieveData, ThrowOnError>) => (options.client ?? client).get<SizesRetrieveResponses, unknown, ThrowOnError>({
+    responseType: 'json',
+    url: '/v2/sizes/{key}/',
+    ...options
+});
 
 /**
  * list: API endpoint for returning a list of item rarities.
  *
  * retrieve: API endpoint for returning a particular item rarity.
  */
-export const itemraritiesList = <ThrowOnError extends boolean = false>(options?: Options<ItemraritiesListData, ThrowOnError>) => (options?.client ?? client).get<ItemraritiesListResponses, unknown, ThrowOnError>({ url: '/v2/itemrarities/', ...options });
+export const itemraritiesList = <ThrowOnError extends boolean = false>(options?: Options<ItemraritiesListData, ThrowOnError>) => (options?.client ?? client).get<ItemraritiesListResponses, unknown, ThrowOnError>({
+    responseType: 'json',
+    url: '/v2/itemrarities/',
+    ...options
+});
 
 /**
  * list: API endpoint for returning a list of item rarities.
  *
  * retrieve: API endpoint for returning a particular item rarity.
  */
-export const itemraritiesRetrieve = <ThrowOnError extends boolean = false>(options: Options<ItemraritiesRetrieveData, ThrowOnError>) => (options.client ?? client).get<ItemraritiesRetrieveResponses, unknown, ThrowOnError>({ url: '/v2/itemrarities/{key}/', ...options });
+export const itemraritiesRetrieve = <ThrowOnError extends boolean = false>(options: Options<ItemraritiesRetrieveData, ThrowOnError>) => (options.client ?? client).get<ItemraritiesRetrieveResponses, unknown, ThrowOnError>({
+    responseType: 'json',
+    url: '/v2/itemrarities/{key}/',
+    ...options
+});
 
 /**
  * list: API endpoint for returning a list of environments.
@@ -509,6 +652,7 @@ export const environmentsList = <ThrowOnError extends boolean = false>(options?:
             document__key__in: { array: { explode: false } },
             document__gamesystem__key__in: { array: { explode: false } }
         } },
+    responseType: 'json',
     url: '/v2/environments/',
     ...options
 });
@@ -517,7 +661,11 @@ export const environmentsList = <ThrowOnError extends boolean = false>(options?:
  * list: API endpoint for returning a list of environments.
  * retrieve: API endpoint for returning a particular environment.
  */
-export const environmentsRetrieve = <ThrowOnError extends boolean = false>(options: Options<EnvironmentsRetrieveData, ThrowOnError>) => (options.client ?? client).get<EnvironmentsRetrieveResponses, unknown, ThrowOnError>({ url: '/v2/environments/{key}/', ...options });
+export const environmentsRetrieve = <ThrowOnError extends boolean = false>(options: Options<EnvironmentsRetrieveData, ThrowOnError>) => (options.client ?? client).get<EnvironmentsRetrieveResponses, unknown, ThrowOnError>({
+    responseType: 'json',
+    url: '/v2/environments/{key}/',
+    ...options
+});
 
 /**
  * list: API endpoint for returning a list of abilities.
@@ -529,6 +677,7 @@ export const abilitiesList = <ThrowOnError extends boolean = false>(options?: Op
             document__key__in: { array: { explode: false } },
             document__gamesystem__key__in: { array: { explode: false } }
         } },
+    responseType: 'json',
     url: '/v2/abilities/',
     ...options
 });
@@ -537,19 +686,31 @@ export const abilitiesList = <ThrowOnError extends boolean = false>(options?: Op
  * list: API endpoint for returning a list of abilities.
  * retrieve: API endpoint for returning a particular ability.
  */
-export const abilitiesRetrieve = <ThrowOnError extends boolean = false>(options: Options<AbilitiesRetrieveData, ThrowOnError>) => (options.client ?? client).get<AbilitiesRetrieveResponses, unknown, ThrowOnError>({ url: '/v2/abilities/{key}/', ...options });
+export const abilitiesRetrieve = <ThrowOnError extends boolean = false>(options: Options<AbilitiesRetrieveData, ThrowOnError>) => (options.client ?? client).get<AbilitiesRetrieveResponses, unknown, ThrowOnError>({
+    responseType: 'json',
+    url: '/v2/abilities/{key}/',
+    ...options
+});
 
 /**
  * list: API endpoint for returning a list of skills.
  * retrieve: API endpoint for returning a particular skill.
  */
-export const skillsList = <ThrowOnError extends boolean = false>(options?: Options<SkillsListData, ThrowOnError>) => (options?.client ?? client).get<SkillsListResponses, unknown, ThrowOnError>({ url: '/v2/skills/', ...options });
+export const skillsList = <ThrowOnError extends boolean = false>(options?: Options<SkillsListData, ThrowOnError>) => (options?.client ?? client).get<SkillsListResponses, unknown, ThrowOnError>({
+    responseType: 'json',
+    url: '/v2/skills/',
+    ...options
+});
 
 /**
  * list: API endpoint for returning a list of skills.
  * retrieve: API endpoint for returning a particular skill.
  */
-export const skillsRetrieve = <ThrowOnError extends boolean = false>(options: Options<SkillsRetrieveData, ThrowOnError>) => (options.client ?? client).get<SkillsRetrieveResponses, unknown, ThrowOnError>({ url: '/v2/skills/{key}/', ...options });
+export const skillsRetrieve = <ThrowOnError extends boolean = false>(options: Options<SkillsRetrieveData, ThrowOnError>) => (options.client ?? client).get<SkillsRetrieveResponses, unknown, ThrowOnError>({
+    responseType: 'json',
+    url: '/v2/skills/{key}/',
+    ...options
+});
 
 export const rulesList = <ThrowOnError extends boolean = false>(options?: Options<RulesListData, ThrowOnError>) => (options?.client ?? client).get<RulesListResponses, unknown, ThrowOnError>({
     querySerializer: { parameters: {
@@ -557,11 +718,16 @@ export const rulesList = <ThrowOnError extends boolean = false>(options?: Option
             document__key__in: { array: { explode: false } },
             document__gamesystem__key__in: { array: { explode: false } }
         } },
+    responseType: 'json',
     url: '/v2/rules/',
     ...options
 });
 
-export const rulesRetrieve = <ThrowOnError extends boolean = false>(options: Options<RulesRetrieveData, ThrowOnError>) => (options.client ?? client).get<RulesRetrieveResponses, unknown, ThrowOnError>({ url: '/v2/rules/{key}/', ...options });
+export const rulesRetrieve = <ThrowOnError extends boolean = false>(options: Options<RulesRetrieveData, ThrowOnError>) => (options.client ?? client).get<RulesRetrieveResponses, unknown, ThrowOnError>({
+    responseType: 'json',
+    url: '/v2/rules/{key}/',
+    ...options
+});
 
 /**
  * Mixin to apply eager loading optimisations to a ViewSet.
@@ -594,6 +760,7 @@ export const rulesetsList = <ThrowOnError extends boolean = false>(options?: Opt
             document__key__in: { array: { explode: false } },
             document__gamesystem__key__in: { array: { explode: false } }
         } },
+    responseType: 'json',
     url: '/v2/rulesets/',
     ...options
 });
@@ -623,11 +790,23 @@ export const rulesetsList = <ThrowOnError extends boolean = false>(options?: Opt
  * prefetch_related_fields = [] # ManyToMany/reverse relations to optimise with prefetch_related()
  * ```
  */
-export const rulesetsRetrieve = <ThrowOnError extends boolean = false>(options: Options<RulesetsRetrieveData, ThrowOnError>) => (options.client ?? client).get<RulesetsRetrieveResponses, unknown, ThrowOnError>({ url: '/v2/rulesets/{key}/', ...options });
+export const rulesetsRetrieve = <ThrowOnError extends boolean = false>(options: Options<RulesetsRetrieveData, ThrowOnError>) => (options.client ?? client).get<RulesetsRetrieveResponses, unknown, ThrowOnError>({
+    responseType: 'json',
+    url: '/v2/rulesets/{key}/',
+    ...options
+});
 
-export const imagesList = <ThrowOnError extends boolean = false>(options?: Options<ImagesListData, ThrowOnError>) => (options?.client ?? client).get<ImagesListResponses, unknown, ThrowOnError>({ url: '/v2/images/', ...options });
+export const imagesList = <ThrowOnError extends boolean = false>(options?: Options<ImagesListData, ThrowOnError>) => (options?.client ?? client).get<ImagesListResponses, unknown, ThrowOnError>({
+    responseType: 'json',
+    url: '/v2/images/',
+    ...options
+});
 
-export const imagesRetrieve = <ThrowOnError extends boolean = false>(options: Options<ImagesRetrieveData, ThrowOnError>) => (options.client ?? client).get<ImagesRetrieveResponses, unknown, ThrowOnError>({ url: '/v2/images/{key}/', ...options });
+export const imagesRetrieve = <ThrowOnError extends boolean = false>(options: Options<ImagesRetrieveData, ThrowOnError>) => (options.client ?? client).get<ImagesRetrieveResponses, unknown, ThrowOnError>({
+    responseType: 'json',
+    url: '/v2/images/{key}/',
+    ...options
+});
 
 /**
  * Mixin to apply eager loading optimisations to a ViewSet.
@@ -660,6 +839,7 @@ export const weaponpropertiesList = <ThrowOnError extends boolean = false>(optio
             document__key__in: { array: { explode: false } },
             document__gamesystem__key__in: { array: { explode: false } }
         } },
+    responseType: 'json',
     url: '/v2/weaponproperties/',
     ...options
 });
@@ -689,16 +869,32 @@ export const weaponpropertiesList = <ThrowOnError extends boolean = false>(optio
  * prefetch_related_fields = [] # ManyToMany/reverse relations to optimise with prefetch_related()
  * ```
  */
-export const weaponpropertiesRetrieve = <ThrowOnError extends boolean = false>(options: Options<WeaponpropertiesRetrieveData, ThrowOnError>) => (options.client ?? client).get<WeaponpropertiesRetrieveResponses, unknown, ThrowOnError>({ url: '/v2/weaponproperties/{key}/', ...options });
+export const weaponpropertiesRetrieve = <ThrowOnError extends boolean = false>(options: Options<WeaponpropertiesRetrieveData, ThrowOnError>) => (options.client ?? client).get<WeaponpropertiesRetrieveResponses, unknown, ThrowOnError>({
+    responseType: 'json',
+    url: '/v2/weaponproperties/{key}/',
+    ...options
+});
 
-export const servicesList = <ThrowOnError extends boolean = false>(options?: Options<ServicesListData, ThrowOnError>) => (options?.client ?? client).get<ServicesListResponses, unknown, ThrowOnError>({ url: '/v2/services/', ...options });
+export const servicesList = <ThrowOnError extends boolean = false>(options?: Options<ServicesListData, ThrowOnError>) => (options?.client ?? client).get<ServicesListResponses, unknown, ThrowOnError>({
+    responseType: 'json',
+    url: '/v2/services/',
+    ...options
+});
 
-export const servicesRetrieve = <ThrowOnError extends boolean = false>(options: Options<ServicesRetrieveData, ThrowOnError>) => (options.client ?? client).get<ServicesRetrieveResponses, unknown, ThrowOnError>({ url: '/v2/services/{key}/', ...options });
+export const servicesRetrieve = <ThrowOnError extends boolean = false>(options: Options<ServicesRetrieveData, ThrowOnError>) => (options.client ?? client).get<ServicesRetrieveResponses, unknown, ThrowOnError>({
+    responseType: 'json',
+    url: '/v2/services/{key}/',
+    ...options
+});
 
 /**
  * API endpoint for enums.
  */
-export const enumsList = <ThrowOnError extends boolean = false>(options?: Options<EnumsListData, ThrowOnError>) => (options?.client ?? client).get<EnumsListResponses, unknown, ThrowOnError>({ url: '/v2/enums/', ...options });
+export const enumsList = <ThrowOnError extends boolean = false>(options?: Options<EnumsListData, ThrowOnError>) => (options?.client ?? client).get<EnumsListResponses, unknown, ThrowOnError>({
+    responseType: 'json',
+    url: '/v2/enums/',
+    ...options
+});
 
 /**
  * Search across D&D 5E content
@@ -713,9 +909,17 @@ export const enumsList = <ThrowOnError extends boolean = false>(options?: Option
  *
  *
  */
-export const searchList = <ThrowOnError extends boolean = false>(options: Options<SearchListData, ThrowOnError>) => (options.client ?? client).get<SearchListResponses, SearchListErrors, ThrowOnError>({ url: '/v2/search/', ...options });
+export const searchList = <ThrowOnError extends boolean = false>(options: Options<SearchListData, ThrowOnError>) => (options.client ?? client).get<SearchListResponses, SearchListErrors, ThrowOnError>({
+    responseType: 'json',
+    url: '/v2/search/',
+    ...options
+});
 
 /**
  * Unified search across exact text, fuzzy, and vector search methods.
  */
-export const searchRetrieve = <ThrowOnError extends boolean = false>(options: Options<SearchRetrieveData, ThrowOnError>) => (options.client ?? client).get<SearchRetrieveResponses, unknown, ThrowOnError>({ url: '/v2/search/{id}/', ...options });
+export const searchRetrieve = <ThrowOnError extends boolean = false>(options: Options<SearchRetrieveData, ThrowOnError>) => (options.client ?? client).get<SearchRetrieveResponses, unknown, ThrowOnError>({
+    responseType: 'json',
+    url: '/v2/search/{id}/',
+    ...options
+});
