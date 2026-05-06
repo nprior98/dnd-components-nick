@@ -1,0 +1,266 @@
+asyncapi: 3.1.0
+info:
+  title: DnD Encounter Live API
+  version: 0.1.0
+  description: WebSocket messages for live encounter state and combat updates.
+servers:
+  local:
+    host: localhost:3001
+    protocol: ws
+channels:
+  encounterLive:
+    address: /api/encounters/live
+    description: Clients join one encounter room by providing `encounterId` as a WebSocket query parameter.
+    messages:
+      StateSnapshot:
+        $ref: "#/components/messages/StateSnapshot"
+      DamageCombatantCommand:
+        $ref: "#/components/messages/DamageCombatantCommand"
+      CombatantHpChangedEvent:
+        $ref: "#/components/messages/CombatantHpChangedEvent"
+      VersionConflictError:
+        $ref: "#/components/messages/VersionConflictError"
+    bindings:
+      ws:
+        query:
+          type: object
+          required:
+            - encounterId
+          properties:
+            encounterId:
+              type: string
+              description: Encounter ID to join.
+              examples:
+                - enc_seed_goblin_ambush
+operations:
+  receiveSnapshot:
+    action: receive
+    channel:
+      $ref: "#/channels/encounterLive"
+    messages:
+      - $ref: "#/channels/encounterLive/messages/StateSnapshot"
+  sendDamageCommand:
+    action: send
+    channel:
+      $ref: "#/channels/encounterLive"
+    messages:
+      - $ref: "#/channels/encounterLive/messages/DamageCombatantCommand"
+  receiveHpChanged:
+    action: receive
+    channel:
+      $ref: "#/channels/encounterLive"
+    messages:
+      - $ref: "#/channels/encounterLive/messages/CombatantHpChangedEvent"
+  receiveVersionConflict:
+    action: receive
+    channel:
+      $ref: "#/channels/encounterLive"
+    messages:
+      - $ref: "#/channels/encounterLive/messages/VersionConflictError"
+components:
+  messages:
+    StateSnapshot:
+      name: state.snapshot
+      title: Initial encounter snapshot
+      payload:
+        type: object
+        required:
+          - type
+          - payload
+        properties:
+          type:
+            const: state.snapshot
+          payload:
+            $ref: "#/components/schemas/EncounterSnapshot"
+    DamageCombatantCommand:
+      name: command.damage
+      title: Damage combatant command
+      payload:
+        type: object
+        required:
+          - type
+          - expectedVersion
+          - payload
+        properties:
+          type:
+            const: command.damage
+          expectedVersion:
+            type: integer
+            examples:
+              - 1
+          payload:
+            type: object
+            required:
+              - combatantId
+              - amount
+            properties:
+              combatantId:
+                type: string
+                examples:
+                  - cmb_seed_goblin_1
+              amount:
+                type: integer
+                minimum: 1
+                examples:
+                  - 3
+    CombatantHpChangedEvent:
+      name: event.combatants.hp_changed
+      title: Combatant HP changed event
+      payload:
+        $ref: "#/components/schemas/CombatantHpChangedEvent"
+    VersionConflictError:
+      name: error.version_conflict
+      title: Version conflict error
+      payload:
+        type: object
+        required:
+          - type
+          - currentVersion
+        properties:
+          type:
+            const: error.version_conflict
+          currentVersion:
+            type: integer
+            examples:
+              - 2
+  schemas:
+    EncounterSnapshot:
+      type: object
+      required:
+        - encounter
+        - combatants
+      properties:
+        encounter:
+          $ref: "#/components/schemas/Encounter"
+        combatants:
+          type: array
+          items:
+            $ref: "#/components/schemas/Combatant"
+    Encounter:
+      type: object
+      required:
+        - id
+        - name
+        - status
+        - roundNumber
+        - activeTurnIndex
+        - version
+        - createdAt
+      properties:
+        id:
+          type: string
+          examples:
+            - enc_seed_goblin_ambush
+        name:
+          type: string
+          examples:
+            - Seed: Goblin Ambush
+        status:
+          type: string
+          enum:
+            - setup
+            - running
+            - paused
+            - completed
+        roundNumber:
+          type: integer
+        activeTurnIndex:
+          type: integer
+        version:
+          type: integer
+        createdAt:
+          type: string
+          format: date-time
+    Combatant:
+      type: object
+      required:
+        - id
+        - encounterId
+        - kind
+        - displayName
+        - initiative
+        - initiativeOrder
+        - currentHp
+        - maxHp
+        - conditions
+        - isDefeated
+      properties:
+        id:
+          type: string
+          examples:
+            - cmb_seed_goblin_1
+        encounterId:
+          type: string
+          examples:
+            - enc_seed_goblin_ambush
+        kind:
+          type: string
+          enum:
+            - player
+            - enemy
+            - npc
+        displayName:
+          type: string
+          examples:
+            - Goblin Scout
+        initiative:
+          type: integer
+        initiativeOrder:
+          type: integer
+        currentHp:
+          type: integer
+        maxHp:
+          type: integer
+        armorClass:
+          type: integer
+          nullable: true
+        attackBonus:
+          type: integer
+          nullable: true
+        conditions:
+          type: array
+          items:
+            type: string
+        isDefeated:
+          type: boolean
+    CombatantHpChangedEvent:
+      type: object
+      required:
+        - id
+        - encounterId
+        - type
+        - version
+        - payload
+        - createdAt
+      properties:
+        id:
+          type: string
+          examples:
+            - evt_seed_created
+        encounterId:
+          type: string
+          examples:
+            - enc_seed_goblin_ambush
+        type:
+          const: event.combatants.hp_changed
+        version:
+          type: integer
+        payload:
+          type: object
+          required:
+            - combatantId
+            - previousHp
+            - currentHp
+            - delta
+          properties:
+            combatantId:
+              type: string
+            previousHp:
+              type: integer
+            currentHp:
+              type: integer
+            delta:
+              type: integer
+        createdAt:
+          type: string
+          format: date-time

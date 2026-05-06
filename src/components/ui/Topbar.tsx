@@ -4,10 +4,12 @@ import { Button } from "react-bootstrap";
 
 type TopbarProps = {
 	libraryOpen: boolean;
+	catalogueOpen: boolean;
 	onToggleLibrary: () => void;
+	onToggleCatalogue: () => void;
 };
 
-export default function Topbar({ libraryOpen, onToggleLibrary }: TopbarProps) {
+export default function Topbar({ libraryOpen, onToggleLibrary, catalogueOpen, onToggleCatalogue }: TopbarProps) {
 	return (
 		<header className="main-header">
 			<div className="header-left">
@@ -38,7 +40,18 @@ export default function Topbar({ libraryOpen, onToggleLibrary }: TopbarProps) {
 					Combat Tracker
 				</Link>
 			</nav>
-			<div className="user">👤</div>
+			<div className="header-right">
+				<Button
+					variant="dark"
+					size="sm"
+					className="library-toggle"
+					onClick={onToggleCatalogue}
+					aria-expanded={catalogueOpen}
+					aria-controls="sidebar-right"
+				>
+					☰ Encounters
+				</Button>
+			</div>
 		</header>
 	);
 }

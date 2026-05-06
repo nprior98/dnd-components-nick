@@ -2,13 +2,14 @@
    1. COLOR VARIABLES & GLOBAL DEFAULTS
    ========================================= */
 :root {
-	--brown: #33261d;
-	--teal: #3d5a5e;
-	--dark-teal: #2c3e40;
-	--border-teal: #4a6b6e;
-	--parchment: #f4ecd8;
-	--text-dark: #2c2825;
-	--sidebar-width: 260px;
+  --brown: #33261d;
+  --teal: #3d5a5e;
+  --dark-teal: #2c3e40;
+  --border-teal: #4a6b6e;
+  --parchment: #f4ecd8;
+  --text-dark: #2c2825;
+  --sidebar-width: 260px;
+  --sidebar-right-width: 360px;
 }
 
 body {
@@ -255,16 +256,19 @@ body {
 
 /* 3. Optional: Style for the grid board */
 .grid-placeholder {
-	width: 100%;
-	height: 500px;
-	background-image:
-		linear-gradient(to right, rgba(51, 38, 29, 0.1) 1px, transparent 1px),
-		linear-gradient(to bottom, rgba(51, 38, 29, 0.1) 1px, transparent 1px);
-	background-size: 40px 40px; /* Creates a 40px grid effect */
-	border: 2px solid var(--brown);
-	display: flex;
-	align-items: center;
-	justify-content: center;
+  width: 100%;
+  height: 500px;
+  background-image: linear-gradient(
+      to right,
+      rgba(51, 38, 29, 0.1) 1px,
+      transparent 1px
+    ),
+    linear-gradient(to bottom, rgba(51, 38, 29, 0.1) 1px, transparent 1px);
+  background-size: 40px 40px; /* Creates a 40px grid effect */
+  border: 2px solid var(--brown);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* =========================================
@@ -284,6 +288,15 @@ body {
 	display: flex;
 	flex-direction: column;
 	gap: 10px;
+}
+.sidebar-right .encounter {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.sidebar-right {
+  width: var(--sidebar-right-width);
 }
 
 .sidebar .library-content {
@@ -468,16 +481,19 @@ body {
 }
 
 .battle-grid {
-	display: grid;
-	grid-template-columns: repeat(10, 50px); /* 10 columns, 50px each */
-	grid-template-rows: repeat(10, 50px); /* 10 rows, 50px each */
-	background-image:
-		linear-gradient(to right, rgba(51, 38, 29, 0.2) 1px, transparent 1px),
-		linear-gradient(to bottom, rgba(51, 38, 29, 0.2) 1px, transparent 1px);
-	background-size: 50px 50px;
-	border: 2px solid var(--brown);
-	width: 500px;
-	height: 500px;
+  display: grid;
+  grid-template-columns: repeat(10, 50px); /* 10 columns, 50px each */
+  grid-template-rows: repeat(10, 50px); /* 10 rows, 50px each */
+  background-image: linear-gradient(
+      to right,
+      rgba(51, 38, 29, 0.2) 1px,
+      transparent 1px
+    ),
+    linear-gradient(to bottom, rgba(51, 38, 29, 0.2) 1px, transparent 1px);
+  background-size: 50px 50px;
+  border: 2px solid var(--brown);
+  width: 500px;
+  height: 500px;
 }
 
 /* TOKEN STYLING */

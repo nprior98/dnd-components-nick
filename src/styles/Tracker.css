@@ -165,13 +165,15 @@ table {
 }
 
 .tracker-sidebar {
+  background-color: #333; /* Dark Charcoal */
+  color: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  min-width: 250px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
-  width: 25vw;
-  height: 100vh;
-  align-items: center;
-  background-color: var(--dark-teal);
+  gap: 1rem;
 }
 
 .combatArea {
@@ -186,4 +188,61 @@ table {
   flex-direction: row;
   justify-content: space-between;
   width: 40vw;
+}
+
+.tracker-sidebar button:hover,
+.combatant button:hover {
+  background-color: #991b1b; /* dark red color */
+}
+
+.tracker-sidebar button:active {
+  transform: translateY(2px);
+}
+
+.next-turn-btn {
+  background-color: #444 !important;
+  border: 1px solid #666 !important;
+  margin-bottom: 1rem;
+}
+
+.next-turn-btn:hover {
+  background-color: #555 !important;
+}
+
+.tracker-sidebar h3 {
+  color: #ffcc00;
+  font-size: 1.4rem;
+  text-align: center;
+  border-bottom: 2px solid #555;
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.tracker-sidebar div {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 1rem;
+  margin-bottom: 5px;
+}
+
+.tracker-sidebar .acting-label {
+  font-weight: bold;
+  color: #ffcc00;
+}
+
+.tracker-sidebar button, 
+.combatant button {
+  padding: 0.8rem;
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  background-color: #b91c1c;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  width: 100%;
+  margin-top: 5px;
 }
