@@ -79,11 +79,11 @@ p {
 
 /* CSS RESET END */
 
-.card {
+.card:has(.character-page) {
 	all: unset;
 }
 
-.card-body {
+.card-body:has(.character-page) {
 	all: unset;
 }
 
