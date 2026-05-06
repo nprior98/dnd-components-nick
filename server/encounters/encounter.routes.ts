@@ -54,6 +54,8 @@ export const encounterRoutes = Router();
  *         - initiativeOrder
  *         - currentHp
  *         - maxHp
+ *         - armorClass
+ *         - attackBonus
  *         - conditions
  *         - isDefeated
  *       properties:
@@ -126,6 +128,9 @@ export const encounterRoutes = Router();
  *         - displayName
  *         - currentHp
  *         - maxHp
+ *         - initiative
+ *         - armorClass
+ *         - attackBonus
  *       properties:
  *         kind:
  *           type: string
@@ -146,6 +151,12 @@ export const encounterRoutes = Router();
  *         maxHp:
  *           type: integer
  *           example: 7
+ *         armorClass:
+ *           type: integer
+ *           example: 15
+ *         attackBonus:
+ *           type: integer
+ *           example: 4
  */
 
 /**
@@ -261,6 +272,8 @@ encounterRoutes.post("/:encounterId/combatants", (req, res) => {
     initiative: req.body.initiative,
     currentHp: req.body.currentHp,
     maxHp: req.body.maxHp,
+    armorClass: req.body.armorClass,
+    attackBonus: req.body.attackBonus
   });
 
   res.status(201).json(combatant);

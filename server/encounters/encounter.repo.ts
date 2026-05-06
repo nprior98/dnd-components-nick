@@ -91,6 +91,10 @@ export function addCombatant(input: {
   initiative?: number;
   currentHp: number;
   maxHp: number;
+  armorClass: number;
+  attackBonus: number;
+  conditions?: string[];
+  
 }) {
   const combatant = {
     id: id("cmb"),
