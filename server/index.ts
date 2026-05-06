@@ -1,6 +1,7 @@
 import express from "express";
 import http, { createServer } from "node:http";
 import { encounterRoutes } from "./encounters/encounter.routes";
+import { characterRoutes } from "./characters/character.routes";
 import { attachEncounterWebSocket } from "./encounters/encounter.websocket";
 import { openApiSpec } from "./openapi";
 
@@ -35,7 +36,7 @@ app.use("/api/async-docs", express.static("dist/asyncapi"));
 
 // Encounters are the only mounted API module at the moment.
 app.use("/api/encounters", encounterRoutes);
-app.use("/api/characters")
+app.use("/api/characters", characterRoutes);
 
 const server = http.createServer(app);
 
