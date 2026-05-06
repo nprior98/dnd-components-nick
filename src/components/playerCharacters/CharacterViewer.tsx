@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import type { Character } from "./CharacterPage";
+import type { Character } from "./CharacterInterface";
 
 interface CharacterViewerProps {
 	requestedCharacterID: string;
@@ -34,7 +34,7 @@ function CharacterViewer({ requestedCharacterID }: CharacterViewerProps) {
 	return (
 		<div className="flex-down">
 			<div className="character-info-container">
-				<img src="src/gandalf.png" alt="" />
+				{/* <img src="src/gandalf.png" alt="" /> */}
 				<div className="character-info">
 					<div className="name-container">
 						<h1>{char.name}</h1>
@@ -118,6 +118,7 @@ function CharacterViewer({ requestedCharacterID }: CharacterViewerProps) {
 							<p>&nbsp;({getModifier(char["wisdom"])})</p>
 						</div>
 					</div>
+					<hr />
 					<div>
 						<label htmlFor="charisma">Charisma</label>
 						<div className="attribute-container">

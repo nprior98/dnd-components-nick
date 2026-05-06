@@ -1,9 +1,10 @@
 import { Card, CardBody } from "react-bootstrap";
 import { useState, useEffect } from "react";
-import "./CharacterPage.css";
-import CharacterGetter from "./CharacterGetter";
+import "./Character.css";
+import CharacterGetter from "./CharacterListGetter";
 import CharacterCreator from "./CharacterCreator";
 import CharacterViewer from "./CharacterViewer";
+import type { Character } from "./CharacterInterface";
 
 export interface Character {
   charID: string;

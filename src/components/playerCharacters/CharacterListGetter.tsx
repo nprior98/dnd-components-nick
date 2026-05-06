@@ -1,4 +1,4 @@
-import type { Character } from "./CharacterPage";
+import type { Character } from "./CharacterInterface";
 
 interface GetterProps {
 	characters: Character[];

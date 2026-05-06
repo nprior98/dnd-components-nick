@@ -1,5 +1,5 @@
 import { useState, type ChangeEvent, Fragment } from "react";
-import "./CharacterCreator.css";
+import "./Character.css";
 
 const STAT_FIELDS = [
 	{ id: "armorClass", label: "Armor Class", placeholder: "15" },
@@ -17,11 +17,7 @@ const ATTRIBUTE_FIELDS = [
 	"charisma",
 ] as const;
 
-interface CreatorProps {
-	onCharacterCreated: () => void;
-}
-
-function CharacterCreator({ onCharacterCreated }: CreatorProps) {
+function CharacterCreator() {
 	const [char, setChar] = useState({
 		name: "",
 		level: "",
@@ -73,8 +69,6 @@ function CharacterCreator({ onCharacterCreated }: CreatorProps) {
 			...char,
 			charID: crypto.randomUUID(),
 		};
-
-		onCharacterCreated();
 
 		console.log("Created character:", newCharacter);
 		const existing = JSON.parse(localStorage.getItem("characters") || "[]");
