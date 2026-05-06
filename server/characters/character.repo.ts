@@ -1,7 +1,7 @@
 import { db } from "../db/connection";
 import { sql } from "../db/sql";
 import { id } from "../utils/ids";
-import { nowIso } from "../utils/time";
+import { Character } from "./character.types";
 
 // Create a character with user inputted stats
 export function addCharacter(input: {
@@ -20,7 +20,7 @@ export function addCharacter(input: {
   intelligence: number;
   wisdom: number;
   charisma: number;
-}) {
+}): Character {
   const character = {
     id: id("char"),
     characterId: input.characterId,
@@ -71,3 +71,57 @@ export function addCharacter(input: {
   };
 }
 
+// View a specific character
+export function getCharacter(id: string): Character | undefined {
+  return db.prepare(
+    sql`
+      select
+        character_id as characterId,
+        name,
+        level,
+        character_class as characterClass,
+        background,
+        armor_class as armorClass,
+        initiative,
+        speed,
+        max_hp as maxHp,
+        strength,
+        dexterity,
+        constitution,
+        intelligence,
+        wisdom, 
+        charisma
+      from characters
+      where id = ?
+    `
+  ).get(id) as Character | undefined;
+}
+
+// List all characters
+export function listCharacters(): Character[] {
+  const rows = db.prepare(
+    sql`
+      select
+        character_id as characterId,
+        name,
+        level,
+        character_class as characterClass,
+        background,
+        armor_class as armorClass,
+        initiative,
+        speed,
+        max_hp as maxHp,
+        strength,
+        dexterity,
+        constitution,
+        intelligence,
+        wisdom, 
+        charisma
+      from characters
+      where id = ?
+      order by name asc
+    `
+  ).all();
+
+  return rows.map((row: any) => (row))
+}
