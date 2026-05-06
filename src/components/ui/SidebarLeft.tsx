@@ -1,5 +1,5 @@
 import "../../styles/Style.css";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import {
   DropdownButton,
   DropdownItem,
@@ -32,7 +32,7 @@ export default function LeftSidebar({ isOpen, onClose }: SidebarProps) {
   const [items, setItems] = useState<ListableItem[] | null>(null);
   const [search, setSearch] = useState<string>("");
 
-  const handleSearch = (e) => {
+  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
   };
 

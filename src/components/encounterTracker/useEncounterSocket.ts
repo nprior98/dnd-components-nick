@@ -1,13 +1,14 @@
 import { useEffect, useRef, useState } from "react";
+import { EncounterSnapshot } from "../../modules/encounter-api/types.gen";
 
 export function useEncounterSocket(encounterId: string) {
   const socketRef = useRef<WebSocket | null>(null);
-  const [state, setState] = useState<any>(null);
+  const [snapshot, setSnapshot] = useState<EncounterSnapshot | null>(null);
   const [version, setVersion] = useState<number>(0);
 
   useEffect(() => {
     const socket = new WebSocket(
-      `ws://localhost:3001/api/encounters/live?encounterId=${encounterId}`,
+      `ws://localhost:3001/api/encounters/live?encounterId=${encounterId}`
     );
 
     socketRef.current = socket;
@@ -16,13 +17,13 @@ export function useEncounterSocket(encounterId: string) {
       const msg = JSON.parse(event.data);
 
       if (msg.type === "state.snapshot") {
-        setState(msg.payload);
+        setSnapshot(msg.payload);
         setVersion(msg.payload.encounter.version);
       }
 
-      if (msg.type === "event.combatant.hp_changed") {
+      if (msg.type === "event.combatants.hp_changed") {
         setVersion(msg.version);
-        setState((prev: any) => ({
+        setSnapshot((prev: any) => ({
           ...prev,
           combatants: prev.combatants.map((c: any) =>
             c.id === msg.payload.combatantId
@@ -31,7 +32,7 @@ export function useEncounterSocket(encounterId: string) {
                   currentHp: msg.payload.currentHp,
                   isDefeated: msg.payload.currentHp <= 0,
                 }
-              : c,
+              : c
           ),
           encounter: {
             ...prev.encounter,
@@ -50,8 +51,8 @@ export function useEncounterSocket(encounterId: string) {
         type: "command.damage",
         expectedVersion: version,
         payload: { combatantId, amount },
-      }),
+      })
     );
-    return { state, damage };
   }
+  return { snapshot, damage };
 }

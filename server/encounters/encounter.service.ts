@@ -3,9 +3,11 @@ import { sql } from "../db/sql";
 import { id } from "../utils/ids";
 import { nowIso } from "../utils/time";
 import * as repo from "./encounter.repo";
+import type { CombatantHpChangedEvent, VersionConflictError } from "./encounter.events";
+import type { EncounterSnapshot } from "./encounter.types";
 
 // Build the state shape consumed by HTTP clients and WebSocket snapshots.
-export function getSnapshot(encounterId: string) {
+export function getSnapshot(encounterId: string): EncounterSnapshot {
   const encounter = repo.getEncounter(encounterId);
   if (!encounter) throw new Error("Encounter not found");
 
@@ -22,8 +24,8 @@ export const damageCombatant = db.transaction(
     combatantId: string;
     amount: number;
     expectedVersion: number;
-  }) => {
-    const encounter: any = repo.getEncounter(input.encounterId);
+  }): CombatantHpChangedEvent | VersionConflictError => {
+    const encounter = repo.getEncounter(input.encounterId);
     if (!encounter) throw new Error("Encounter not found");
 
     if (encounter.version !== input.expectedVersion) {
@@ -34,15 +36,17 @@ export const damageCombatant = db.transaction(
       };
     }
 
-    const combatant: any = db
+    const combatant = db
       .prepare(
         sql`
           select id, current_hp as currentHp
           from encounter_combatants
           where id = ? and encounter_id = ?
-        `,
+        `
       )
-      .get(input.combatantId, input.encounterId);
+      .get(input.combatantId, input.encounterId) as
+      | { id: string; currentHp: number }
+      | undefined;
 
     if (!combatant) throw new Error("Combatant not found");
 
@@ -51,30 +55,30 @@ export const damageCombatant = db.transaction(
 
     // Defeated state is derived from HP reaching zero.
     db.prepare(
-      sql`update encounter_combatants set current_hp = ?, is_defeated = ? where id = ?`,
+      sql`update encounter_combatants set current_hp = ?, is_defeated = ? where id = ?`
     ).run(nextHp, nextHp <= 0 ? 1 : 0, input.combatantId);
 
     db.prepare(sql` update encounters set version = ? where id = ?`).run(
       nextVersion,
-      input.encounterId,
+      input.encounterId
     );
 
-    const event = {
+    const event: CombatantHpChangedEvent = {
       id: id("evt"),
       encounterId: input.encounterId,
       type: "event.combatants.hp_changed",
       version: nextVersion,
       payload: {
         combatantId: input.combatantId,
-        previousHp: combatant.current_hp,
+        previousHp: combatant.currentHp,
         currentHp: nextHp,
         delta: -input.amount,
       },
       createdAt: nowIso(),
     };
     db.prepare(
-      sql`insert into encounter_events (id, encounter_id, type, version, payload, created_at) values (@id, @encounterId, @type, @version, @payload, @createdAt)`,
+      sql`insert into encounter_events (id, encounter_id, type, version, payload, created_at) values (@id, @encounterId, @type, @version, @payload, @createdAt)`
     ).run({ ...event, payload: JSON.stringify(event.payload) });
     return event;
-  },
+  }
 );

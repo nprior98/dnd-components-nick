@@ -1,6 +1,7 @@
 import type { Server } from "node:http";
 import { WebSocketServer, WebSocket } from "ws";
 import { damageCombatant, getSnapshot } from "./encounter.service";
+import { registerEncounterBroadcaster } from "./encounter.realtime";
 import type { EncounterCommand } from "./encounter.commands";
 import type { EncounterEvent } from "./encounter.events";
 
@@ -21,6 +22,7 @@ function broadcast(encounterId: string, message: EncounterEvent) {
 // Register the live encounter endpoint on the existing HTTP server.
 export function attachEncounterWebSocket(server: Server) {
   const wss = new WebSocketServer({ server, path: "/api/encounters/live" });
+  registerEncounterBroadcaster(broadcast);
 
   wss.on("connection", (socket, req) => {
     const url = new URL(req.url ?? "", "http://localhost");
@@ -40,7 +42,7 @@ export function attachEncounterWebSocket(server: Server) {
       JSON.stringify({
         type: "state.snapshot",
         payload: getSnapshot(encounterId),
-      }),
+      })
     );
 
     socket.on("message", (raw) => {

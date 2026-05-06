@@ -9,6 +9,7 @@
   --parchment: #f4ecd8;
   --text-dark: #2c2825;
   --sidebar-width: 260px;
+  --sidebar-right-width: 360px;
 }
 
 body {
@@ -257,8 +258,11 @@ body {
 .grid-placeholder {
   width: 100%;
   height: 500px;
-  background-image:
-    linear-gradient(to right, rgba(51, 38, 29, 0.1) 1px, transparent 1px),
+  background-image: linear-gradient(
+      to right,
+      rgba(51, 38, 29, 0.1) 1px,
+      transparent 1px
+    ),
     linear-gradient(to bottom, rgba(51, 38, 29, 0.1) 1px, transparent 1px);
   background-size: 40px 40px; /* Creates a 40px grid effect */
   border: 2px solid var(--brown);
@@ -284,6 +288,15 @@ body {
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+.sidebar-right .encounter {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.sidebar-right {
+  width: var(--sidebar-right-width);
 }
 
 .sidebar .library-content {
@@ -337,7 +350,6 @@ body {
   background: var(--dark-teal);
   color: white;
 }
-
 
 .enc-card {
   background: var(--dark-teal);
@@ -472,8 +484,11 @@ body {
   display: grid;
   grid-template-columns: repeat(10, 50px); /* 10 columns, 50px each */
   grid-template-rows: repeat(10, 50px); /* 10 rows, 50px each */
-  background-image:
-    linear-gradient(to right, rgba(51, 38, 29, 0.2) 1px, transparent 1px),
+  background-image: linear-gradient(
+      to right,
+      rgba(51, 38, 29, 0.2) 1px,
+      transparent 1px
+    ),
     linear-gradient(to bottom, rgba(51, 38, 29, 0.2) 1px, transparent 1px);
   background-size: 50px 50px;
   border: 2px solid var(--brown);
