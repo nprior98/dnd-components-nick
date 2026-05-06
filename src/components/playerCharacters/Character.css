@@ -17,22 +17,6 @@
 
 /* CSS RESET */
 
-/* Box sizing rules */
-*,
-*::before,
-*::after {
-	box-sizing: border-box;
-}
-
-/* increase responsiveness for images/videos */
-img,
-picture,
-svg,
-video {
-	display: block;
-	max-width: 100%;
-}
-
 body {
 	color: black;
 	background-color: hsl(var(--clr-background));
@@ -95,12 +79,25 @@ p {
 
 /* CSS RESET END */
 
+.card {
+	all: unset;
+}
+
+.card-body {
+	all: unset;
+}
+
 /* Page Layout */
 .character-page {
 	display: grid;
-	height: 100vh;
-	width: 100vw;
+	height: 90vh;
+	width: 90vw;
 	grid-template-columns: max-content 1fr;
+	background-color: hsl(var(--clr-background));
+	border-top-right-radius: 1rem;
+	border-bottom-right-radius: 1rem;
+	border-bottom-left-radius: 2rem;
+	border-top-left-radius: 2rem;
 }
 
 .character-page button {
@@ -113,6 +110,8 @@ p {
 	background-color: hsl(var(--clr-darker-green));
 	width: fit-content;
 	height: 100%;
+	border-bottom-left-radius: 1rem;
+	border-top-left-radius: 1rem;
 }
 
 .character-selector ul {
