@@ -92,7 +92,7 @@ export function getCharacter(id: string): Character | undefined {
         wisdom, 
         charisma
       from characters
-      where id = ?
+      where character_id = ?
     `
   ).get(id) as Character | undefined;
 }
@@ -118,7 +118,6 @@ export function listCharacters(): Character[] {
         wisdom, 
         charisma
       from characters
-      where id = ?
       order by name asc
     `
   ).all();

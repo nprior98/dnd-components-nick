@@ -2,7 +2,7 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { GetApiEncountersByEncounterIdStateData, GetApiEncountersByEncounterIdStateErrors, GetApiEncountersByEncounterIdStateResponses, GetApiEncountersData, GetApiEncountersResponses, PostApiEncountersByEncounterIdCombatantsData, PostApiEncountersByEncounterIdCombatantsResponses, PostApiEncountersData, PostApiEncountersResponses } from './types.gen';
+import type { GetApiCharactersByCharacterIdData, GetApiCharactersByCharacterIdResponses, GetApiCharactersData, GetApiCharactersResponses, GetApiEncountersByEncounterIdStateData, GetApiEncountersByEncounterIdStateErrors, GetApiEncountersByEncounterIdStateResponses, GetApiEncountersData, GetApiEncountersResponses, PostApiCharactersData, PostApiCharactersResponses, PostApiEncountersByEncounterIdCombatantsData, PostApiEncountersByEncounterIdCombatantsResponses, PostApiEncountersData, PostApiEncountersResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -17,6 +17,28 @@ export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends 
      */
     meta?: Record<string, unknown>;
 };
+
+/**
+ * List characters
+ */
+export const getApiCharacters = <ThrowOnError extends boolean = false>(options?: Options<GetApiCharactersData, ThrowOnError>) => (options?.client ?? client).get<GetApiCharactersResponses, unknown, ThrowOnError>({ url: '/api/characters', ...options });
+
+/**
+ * Create a character
+ */
+export const postApiCharacters = <ThrowOnError extends boolean = false>(options: Options<PostApiCharactersData, ThrowOnError>) => (options.client ?? client).post<PostApiCharactersResponses, unknown, ThrowOnError>({
+    url: '/api/characters',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Get a character
+ */
+export const getApiCharactersByCharacterId = <ThrowOnError extends boolean = false>(options: Options<GetApiCharactersByCharacterIdData, ThrowOnError>) => (options.client ?? client).get<GetApiCharactersByCharacterIdResponses, unknown, ThrowOnError>({ url: '/api/characters/{characterId}', ...options });
 
 /**
  * List encounters

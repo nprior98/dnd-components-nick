@@ -4,6 +4,42 @@ export type ClientOptions = {
     baseUrl: 'http://localhost:3001' | (string & {});
 };
 
+export type Character = {
+    characterId: string;
+    name: string;
+    level: number;
+    characterClass: string;
+    background: string;
+    armorClass: number;
+    initiative: number;
+    speed: number;
+    maxHp: number;
+    strength: number;
+    dexterity: number;
+    constitution: number;
+    intelligence: number;
+    wisdom: number;
+    charisma: number;
+};
+
+export type CreateCharacterRequest = {
+    characterId: string;
+    name: string;
+    level: number;
+    characterClass: string;
+    background: string;
+    armorClass: number;
+    initiative: number;
+    speed: number;
+    maxHp: number;
+    strength: number;
+    dexterity: number;
+    constitution: number;
+    intelligence: number;
+    wisdom: number;
+    charisma: number;
+};
+
 export type Encounter = {
     id: string;
     name: string;
@@ -47,6 +83,56 @@ export type AddCombatantRequest = {
     armorClass: number;
     attackBonus: number;
 };
+
+export type GetApiCharactersData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/characters';
+};
+
+export type GetApiCharactersResponses = {
+    /**
+     * Character list.
+     */
+    200: Array<Character>;
+};
+
+export type GetApiCharactersResponse = GetApiCharactersResponses[keyof GetApiCharactersResponses];
+
+export type PostApiCharactersData = {
+    body: CreateCharacterRequest;
+    path?: never;
+    query?: never;
+    url: '/api/characters';
+};
+
+export type PostApiCharactersResponses = {
+    /**
+     * Character created.
+     */
+    201: Character;
+};
+
+export type PostApiCharactersResponse = PostApiCharactersResponses[keyof PostApiCharactersResponses];
+
+export type GetApiCharactersByCharacterIdData = {
+    body?: never;
+    path: {
+        characterId: string;
+    };
+    query?: never;
+    url: '/api/characters/{characterId}';
+};
+
+export type GetApiCharactersByCharacterIdResponses = {
+    /**
+     * Character, if found.
+     */
+    200: Character;
+};
+
+export type GetApiCharactersByCharacterIdResponse = GetApiCharactersByCharacterIdResponses[keyof GetApiCharactersByCharacterIdResponses];
 
 export type GetApiEncountersData = {
     body?: never;
