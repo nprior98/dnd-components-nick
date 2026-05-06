@@ -2,16 +2,26 @@ import { useEffect, useState } from "react";
 import { DropdownButton, DropdownItem } from "react-bootstrap";
 import { getApiEncounters } from "../../modules/encounter-api/sdk.gen";
 import { Encounter } from "../../modules/encounter-api/types.gen";
+import EncounterSidebar from "../encounterTracker/EncounterSidebar";
 
 type RightBarProps = {
   isOpen: boolean;
+  onSelectEncounter?: (encounterId: string) => void;
   onClose: () => void;
 };
 
-export default function RightSideBar({ isOpen, onClose }: RightBarProps) {
+// all of this page is just one mega stub
+export default function SidebarRight({
+  isOpen,
+  onClose,
+  onSelectEncounter,
+}: RightBarProps) {
   const [encounters, setEncounters] = useState<Encounter[] | null>(null);
   const [encounter, setEncounter] = useState<Encounter | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
+  const [selectedEncounter, setSelectedEncounter] = useState<string | null>(
+    null
+  );
 
   useEffect(() => {
     let cancelled = false;
@@ -52,7 +62,11 @@ export default function RightSideBar({ isOpen, onClose }: RightBarProps) {
         title={encounter?.name ?? "Select encounter"}
         onSelect={(id) => {
           const selected = encounters?.find((item) => item.id === id);
-          if (selected) setEncounter(selected);
+          if (selected) {
+            setEncounter(selected);
+            setSelectedEncounter(selected.id);
+            onSelectEncounter?.(selected.id);
+          }
         }}
       >
         {loadError ? (
@@ -63,12 +77,15 @@ export default function RightSideBar({ isOpen, onClose }: RightBarProps) {
           <DropdownItem disabled>No encounters</DropdownItem>
         ) : (
           encounters.map(({ id, name }) => (
-            <DropdownItem key={id} eventKey={id}>
+            <DropdownItem className="encounter" key={id} eventKey={id}>
               {name}
             </DropdownItem>
           ))
         )}
       </DropdownButton>
+      {selectedEncounter && (
+        <EncounterSidebar encounterId={selectedEncounter} />
+      )}
     </aside>
   );
 }

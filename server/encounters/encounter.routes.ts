@@ -1,5 +1,6 @@
 import { Router } from "express";
 import * as repo from "./encounter.repo";
+import { broadcastEncounterSnapshot } from "./encounter.realtime";
 import { getSnapshot } from "./encounter.service";
 
 export const encounterRoutes = Router();
@@ -275,6 +276,8 @@ encounterRoutes.post("/:encounterId/combatants", (req, res) => {
     armorClass: req.body.armorClass,
     attackBonus: req.body.attackBonus
   });
+
+  broadcastEncounterSnapshot(req.params.encounterId);
 
   res.status(201).json(combatant);
 });
