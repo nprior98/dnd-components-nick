@@ -107,8 +107,8 @@ export function addCombatant(input: {
     initiativeOrder: 999,
     currentHp: input.currentHp,
     maxHp: input.maxHp,
-    armorClass: null,
-    attackBonus: null,
+    armorClass: input.armorClass,
+    attackBonus: input.attackBonus,
     conditions: "[]",
     isDefeated: 0,
   };
