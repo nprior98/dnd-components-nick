@@ -4,6 +4,81 @@
   padding: 10px 0;
 }
 
+.creature-encounter-actions {
+  position: absolute;
+  top: 0.45cm;
+  right: 0.55cm;
+  z-index: 180;
+  width: 5.2cm;
+  font-family: "ScalySansRemake";
+  color: var(--HB_Color_HeaderText);
+}
+
+.creature-encounter-actions .alert {
+  margin-bottom: 0.5rem;
+  padding: 0.15cm 0.2cm;
+  font-family: "ScalySansRemake";
+  font-size: 0.28cm;
+  line-height: 1.15;
+  color: var(--HB_Color_HeaderText);
+  background: var(--HB_Color_Accent);
+  border: 1px solid var(--HB_Color_HeaderUnderline);
+  border-radius: 0;
+}
+
+.creature-encounter-actions .dropdown,
+.creature-encounter-actions .dropdown-toggle {
+  width: 100%;
+}
+
+.creature-encounter-actions .dropdown-toggle,
+.creature-encounter-actions .dropdown-toggle:disabled {
+  padding: 0.12cm 0.2cm;
+  font-family: "ScalySansSmallCapsRemake";
+  font-size: 0.32cm;
+  line-height: 1.1;
+  color: var(--HB_Color_HeaderText);
+  text-align: left;
+  background: var(--HB_Color_MonsterStatBackground);
+  border: 1px solid var(--HB_Color_HeaderText);
+  border-radius: 0;
+  box-shadow: 1px 3px 8px rgba(88, 24, 13, 0.28);
+  opacity: 1;
+}
+
+.creature-encounter-actions .dropdown-toggle:hover,
+.creature-encounter-actions .dropdown-toggle:focus,
+.creature-encounter-actions .dropdown-toggle:active,
+.creature-encounter-actions .dropdown-toggle.show {
+  color: #ffffff;
+  background: var(--HB_Color_HeaderText);
+  border-color: var(--HB_Color_HeaderText);
+}
+
+.creature-encounter-actions .dropdown-menu {
+  width: 100%;
+  min-width: 100%;
+  padding: 0.08cm;
+  font-family: "ScalySansRemake";
+  font-size: 0.3cm;
+  color: var(--HB_Color_HeaderText);
+  background: #faf7ea;
+  border: 1px solid var(--HB_Color_HeaderUnderline);
+  border-radius: 0;
+  box-shadow: 1px 4px 14px #888888;
+}
+
+.creature-encounter-actions .dropdown-item {
+  padding: 0.08cm 0.12cm;
+  color: var(--HB_Color_HeaderText);
+}
+
+.creature-encounter-actions .dropdown-item:hover,
+.creature-encounter-actions .dropdown-item:focus {
+  color: var(--HB_Color_HeaderText);
+  background: var(--HB_Color_Accent);
+}
+
 .phb.page.soft {
   height: auto;
   min-height: 500mm;

@@ -16,7 +16,11 @@ export default function CombatantCard({
       <Card.Body>
         <Card.Title>
           {combatant.displayName}{" "}
-          {isActive && <Badge bg="warning" text="dark">Turn</Badge>}{" "}
+          {isActive && (
+            <Badge bg="warning" text="dark">
+              Turn
+            </Badge>
+          )}{" "}
           {isTargetable && <Badge bg="danger">Target</Badge>}
         </Card.Title>
         <Card.Subtitle>{combatant.kind}</Card.Subtitle>
@@ -26,10 +30,6 @@ export default function CombatantCard({
               HP{" "}
               <Badge bg="secondary">{`${combatant.currentHp} / ${combatant.maxHp}`}</Badge>
             </Button>
-            <p>{combatant.maxHp}</p>
-          </Col>
-          <Col>
-            <p>{combatant.currentHp}</p>
           </Col>
         </Row>
       </Card.Body>

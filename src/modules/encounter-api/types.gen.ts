@@ -23,8 +23,8 @@ export type Combatant = {
     initiativeOrder: number;
     currentHp: number;
     maxHp: number;
-    armorClass?: number | null;
-    attackBonus?: number | null;
+    armorClass: number | null;
+    attackBonus: number | null;
     conditions: Array<string>;
     isDefeated: boolean;
 };
@@ -41,9 +41,11 @@ export type CreateEncounterRequest = {
 export type AddCombatantRequest = {
     kind: 'player' | 'enemy' | 'npc';
     displayName: string;
-    initiative?: number;
+    initiative: number;
     currentHp: number;
     maxHp: number;
+    armorClass: number;
+    attackBonus: number;
 };
 
 export type GetApiEncountersData = {
