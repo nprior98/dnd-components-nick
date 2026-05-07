@@ -13,6 +13,7 @@ export function addCharacter(input: {
   armorClass: number;
   initiative: number;
   speed: number;
+  currentHp: number;
   maxHp: number;
   strength: number;
   dexterity: number;
@@ -32,6 +33,7 @@ export function addCharacter(input: {
     initiative: input.initiative,
     speed: input.speed,
     maxHp: input.maxHp,
+    currentHp: input.currentHp,
     strength: input.strength,
     dexterity: input.dexterity,
     constitution: input.constitution,
@@ -53,6 +55,7 @@ export function addCharacter(input: {
         armor_class,
         initiative,
         speed,
+        current_hp,
         max_hp,
         strength,
         dexterity,
@@ -62,7 +65,7 @@ export function addCharacter(input: {
         charisma
       )
       values
-      (@id, @characterId, @name, @level, @characterClass, @background, @armorClass, @initiative, @speed, @maxHp, @strength, @dexterity, @constitution, @intelligence, @wisdom, @charisma)
+      (@id, @characterId, @name, @level, @characterClass, @background, @armorClass, @initiative, @speed, @maxHp, @currentHp, @strength, @dexterity, @constitution, @intelligence, @wisdom, @charisma)
         `
   ).run(character);
 
@@ -85,6 +88,7 @@ export function getCharacter(id: string): Character | undefined {
         initiative,
         speed,
         max_hp as maxHp,
+        current_hp as currentHp,
         strength,
         dexterity,
         constitution,
@@ -111,6 +115,7 @@ export function listCharacters(): Character[] {
         initiative,
         speed,
         max_hp as maxHp,
+        current_hp as currentHp,
         strength,
         dexterity,
         constitution,

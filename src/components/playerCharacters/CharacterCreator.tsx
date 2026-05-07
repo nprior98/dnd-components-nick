@@ -1,5 +1,7 @@
 import { useState, type ChangeEvent, Fragment } from "react";
 import "./Character.css";
+import { addCharacter } from "../../modules/character-api/requests"
+import { Character } from "./CharacterInterface";
 
 const STAT_FIELDS = [
 	{ id: "armorClass", label: "Armor Class", placeholder: "15" },
@@ -17,8 +19,10 @@ const ATTRIBUTE_FIELDS = [
 	"charisma",
 ] as const;
 
+/* maybe cast char as Character later or change default fields if addCharacter breaks the hoover dam */
+
 function CharacterCreator() {
-	const [char, setChar] = useState({
+	const [char, setChar] = useState({ 
 		name: "",
 		level: "",
 		characterClass: "",
@@ -61,7 +65,7 @@ function CharacterCreator() {
 		setChar((prev) => ({ ...prev, [id]: value }));
 	};
 
-	const createCharacter = (e: React.SubmitEvent<HTMLFormElement>) => {
+	const createCharacter = async (e: React.SubmitEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
 		// Create a new character with a unique ID
@@ -71,12 +75,15 @@ function CharacterCreator() {
 			currentHP: char.maxHP,
 		};
 
-		console.log("Created character:", newCharacter);
-		const existing = JSON.parse(localStorage.getItem("characters") || "[]");
-		localStorage.setItem(
-			"characters",
-			JSON.stringify([...existing, newCharacter]),
-		);
+		const result = await addCharacter(((newCharacter as unknown) as Character));
+		if (result == 201) {
+			console.log("Created character:", newCharacter);
+		} 
+		// const existing = JSON.parse(localStorage.getItem("characters") || "[]");
+		// localStorage.setItem(
+		// 	"characters",
+		// 	JSON.stringify([...existing, newCharacter]),
+		// );
 
 		// Reset form
 		setChar({
