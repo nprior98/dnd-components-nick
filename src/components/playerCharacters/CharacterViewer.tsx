@@ -25,7 +25,7 @@ function CharacterViewer({ requestedCharacterID }: CharacterViewerProps) {
 	}
 
 	// Returns modifier for attribute values
-	const getModifier = (val: string) => {
+	const getModifier = (val: number) => {
 		if (!val) return "+0";
 		const mod = Math.floor((Number(val) - 10) / 2);
 		return mod >= 0 ? `+${mod}` : `${mod}`;
@@ -69,7 +69,7 @@ function CharacterViewer({ requestedCharacterID }: CharacterViewerProps) {
 					<label htmlFor="HP">HP</label>
 					<p id="HP">
 						<strong>
-							{char.maxHP}/{char.maxHP}
+							{char.currentHP}/{char.maxHP}
 						</strong>
 					</p>
 				</div>

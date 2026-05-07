@@ -68,6 +68,7 @@ function CharacterCreator() {
 		const newCharacter = {
 			...char,
 			charID: crypto.randomUUID(),
+			currentHP: char.maxHP,
 		};
 
 		console.log("Created character:", newCharacter);
@@ -99,6 +100,7 @@ function CharacterCreator() {
 	return (
 		<form onSubmit={createCharacter}>
 			<div className="flex-down">
+				<h1>Character Creator</h1>
 				<div className="character-info-container">
 					<img src="src/gandalf.png" alt="" />
 					<div className="character-info">
