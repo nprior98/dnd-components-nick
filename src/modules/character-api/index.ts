@@ -1,2 +1,2 @@
-export { Character } from "./types";
-export { addCharacter } from "./requests";
+export type { Character } from "./types";
+export { addCharacter, listCharacters } from "./requests";

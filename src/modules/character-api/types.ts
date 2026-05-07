@@ -17,4 +17,4 @@ interface Character {
 	charisma: number;
 }
 
-export { Character };
+export type { Character };

@@ -1,6 +1,6 @@
 import { useState, type ChangeEvent, Fragment } from "react";
 import "./Character.css";
-import { addCharacter } from "../../modules/character-api/requests"
+import { addCharacter } from "../../modules/character-api"
 import { Character } from "./CharacterInterface";
 
 const STAT_FIELDS = [
