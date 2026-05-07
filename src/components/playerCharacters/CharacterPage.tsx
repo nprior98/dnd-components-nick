@@ -5,17 +5,19 @@ import CharacterGetter from "./CharacterListGetter";
 import CharacterCreator from "./CharacterCreator";
 import CharacterViewer from "./CharacterViewer";
 import type { Character } from "./CharacterInterface";
+import { listCharacters } from "../../modules/character-api";
 
 function CharacterPage() {
 	const [selectedCharID, setSelectedCharID] = useState<string | null>(null);
 	const [characters, setCharacters] = useState<Character[]>([]);
 
-	const loadCharacters = () => {
-		const stored = localStorage.getItem("characters");
-		if (stored) {
-			setCharacters(JSON.parse(stored));
-		}
-	};
+	const loadCharacters = async () => {
+		// const stored = localStorage.getItem("characters");
+		// if (stored) {
+		// 	setCharacters(JSON.parse(stored));
+		// }
+		setCharacters(await listCharacters());
+	}
 
 	useEffect(() => {
 		loadCharacters();
