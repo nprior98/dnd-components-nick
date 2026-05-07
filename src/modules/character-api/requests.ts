@@ -7,3 +7,5 @@ const addCharacter = async (newCharacter: Character) => {
     const request = axios.post("/api/characters", newCharacter);
     return (await request).status;
 };
+
+export { addCharacter };
