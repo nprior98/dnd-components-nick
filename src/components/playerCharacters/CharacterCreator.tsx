@@ -68,6 +68,7 @@ function CharacterCreator() {
 		const newCharacter = {
 			...char,
 			charID: crypto.randomUUID(),
+			currentHP: char.maxHP,
 		};
 
 		console.log("Created character:", newCharacter);
