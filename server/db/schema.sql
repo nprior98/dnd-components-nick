@@ -28,8 +28,9 @@ CREATE TABLE if NOT EXISTS encounter_combatants(
   armor_class INTEGER,
   attack_bonus INTEGER,
   conditions TEXT NOT NULL DEFAULT '[]',
-  is_defeated INTEGER NOT NULL DEFAULT 0 FOREIGN KEY(encounter_id) REFERENCES encounters(id)
-ON DELETE cascade CONSTRAINT encounter_combatants_kind_check CHECK(kind IN(
+  is_defeated INTEGER NOT NULL DEFAULT 0,
+  FOREIGN KEY(encounter_id) REFERENCES encounters(id) ON DELETE cascade,
+  CONSTRAINT encounter_combatants_kind_check CHECK(kind IN(
     'player',
     'enemy',
     'npc'
@@ -42,8 +43,8 @@ CREATE TABLE if NOT EXISTS encounter_events(
   type TEXT NOT NULL,
   version INTEGER NOT NULL,
   payload TEXT NOT NULL,
-  created_at TEXT NOT NULL FOREIGN KEY(encounter_id) REFERENCES encounters(id)
-ON DELETE cascade
+  created_at TEXT NOT NULL,
+  FOREIGN KEY(encounter_id) REFERENCES encounters(id) ON DELETE cascade
 );
 -- Characters are player characters
 CREATE TABLE if NOT EXISTS characters(

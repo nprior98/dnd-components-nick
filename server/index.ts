@@ -37,7 +37,7 @@ app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(openApiSpec));
 // Serve generated AsyncAPI WebSocket documentation.
 app.use("/api/async-docs", express.static("dist/asyncapi"));
 
-// Encounters are the only mounted API module at the moment.
+// API modules
 app.use("/api/encounters", encounterRoutes);
 app.use("/api/characters", characterRoutes);
 
