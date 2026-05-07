@@ -1,4 +1,9 @@
+import fs from "node:fs";
 import swaggerJsdoc from "swagger-jsdoc";
+
+const routeApiGlobs = fs.existsSync("build/server")
+  ? ["build/server/**/*.routes.js"]
+  : ["server/**/*.routes.ts"];
 
 export const openApiSpec = swaggerJsdoc({
   definition: {
@@ -14,5 +19,5 @@ export const openApiSpec = swaggerJsdoc({
       },
     ],
   },
-  apis: ["server/**/*.routes.ts"],
+  apis: routeApiGlobs,
 });
