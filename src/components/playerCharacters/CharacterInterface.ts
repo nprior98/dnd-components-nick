@@ -4,7 +4,7 @@ export interface Character {
 	level: number;
 	characterClass: string;
 	background: string;
-	armorClass: string;
+	armorClass: number;
 	initiative: number;
 	speed: number;
 	maxHP: number;
