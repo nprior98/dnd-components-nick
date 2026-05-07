@@ -74,11 +74,14 @@ function CharacterCreator() {
 			charID: crypto.randomUUID(),
 			currentHP: char.maxHP,
 		};
-
 		const result = await addCharacter(((newCharacter as unknown) as Character));
 		if (result == 201) {
 			console.log("Created character:", newCharacter);
-		} 
+		} else if (result == 400) {
+			console.error("Data was bad?", newCharacter);
+		} else {
+			console.error("Yeah I don't know what happened here, but:", newCharacter);
+		}
 		// const existing = JSON.parse(localStorage.getItem("characters") || "[]");
 		// localStorage.setItem(
 		// 	"characters",

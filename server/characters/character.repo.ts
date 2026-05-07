@@ -5,7 +5,7 @@ import { Character } from "./character.types";
 
 // Create a character with user inputted stats
 export function addCharacter(input: {
-  characterId: string;
+  charID: string;
   name: string;
   level: number;
   characterClass: string;
@@ -13,8 +13,8 @@ export function addCharacter(input: {
   armorClass: number;
   initiative: number;
   speed: number;
-  currentHp: number;
-  maxHp: number;
+  currentHP: number;
+  maxHP: number;
   strength: number;
   dexterity: number;
   constitution: number;
@@ -24,7 +24,7 @@ export function addCharacter(input: {
 }): Character {
   const character = {
     id: id("char"),
-    characterId: input.characterId,
+    charID: input.charID,
     name: input.name,
     level: input.level,
     characterClass: input.characterClass,
@@ -32,8 +32,8 @@ export function addCharacter(input: {
     armorClass: input.armorClass,
     initiative: input.initiative,
     speed: input.speed,
-    maxHp: input.maxHp,
-    currentHp: input.currentHp,
+    maxHP: input.maxHP,
+    currentHP: input.currentHP,
     strength: input.strength,
     dexterity: input.dexterity,
     constitution: input.constitution,
@@ -65,7 +65,7 @@ export function addCharacter(input: {
         charisma
       )
       values
-      (@id, @characterId, @name, @level, @characterClass, @background, @armorClass, @initiative, @speed, @maxHp, @currentHp, @strength, @dexterity, @constitution, @intelligence, @wisdom, @charisma)
+      (@id, @charID, @name, @level, @characterClass, @background, @armorClass, @initiative, @speed, @maxHP, @currentHP, @strength, @dexterity, @constitution, @intelligence, @wisdom, @charisma)
         `
   ).run(character);
 
@@ -79,7 +79,7 @@ export function getCharacter(id: string): Character | undefined {
   return db.prepare(
     sql`
       select
-        character_id as characterId,
+        character_id as charID,
         name,
         level,
         character_class as characterClass,
@@ -87,8 +87,8 @@ export function getCharacter(id: string): Character | undefined {
         armor_class as armorClass,
         initiative,
         speed,
-        max_hp as maxHp,
-        current_hp as currentHp,
+        max_hp as maxHP,
+        current_hp as currentHP,
         strength,
         dexterity,
         constitution,
@@ -106,7 +106,7 @@ export function listCharacters(): Character[] {
   const rows = db.prepare(
     sql`
       select
-        character_id as characterId,
+        character_id as charID,
         name,
         level,
         character_class as characterClass,
@@ -114,8 +114,8 @@ export function listCharacters(): Character[] {
         armor_class as armorClass,
         initiative,
         speed,
-        max_hp as maxHp,
-        current_hp as currentHp,
+        max_hp as maxHP,
+        current_hp as currentHP,
         strength,
         dexterity,
         constitution,

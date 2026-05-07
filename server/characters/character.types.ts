@@ -1,5 +1,5 @@
 export type Character = {
-characterId: string;
+charID: string;
 name: string;
 level: number;
 characterClass: string;
@@ -7,7 +7,8 @@ background: string;
 armorClass: number;
 initiative: number;
 speed: number;
-maxHp: number;
+maxHP: number;
+currentHP: number;
 strength: number;
 dexterity: number;
 constitution: number;

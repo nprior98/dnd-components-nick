@@ -55,7 +55,7 @@ CREATE TABLE if NOT EXISTS characters(
   character_class TEXT NOT NULL,
   background TEXT NOT NULL,
   armor_class INTEGER DEFAULT 10,
-  intiative INTEGER NOT NULL DEFAULT 0,
+  initiative INTEGER NOT NULL DEFAULT 0,
   speed INTEGER NOT NULL DEFAULT 30,
   current_hp INTEGER NOT NULL,
   max_hp INTEGER NOT NULL,
