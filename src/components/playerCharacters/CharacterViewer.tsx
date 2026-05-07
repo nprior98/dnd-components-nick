@@ -69,7 +69,7 @@ function CharacterViewer({ requestedCharacterID }: CharacterViewerProps) {
 					<label htmlFor="HP">HP</label>
 					<p id="HP">
 						<strong>
-							{char.maxHP}/{char.maxHP}
+							{char.currentHP}/{char.maxHP}
 						</strong>
 					</p>
 				</div>
