@@ -9,7 +9,7 @@ interface CharacterViewerProps {
 function CharacterViewer({ requestedCharacterID }: CharacterViewerProps) {
 	const [char, setChar] = useState<Character>();
 
-	const loadCharacter = async (charID: String) => {
+	const loadCharacter = async (charID: string) => {
 		setChar(await getCharacter(charID));
 	}
 
