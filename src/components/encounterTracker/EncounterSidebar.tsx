@@ -1,13 +1,9 @@
 import { useEncounterSocket } from "./useEncounterSocket";
 import "../../styles/Tracker.css";
-import {
-  Button,
-  ButtonGroup,
-  ListGroup,
-  Row,
-} from "react-bootstrap";
+import { Button, ButtonGroup, ListGroup, Row } from "react-bootstrap";
 import CombatantCard from "./CombatantCard";
 import { useState } from "react";
+import { Combatant } from "../../modules/encounter-api";
 
 type EncounterProps = {
   encounterId: string;
@@ -45,13 +41,10 @@ export default function EncounterSidebar({ encounterId }: EncounterProps) {
       <div className="encounter">
         <br />
         <ListGroup variant="flush" className="library-list">
-          {snapshot?.combatants.map((combatant) => {
+          {snapshot?.combatants.map((combatant: Combatant) => {
             const isActive = combatant.id === activeCombatantId;
             const isTargetable =
-              attackMode &&
-              canAct &&
-              !isActive &&
-              !combatant.isDefeated;
+              attackMode && canAct && !isActive && !combatant.isDefeated;
 
             return (
               <ListGroup.Item

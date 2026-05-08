@@ -1,4 +1,4 @@
-export type { Encounter, Combatant } from "./types";
+export type { Encounter, Combatant, AddCombatantRequest } from "./types";
 export {
   addCombatant,
   addEncounter,

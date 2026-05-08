@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { DropdownButton, DropdownItem } from "react-bootstrap";
-import { listEncounters } from "../../modules/encounter-api";
 import { Encounter } from "../../modules/encounter-api/types";
 import EncounterSidebar from "../encounterTracker/EncounterSidebar";
 
@@ -8,47 +7,25 @@ type RightBarProps = {
   isOpen: boolean;
   onSelectEncounter?: (encounterId: string) => void;
   onClose: () => void;
+  encounterList: Encounter[];
+  refreshEncounters: () => Promise<void>;
 };
 
 // all of this page is just one mega stub
 export default function SidebarRight({
   isOpen,
   onSelectEncounter,
+  encounterList,
+  refreshEncounters,
 }: RightBarProps) {
-  const [encounters, setEncounters] = useState<Encounter[] | null>(null);
   const [encounter, setEncounter] = useState<Encounter | null>(null);
-  const [loadError, setLoadError] = useState<string | null>(null);
   const [selectedEncounter, setSelectedEncounter] = useState<string | null>(
     null
   );
 
   useEffect(() => {
-    let cancelled = false;
-
-    async function load() {
-      const result = await listEncounters();
-      if (cancelled) return;
-
-      if (result.status === 200) {
-        setEncounters(result.data ?? []);
-        setLoadError(null);
-      } else {
-        setEncounters([]);
-        setLoadError("Could not load encounters");
-      }
-    }
-
-    load().catch(() => {
-      if (!cancelled) {
-        setEncounters([]);
-        setLoadError("Could not load encounters");
-      }
-    });
-
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+    refreshEncounters();
+  }, [refreshEncounters]);
 
   return (
     <aside
@@ -60,7 +37,7 @@ export default function SidebarRight({
         id="sidebar-dropdown-selection"
         title={encounter?.name ?? "Select encounter"}
         onSelect={(id) => {
-          const selected = encounters?.find((item) => item.id === id);
+          const selected = encounterList?.find((item) => item.id === id);
           if (selected) {
             setEncounter(selected);
             setSelectedEncounter(selected.id);
@@ -68,14 +45,14 @@ export default function SidebarRight({
           }
         }}
       >
-        {loadError ? (
-          <DropdownItem disabled>{loadError}</DropdownItem>
-        ) : encounters === null ? (
+        {encounterList.length === 0 ? (
+          <DropdownItem disabled>Could not Load Encounters</DropdownItem>
+        ) : encounterList === null ? (
           <DropdownItem disabled>Loading encounters</DropdownItem>
-        ) : encounters.length === 0 ? (
+        ) : encounterList.length === 0 ? (
           <DropdownItem disabled>No encounters</DropdownItem>
         ) : (
-          encounters.map(({ id, name }) => (
+          encounterList.map(({ id, name }) => (
             <DropdownItem className="encounter" key={id} eventKey={id}>
               {name}
             </DropdownItem>

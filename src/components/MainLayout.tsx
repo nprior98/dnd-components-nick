@@ -3,8 +3,19 @@ import { ReactNode, useState } from "react";
 import Topbar from "./ui/Topbar";
 import LeftSidebar from "./ui/SidebarLeft";
 import SidebarRight from "./ui/SidebarRight";
+import { Encounter } from "../modules/encounter-api";
 
-export default function MainLayout({ children }: { children: ReactNode }) {
+type MainLayoutProps = {
+  children: ReactNode;
+  encounterList: Encounter[];
+  refreshEncounters: () => Promise<void>;
+};
+
+export default function MainLayout({
+  children,
+  encounterList,
+  refreshEncounters,
+}: MainLayoutProps) {
   const [libraryOpen, setLibraryOpen] = useState(false);
   const [catalogueOpen, setCatalogueOpen] = useState(false);
 
@@ -18,6 +29,8 @@ export default function MainLayout({ children }: { children: ReactNode }) {
       />
       <LeftSidebar isOpen={libraryOpen} onClose={() => setLibraryOpen(false)} />
       <SidebarRight
+        refreshEncounters={refreshEncounters}
+        encounterList={encounterList}
         isOpen={catalogueOpen}
         onClose={() => setCatalogueOpen(false)}
       />

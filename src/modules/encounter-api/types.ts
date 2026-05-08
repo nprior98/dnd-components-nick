@@ -43,6 +43,7 @@ interface AddCombatantRequest {
   displayName: string;
   initiative: number;
   currentHp: number;
+  armorClass: number;
   maxHp: number;
   attackBonus: number;
 }

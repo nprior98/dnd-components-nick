@@ -1,4 +1,4 @@
-import type { AddCombatantRequest } from "../../modules/encounter-api/types.gen";
+import type { AddCombatantRequest } from "../../modules/encounter-api";
 import type { Creature } from "../../modules/open5e/types.gen";
 
 export type CreatureCombatantRequest = AddCombatantRequest & {

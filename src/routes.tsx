@@ -14,8 +14,18 @@ import {
 import EncounterTracker from "./components/encounterTracker/EncounterTracker";
 import EncounterGenDemo from "./components/encounterGen/EncounterGenDemo";
 import CharacterPage from "./components/playerCharacters/CharacterPage";
+import { ReactNode } from "react";
+import { Encounter } from "./modules/encounter-api";
 
-export default function Router() {
+type RouterProps = {
+  encounterList: Encounter[];
+  refreshEncounters: () => Promise<void>;
+};
+
+export default function Router({
+  encounterList,
+  refreshEncounters,
+}: RouterProps) {
   return (
     <Routes>
       <Route index element={<h1>Insert Landing Page here</h1>} />
@@ -33,7 +43,15 @@ export default function Router() {
         <Route path="weapons/:stub" element={<Weapon />} />
         <Route path="subclasses/:stub" element={<Class />} />
         <Route path="track" element={<EncounterTracker />} />
-        <Route path="generate" element={<EncounterGenDemo />} />
+        <Route
+          path="generate"
+          element={
+            <EncounterGenDemo
+              refreshEncounters={refreshEncounters}
+              encounterList={encounterList}
+            />
+          }
+        />
         <Route path="characters" element={<CharacterPage />} />
       </Route>
     </Routes>
