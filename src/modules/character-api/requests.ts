@@ -4,9 +4,8 @@ import { Character } from "./types";
 export const BASE_URL = "http://localhost:3001/api/characters"
 
 async function addCharacter(newCharacter: Character) {
-    if (!newCharacter) return 400; // guard statement
-    const response = axios.post(`${BASE_URL}/`, newCharacter);
-    return (await response).status;
+    const response = await axios.post(`${BASE_URL}/`, newCharacter);
+    return response.status;
 };
 
 async function listCharacters() {
@@ -14,9 +13,13 @@ async function listCharacters() {
 	return response.data as Character[];
 };
 
-async function getCharacter(charID: String) {
+async function getCharacter(charID: string) {
     const response = await axios.get(`${BASE_URL}/${charID}`);
     return response.data as Character;
 };
 
-export { addCharacter, listCharacters, getCharacter };
+async function deleteCharacter(charID: string) {
+    const response = await axios.delete(`${BASE_URL}/${charID}`);
+    return response.status;
+}
+export { addCharacter, listCharacters, getCharacter, deleteCharacter };

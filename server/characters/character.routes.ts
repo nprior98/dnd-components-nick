@@ -188,7 +188,7 @@ characterRoutes.post("/", (req, res) => {
  */
 // View a specific character
 characterRoutes.get("/:characterId", (req, res) => {
-  res.json(repo.getCharacter(req.params.characterId));
+  res.status(200).json(repo.getCharacter(req.params.characterId));
 });
 
 /**
@@ -210,6 +210,11 @@ characterRoutes.get("/:characterId", (req, res) => {
  */
 // List all characters
 characterRoutes.get("/", (_req, res) => {
-  res.json(repo.listCharacters());
+  res.status(200).json(repo.listCharacters());
 });
 
+// Delete a specific character
+characterRoutes.delete("/:characterId", (req, res) => {
+  repo.deleteCharacter(req.params.characterId);
+  res.status(204)
+})

@@ -4,7 +4,7 @@ import { id } from "../utils/ids";
 import { Character } from "./character.types";
 
 // Create a character with user inputted stats
-export function addCharacter(input: {
+function addCharacter(input: {
   charID: string;
   name: string;
   level: number;
@@ -75,7 +75,7 @@ export function addCharacter(input: {
 }
 
 // View a specific character
-export function getCharacter(id: string): Character | undefined {
+function getCharacter(id: string): Character | undefined {
   return db.prepare(
     sql`
       select
@@ -95,14 +95,13 @@ export function getCharacter(id: string): Character | undefined {
         intelligence,
         wisdom, 
         charisma
-      from characters
-      where character_id = ?
+      from characters where character_id = ?
     `
   ).get(id) as Character | undefined;
 }
 
 // List all characters
-export function listCharacters(): Character[] {
+function listCharacters(): Character[] {
   const rows = db.prepare(
     sql`
       select
@@ -128,4 +127,17 @@ export function listCharacters(): Character[] {
   ).all();
 
   return rows.map((row: any) => (row))
+
 }
+
+// Delete a character
+function deleteCharacter(id: string) {
+  db.prepare(
+    sql`
+      DELETE FROM characters WHERE character_id = ?
+    `
+  );
+}
+
+export { addCharacter, getCharacter, listCharacters, deleteCharacter };
+  
