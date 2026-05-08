@@ -23,7 +23,15 @@ export default function Topbar({ libraryOpen, onToggleLibrary, catalogueOpen, on
 				>
 					☰ Library
 				</Button>
-				<div className="logo">Logo</div>
+
+				<div className="logo dnd-styled-logo">
+					<span className="logo-icon">🎲</span>
+					<span className="logo-text">
+						D<span className="logo-ampersand">&amp;</span>D
+					</span>
+					<span className="logo-subtext">Tracker</span>
+				</div>
+
 			</div>
 			{/* nav-bar at the top of the page, using routes from routes.tsx */}
 			<nav className="nav-tabs">
