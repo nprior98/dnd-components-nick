@@ -1,23 +1,33 @@
 import { useState, useEffect } from "react";
 import type { Character } from "./CharacterInterface";
+import { getCharacter } from "../../modules/character-api/index";
 
 interface CharacterViewerProps {
 	requestedCharacterID: string;
 }
 
 function CharacterViewer({ requestedCharacterID }: CharacterViewerProps) {
-	const [characters, setCharacters] = useState<Character[]>([]);
+	const [char, setChar] = useState<Character>();
 
-	// Get characters from local storage
+	const loadCharacter = async (charID: String) => {
+		setChar(await getCharacter(charID));
+	}
+
 	useEffect(() => {
-		const storedCharacters = localStorage.getItem("characters");
-		if (storedCharacters) {
-			setCharacters(JSON.parse(storedCharacters));
-		}
+		loadCharacter(requestedCharacterID);
 	}, [requestedCharacterID]);
 
+	// Get characters from local storage
+	// useEffect(() => {
+	// 	const storedCharacters = localStorage.getItem("characters");
+	// 	if (storedCharacters) {
+	// 		setCharacters(JSON.parse(storedCharacters));
+	// 	}
+	// }, [requestedCharacterID]);
+
 	// Find the requested character
-	const char = characters.find((c) => c.charID === requestedCharacterID);
+	// const char = characters.find((c) => c.charID === requestedCharacterID);
+
 
 	// If the character isn't found, return an error message
 	if (!char) {

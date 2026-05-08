@@ -1,6 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
-import { Character } from "../../components/playerCharacters/CharacterInterface";
+import { Character } from "./types";
 
 export const BASE_URL = "http://localhost:3001/api/characters"
 
@@ -13,6 +12,11 @@ async function addCharacter(newCharacter: Character) {
 async function listCharacters() {
     const response = await axios.get(`${BASE_URL}/`);
 	return response.data as Character[];
-}
+};
 
-export { addCharacter, listCharacters };
+async function getCharacter(charID: String) {
+    const response = await axios.get(`${BASE_URL}/${charID}`);
+    return response.data as Character;
+};
+
+export { addCharacter, listCharacters, getCharacter };
