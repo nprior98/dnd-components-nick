@@ -14,6 +14,7 @@ import {
 import EncounterTracker from "./components/encounterTracker/EncounterTracker";
 import EncounterGenDemo from "./components/encounterGen/EncounterGenDemo";
 import CharacterPage from "./components/playerCharacters/CharacterPage";
+import LandingPage from "./components/LandingPage";
 import { ReactNode } from "react";
 import { Encounter } from "./modules/encounter-api";
 
@@ -28,7 +29,7 @@ export default function Router({
 }: RouterProps) {
   return (
     <Routes>
-      <Route index element={<h1>Insert Landing Page here</h1>} />
+      <Route index element={<LandingPage />} />
       <Route path="encounter">
         <Route path="armor/:stub" element={<Armor />} />
         <Route path="backgrounds/:stub" element={<Backgrounds />} />
