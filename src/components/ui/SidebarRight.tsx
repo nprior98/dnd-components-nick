@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { DropdownButton, DropdownItem } from "react-bootstrap";
-import { getApiEncounters } from "../../modules/encounter-api/sdk.gen";
-import { Encounter } from "../../modules/encounter-api/types.gen";
+import { listEncounters } from "../../modules/encounter-api";
+import { Encounter } from "../../modules/encounter-api/types";
 import EncounterSidebar from "../encounterTracker/EncounterSidebar";
 
 type RightBarProps = {
@@ -13,7 +13,6 @@ type RightBarProps = {
 // all of this page is just one mega stub
 export default function SidebarRight({
   isOpen,
-  onClose,
   onSelectEncounter,
 }: RightBarProps) {
   const [encounters, setEncounters] = useState<Encounter[] | null>(null);
@@ -27,7 +26,7 @@ export default function SidebarRight({
     let cancelled = false;
 
     async function load() {
-      const result = await getApiEncounters();
+      const result = await listEncounters();
       if (cancelled) return;
 
       if (result.status === 200) {

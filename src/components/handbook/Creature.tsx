@@ -8,12 +8,13 @@ import {
 import { useParams } from "react-router";
 import HandbookPage from "./HandbookPage";
 import {
-  getApiEncounters,
-  postApiEncountersByEncounterIdCombatants,
-} from "../../modules/encounter-api/sdk.gen";
+  addCombatant,
+  getEncounterSnapshot,
+  listEncounters,
+} from "../../modules/encounter-api";
 import { Alert, Dropdown } from "react-bootstrap";
 import { useEffect, useState } from "react";
-import type { Encounter } from "../../modules/encounter-api/types.gen";
+import type { Encounter } from "../../modules/encounter-api";
 import { creatureToCombatantRequest } from "./creatureEncounter";
 
 function SpeedBlock({ speed }: { speed: SpeedAll }) {
@@ -61,7 +62,7 @@ export default function CreaturePage() {
     let cancelled = false;
 
     async function loadEncounters() {
-      const result = await getApiEncounters();
+      const result = await listEncounters();
       if (cancelled) return;
 
       if (result.status === 200) {
@@ -109,10 +110,10 @@ export default function CreaturePage() {
     setAddStatus(null);
 
     try {
-      const result = await postApiEncountersByEncounterIdCombatants({
-        path: { encounterId },
-        body: creatureToCombatantRequest(creature),
-      });
+      const result = await addCombatant(
+        creatureToCombatantRequest(creature),
+        encounterId
+      );
       const selectedEncounter = encounters.find(
         (encounter) => encounter.id === encounterId
       );
