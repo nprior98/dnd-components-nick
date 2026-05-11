@@ -374,7 +374,7 @@ function EncounterResultView({
                   <td>
                     <Badge bg="secondary">{creature.typeName}</Badge>
                   </td>
-                  <td>{creature.crText}</td>
+                  <td>{creature.cr}</td>
                   <td className="text-end">{creature.xp}</td>
                   <td className="text-end">{creature.xp * count}</td>
                 </tr>

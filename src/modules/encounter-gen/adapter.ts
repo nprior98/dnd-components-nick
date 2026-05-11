@@ -7,7 +7,6 @@ export type NormalizedCreature = {
   key: string;
   name: string;
   cr: number;
-  crText: string;
   xp: number;
   type: string;
   typeName: string;
@@ -78,7 +77,7 @@ const DIFFICULTY_INDEX: Record<Difficulty, number> = {
 
 export function partyXpBudget(
   levels: number[],
-  difficulty: Difficulty,
+  difficulty: Difficulty
 ): number {
   const idx = DIFFICULTY_INDEX[difficulty];
   let total = 0;
@@ -91,7 +90,6 @@ export function partyXpBudget(
 }
 
 export function encounterMultiplier(monsterCount: number): number {
-  if (monsterCount <= 0) return 0;
   if (monsterCount === 1) return 1;
   if (monsterCount === 2) return 1.5;
   if (monsterCount <= 6) return 2;
@@ -103,8 +101,7 @@ export function normalizeCreature(c: Creature): NormalizedCreature {
   return {
     key: c.key,
     name: c.name,
-    cr: Number(c.challenge_rating_decimal),
-    crText: c.challenge_rating_text,
+    cr: Number(c.challenge_rating),
     xp: c.experience_points,
     type: c.type.key,
     typeName: c.type.name,
@@ -130,7 +127,7 @@ function loadAll(): Promise<NormalizedCreature[]> {
 }
 
 export async function fetchCreaturePool(
-  opts: FetchPoolOptions = {},
+  opts: FetchPoolOptions = {}
 ): Promise<NormalizedCreature[]> {
   const all = await loadAll();
   return all.filter((c) => {
@@ -158,8 +155,37 @@ export async function listCreatureTypes(): Promise<CreatureTypeOption[]> {
     .sort((a, b) => a.name.localeCompare(b.name));
 }
 
+export function effectiveMonsterCount(picks: EncounterPick[]): number {
+  let totalCr = 0;
+  let totalCount = 0;
+
+  for (const pick of picks) {
+    totalCr += pick.creature.cr * pick.count;
+    totalCount += pick.count;
+  }
+
+  if (totalCount === 0) return 0;
+
+  const avgCr = totalCr / totalCount;
+
+  const minCr = avgCr * 0.5;
+  const maxCr = avgCr * 1.5;
+
+  let effectiveCount = 0;
+
+  for (const pick of picks) {
+    const cr = pick.creature.cr;
+
+    if (cr >= minCr && cr <= maxCr) {
+      effectiveCount += pick.count;
+    }
+  }
+
+  return effectiveCount;
+}
+
 export async function generateEncounter(
-  opts: GenerateEncounterOptions,
+  opts: GenerateEncounterOptions
 ): Promise<EncounterResult> {
   const {
     partyLevels,
@@ -186,11 +212,12 @@ export async function generateEncounter(
   while (attempts < maxAttempts && pool.length > 0) {
     attempts++;
 
-    const adjusted = rawXp * encounterMultiplier(count);
+    const effectiveCount = effectiveMonsterCount([...picks.values()]);
+    const adjusted = rawXp * encounterMultiplier(effectiveCount);
     const remaining = targetXp - adjusted;
     if (remaining <= 0) break;
 
-    const nextMult = encounterMultiplier(count + 1);
+    const nextMult = encounterMultiplier(Math.max(1, effectiveCount + 1));
     const maxCandidateXp = remaining / nextMult;
     const upper = maxCandidateXp * 0.5;
     const lower = maxCandidateXp * 0.05;
@@ -219,10 +246,12 @@ export async function generateEncounter(
     count++;
   }
 
+const effectiveCount = effectiveMonsterCount([...picks.values()]);
+
   return {
     picks: [...picks.values()],
     rawXp,
-    adjustedXp: rawXp * encounterMultiplier(count),
+    adjustedXp: rawXp * encounterMultiplier(effectiveCount),
     targetXp,
     attemptsUsed: attempts,
     poolSize: pool.length,
@@ -230,7 +259,7 @@ export async function generateEncounter(
 }
 
 export async function generateEncounters(
-  opts: GenerateEncounterOptions & { count: number },
+  opts: GenerateEncounterOptions & { count: number }
 ): Promise<EncounterResult[]> {
   const { count, ...rest } = opts;
   if (count <= 0) return [];
@@ -243,10 +272,11 @@ export async function generateEncounters(
 
 export function calculateAdjustedXp(picks: EncounterPick[]): number {
   let rawXp = 0;
-  let count = 0;
   for (const p of picks) {
     rawXp += p.creature.xp * p.count;
-    count += p.count;
   }
-  return rawXp * encounterMultiplier(count);
+
+  const effectiveCount = effectiveMonsterCount(picks);
+
+  return Math.ceil(rawXp * encounterMultiplier(effectiveCount));
 }
