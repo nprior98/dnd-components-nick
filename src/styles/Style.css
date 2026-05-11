@@ -9,105 +9,106 @@
   --parchment: #f4ecd8;
   --text-dark: #2c2825;
   --sidebar-width: 260px;
+  --sidebar-right-width: 360px;
 }
 
 body {
-  margin: 0;
-  background: var(--parchment);
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  min-height: 100vh;
-  color: var(--text-dark);
+	margin: 0;
+	background: var(--parchment);
+	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+	min-height: 100vh;
+	color: var(--text-dark);
 }
 
 /* Scrollbar Styling for a "D&D" feel */
 ::-webkit-scrollbar {
-  width: 10px;
+	width: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--parchment);
+	background: var(--parchment);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--brown);
-  border-radius: 5px;
+	background: var(--brown);
+	border-radius: 5px;
 }
 
 /* =========================================
    2. HEADER & NAVIGATION (CENTERED)
    ========================================= */
 .main-header {
-  background: var(--brown);
-  display: flex;
-  height: 50px;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 20px;
-  color: white;
-  border-bottom: 3px solid var(--teal);
-  position: sticky;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
+	background: var(--brown);
+	display: flex;
+	height: 50px;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0 20px;
+	color: white;
+	border-bottom: 3px solid var(--teal);
+	position: sticky;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 1000;
 }
 
 .header-left {
-  display: flex;
-  align-items: center;
-  gap: 15px;
+	display: flex;
+	align-items: center;
+	gap: 15px;
 }
 
 .library-toggle.btn {
-  border: none;
-  background: var(--dark-teal);
-  font-size: 11px;
-  text-transform: uppercase;
-  padding: 6px 12px;
+	border: none;
+	background: var(--dark-teal);
+	font-size: 11px;
+	text-transform: uppercase;
+	padding: 6px 12px;
 }
 .library-toggle.btn:hover,
 .library-toggle.btn:focus {
-  background: var(--teal);
+	background: var(--teal);
 }
 
 .main-content {
-  padding-top: 10px;
-  transition: margin-left 0.4s ease;
+	padding-top: 10px;
+	transition: margin-left 0.4s ease;
 }
 
 /* Only push content when the viewport is narrow enough that the sidebar
    would actually overlap the content. On wide (4K-ish) screens the sidebar
    just sits in otherwise-empty space and the page shouldn't shift. */
 @media (max-width: 1400px) {
-  .main-content.library-open {
-    margin-left: var(--sidebar-width);
-  }
+	.main-content.library-open {
+		margin-left: var(--sidebar-width);
+	}
 }
 
 .nav-tabs {
-  display: flex;
-  gap: 2px;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+	display: flex;
+	gap: 2px;
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
 }
 
 /* Style for both Radio Labels (PC) and Links (Home) */
 .tab,
 .nav-tabs a.tab {
-  background: var(--dark-teal);
-  padding: 10px 15px;
-  font-size: 11px;
-  text-transform: uppercase;
-  cursor: pointer;
-  color: white;
-  text-decoration: none;
-  border: none;
-  display: inline-block;
-  transition: background 0.2s ease;
+	background: var(--dark-teal);
+	padding: 10px 15px;
+	font-size: 11px;
+	text-transform: uppercase;
+	cursor: pointer;
+	color: white;
+	text-decoration: none;
+	border: none;
+	display: inline-block;
+	transition: background 0.2s ease;
 }
 
 .tab:hover,
 .nav-tabs a.tab:hover {
-  background: var(--teal);
+	background: var(--teal);
 }
 
 /* Active States */
@@ -115,65 +116,65 @@ body {
 #nav-chars:checked ~ .main-header .t-chars,
 #nav-monsters:checked ~ .main-header .t-monsters,
 .nav-tabs a.tab.active {
-  background: var(--teal);
-  font-weight: bold;
+	background: var(--teal);
+	font-weight: bold;
 }
 
 /* =========================================
    3. LANDING PAGE SPECIFIC LAYOUT
    ========================================= */
 .hero-section {
-  background-color: #1a1b1e;
-  padding: 80px 20px;
-  display: flex;
-  justify-content: center;
-  border-bottom: 5px solid var(--teal);
+	background-color: #1a1b1e;
+	padding: 80px 20px;
+	display: flex;
+	justify-content: center;
+	border-bottom: 5px solid var(--teal);
 }
 
 .hero-content {
-  max-width: 700px;
-  text-align: center;
-  line-height: 1.8;
-  color: #ddd;
-  font-size: 1.1rem;
+	max-width: 700px;
+	text-align: center;
+	line-height: 1.8;
+	color: #ddd;
+	font-size: 1.1rem;
 }
 
 .landing-parchment {
-  background-color: var(--parchment);
-  width: 90%;
-  max-width: 1000px;
-  margin: 40px auto;
-  padding: 60px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+	background-color: var(--parchment);
+	width: 90%;
+	max-width: 1000px;
+	margin: 40px auto;
+	padding: 60px;
+	box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
 }
 
 .feature-section {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 60px;
-  margin-bottom: 100px;
-  align-items: center;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 60px;
+	margin-bottom: 100px;
+	align-items: center;
 }
 
 .placeholder-img {
-  background-color: #d1d1d1;
-  aspect-ratio: 16 / 10;
-  border: 1px solid #bbb;
-  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.05);
+	background-color: #d1d1d1;
+	aspect-ratio: 16 / 10;
+	border: 1px solid #bbb;
+	box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.05);
 }
 
 .placeholder-img.wide {
-  width: 100%;
-  height: 300px;
-  margin-top: 30px;
+	width: 100%;
+	height: 300px;
+	margin-top: 30px;
 }
 
 .text-block h2 {
-  font-size: 2rem;
-  color: var(--brown);
-  border-bottom: 2px solid var(--teal);
-  display: inline-block;
-  margin-bottom: 20px;
+	font-size: 2rem;
+	color: var(--brown);
+	border-bottom: 2px solid var(--teal);
+	display: inline-block;
+	margin-bottom: 20px;
 }
 
 /* =========================================
@@ -182,83 +183,86 @@ body {
 .state-root,
 .lib-state,
 .toggle-hidden {
-  display: none;
+	display: none;
 }
 
 /* Switch Center View based on Radio Button */
 .view-combat,
 .view-chars,
 .view-monsters {
-  display: none;
-  padding: 40px;
+	display: none;
+	padding: 40px;
 }
 #nav-combat:checked ~ .parchment-view .view-combat {
-  display: block;
+	display: block;
 }
 #nav-chars:checked ~ .parchment-view .view-chars {
-  display: block;
+	display: block;
 }
 #nav-monsters:checked ~ .parchment-view .view-monsters {
-  display: block;
+	display: block;
 }
 
 /* Library Sub-Tabs */
 .library-nav {
-  display: flex;
-  gap: 2px;
-  margin-bottom: 10px;
+	display: flex;
+	gap: 2px;
+	margin-bottom: 10px;
 }
 .library-nav label {
-  flex: 1;
-  background: var(--dark-teal);
-  font-size: 10px;
-  padding: 8px 0;
-  text-align: center;
-  cursor: pointer;
-  border: 1px solid var(--border-teal);
-  color: white;
+	flex: 1;
+	background: var(--dark-teal);
+	font-size: 10px;
+	padding: 8px 0;
+	text-align: center;
+	cursor: pointer;
+	border: 1px solid var(--border-teal);
+	color: white;
 }
 
 #lib-mon:checked ~ .library-nav label[for="lib-mon"],
 #lib-spell:checked ~ .library-nav label[for="lib-spell"],
 #lib-item:checked ~ .library-nav label[for="lib-item"],
 #lib-char:checked ~ .library-nav label[for="lib-char"] {
-  background: var(--teal);
-  font-weight: bold;
+	background: var(--teal);
+	font-weight: bold;
 }
 
 .content-pane {
-  display: none;
-  color: white;
+	display: none;
+	color: white;
 }
 #lib-mon:checked ~ .library-content .pane-monsters,
 #lib-spell:checked ~ .library-content .pane-spells,
 #lib-item:checked ~ .library-content .pane-items,
 #lib-char:checked ~ .library-content .pane-chars {
-  display: block;
+	display: block;
 }
 
 /* 1. Highlight the 5th tab when active */
 #nav-board:checked ~ .main-header .t-board {
-  background: var(--teal);
-  font-weight: bold;
+	background: var(--teal);
+	font-weight: bold;
 }
 
 /* 2. Show the Encounter Board view when checked */
 .view-board {
-  display: none;
-  padding: 40px;
+	display: none;
+	padding: 40px;
 }
 #nav-board:checked ~ .parchment-view .view-board {
-  display: block;
+	display: block;
 }
 
 /* 3. Optional: Style for the grid board */
 .grid-placeholder {
   width: 100%;
   height: 500px;
-  background-image:
-    linear-gradient(to right, rgba(51, 38, 29, 0.1) 1px, transparent 1px),
+  background-image: linear-gradient(
+      to right,
+      rgba(51, 38, 29, 0.1) 1px,
+      transparent 1px
+    ),
     linear-gradient(to bottom, rgba(51, 38, 29, 0.1) 1px, transparent 1px);
   background-size: 40px 40px; /* Creates a 40px grid effect */
   border: 2px solid var(--brown);
@@ -271,101 +275,109 @@ body {
    5. SIDEBARS & ENCOUNTER CARDS
    ========================================= */
 .sidebar {
-  position: fixed;
-  top: 50px;
-  bottom: 35px;
-  width: var(--sidebar-width);
-  box-sizing: border-box;
-  background: var(--teal);
-  color: white;
-  padding: 15px;
-  transition: transform 0.4s ease;
-  z-index: 50;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+	position: fixed;
+	top: 50px;
+	bottom: 35px;
+	width: var(--sidebar-width);
+	box-sizing: border-box;
+	background: var(--teal);
+	color: white;
+	padding: 15px;
+	transition: transform 0.4s ease;
+	z-index: 50;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
 }
-
-.sidebar .library-content {
+.sidebar-right .encounter {
   flex: 1;
   min-height: 0;
   overflow-y: auto;
 }
 
+.sidebar-right {
+  width: var(--sidebar-right-width);
+}
+
+.sidebar .library-content {
+	flex: 1;
+	min-height: 0;
+	overflow-y: auto;
+}
+
 .sidebar .library-content::-webkit-scrollbar {
-  width: 8px;
+	width: 8px;
 }
 .sidebar .library-content::-webkit-scrollbar-track {
-  background: transparent;
+	background: transparent;
 }
 .sidebar .library-content::-webkit-scrollbar-thumb {
-  background: var(--dark-teal);
-  border-radius: 4px;
+	background: var(--dark-teal);
+	border-radius: 4px;
 }
 .sidebar-left {
-  left: 0;
-  transform: translateX(-100%);
+	left: 0;
+	transform: translateX(-100%);
 }
 .sidebar-right {
-  right: 0;
-  transform: translateX(100%);
+	right: 0;
+	transform: translateX(100%);
 }
 .sidebar-left.open {
-  transform: translateX(0);
+	transform: translateX(0);
 }
 .sidebar-right.open {
-  transform: translateX(0);
+	transform: translateX(0);
 }
 
 /* Legacy checkbox-hack selectors kept so existing markup (if any remains)
    continues to work; React sidebar uses the .open class above. */
 #toggle-left:checked ~ .sidebar-left {
-  transform: translateX(0);
-  position: absolute;
+	transform: translateX(0);
+	position: absolute;
 }
 #toggle-right:checked ~ .sidebar-right {
-  transform: translateX(0);
+	transform: translateX(0);
 }
 
 .library-list.list-group-flush .list-group-item {
-  background: transparent;
-  color: white;
-  border-color: rgba(255, 255, 255, 0.15);
+	background: transparent;
+	color: white;
+	border-color: rgba(255, 255, 255, 0.15);
 }
 .library-list.list-group-flush .list-group-item.active,
 .library-list.list-group-flush .list-group-item:hover {
-  background: var(--dark-teal);
-  color: white;
+	background: var(--dark-teal);
+	color: white;
 }
-
 
 .enc-card {
-  background: var(--dark-teal);
-  padding: 12px;
-  border: 1px solid var(--border-teal);
-  border-radius: 4px;
-  margin-bottom: 8px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+	background: var(--dark-teal);
+	padding: 12px;
+	border: 1px solid var(--border-teal);
+	border-radius: 4px;
+	margin-bottom: 8px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 .enc-card.active {
-  border: 2px solid white;
+	border: 2px solid white;
 }
 .enc-card.enemy {
-  border-left: 6px solid #8b0000;
-  background: #3d2c2c;
+	border-left: 6px solid #8b0000;
+	background: #3d2c2c;
 }
 .card-init {
-  font-size: 20px;
-  font-weight: bold;
-  color: var(--parchment);
+	font-size: 20px;
+	font-weight: bold;
+	color: var(--parchment);
 }
 
 /* =========================================
    6. CHARACTER SHEET (GANDALF)
    ========================================= */
-.character-grid {
+/* .character-grid {
   max-width: 900px;
   margin: 0 auto;
   color: var(--brown);
@@ -420,60 +432,63 @@ body {
   justify-content: space-between;
   padding: 8px 0;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-}
+} */
 
 /* =========================================
    7. FOOTER & MISC
    ========================================= */
 .main-footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  background: var(--brown);
-  color: rgba(255, 255, 255, 0.6);
-  height: 35px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 20px;
-  font-size: 11px;
-  z-index: 1000;
-  box-sizing: border-box;
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	background: var(--brown);
+	color: rgba(255, 255, 255, 0.6);
+	height: 35px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0 20px;
+	font-size: 11px;
+	z-index: 1000;
+	box-sizing: border-box;
 }
 
 .parchment-view {
-  height: calc(100vh - 85px);
-  overflow-y: auto;
-  padding: 40px;
+	height: calc(100vh - 85px);
+	overflow-y: auto;
+	padding: 40px;
 }
 
 /* =========================================
    8. ENCOUNTER BOARD (BATTLE GRID)
    ========================================= */
 .view-board {
-  display: none; /* Controlled by radio button logic */
-  padding: 20px;
-  height: 100%;
+	display: none; /* Controlled by radio button logic */
+	padding: 20px;
+	height: 100%;
 }
 
 #nav-board:checked ~ .parchment-view .view-board {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
 .board-header {
-  text-align: center;
-  color: var(--brown);
-  margin-bottom: 20px;
+	text-align: center;
+	color: var(--brown);
+	margin-bottom: 20px;
 }
 
 .battle-grid {
   display: grid;
   grid-template-columns: repeat(10, 50px); /* 10 columns, 50px each */
   grid-template-rows: repeat(10, 50px); /* 10 rows, 50px each */
-  background-image:
-    linear-gradient(to right, rgba(51, 38, 29, 0.2) 1px, transparent 1px),
+  background-image: linear-gradient(
+      to right,
+      rgba(51, 38, 29, 0.2) 1px,
+      transparent 1px
+    ),
     linear-gradient(to bottom, rgba(51, 38, 29, 0.2) 1px, transparent 1px);
   background-size: 50px 50px;
   border: 2px solid var(--brown);
@@ -483,24 +498,24 @@ body {
 
 /* TOKEN STYLING */
 .token {
-  width: 40px;
-  height: 40px;
-  margin: 5px; /* Centers 40px token in 50px square */
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  font-size: 14px;
-  color: white;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-  border: 2px solid white;
-  cursor: grab;
+	width: 40px;
+	height: 40px;
+	margin: 5px; /* Centers 40px token in 50px square */
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: bold;
+	font-size: 14px;
+	color: white;
+	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+	border: 2px solid white;
+	cursor: grab;
 }
 
 .player-token {
-  background-color: var(--teal);
+	background-color: var(--teal);
 }
 .enemy-token {
-  background-color: #8b0000;
+	background-color: #8b0000;
 }

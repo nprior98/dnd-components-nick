@@ -1,23 +1,33 @@
 import { useState, useEffect } from "react";
-import type { Character } from "./CharacterPage";
+import type { Character } from "./CharacterInterface";
+import { getCharacter } from "../../modules/character-api/index";
 
 interface CharacterViewerProps {
 	requestedCharacterID: string;
 }
 
 function CharacterViewer({ requestedCharacterID }: CharacterViewerProps) {
-	const [characters, setCharacters] = useState<Character[]>([]);
+	const [char, setChar] = useState<Character>();
 
-	// Get characters from local storage
+	const loadCharacter = async (charID: string) => {
+		setChar(await getCharacter(charID));
+	}
+
 	useEffect(() => {
-		const storedCharacters = localStorage.getItem("characters");
-		if (storedCharacters) {
-			setCharacters(JSON.parse(storedCharacters));
-		}
+		loadCharacter(requestedCharacterID);
 	}, [requestedCharacterID]);
 
+	// Get characters from local storage
+	// useEffect(() => {
+	// 	const storedCharacters = localStorage.getItem("characters");
+	// 	if (storedCharacters) {
+	// 		setCharacters(JSON.parse(storedCharacters));
+	// 	}
+	// }, [requestedCharacterID]);
+
 	// Find the requested character
-	const char = characters.find((c) => c.charID === requestedCharacterID);
+	// const char = characters.find((c) => c.charID === requestedCharacterID);
+
 
 	// If the character isn't found, return an error message
 	if (!char) {
@@ -25,7 +35,7 @@ function CharacterViewer({ requestedCharacterID }: CharacterViewerProps) {
 	}
 
 	// Returns modifier for attribute values
-	const getModifier = (val: string) => {
+	const getModifier = (val: number) => {
 		if (!val) return "+0";
 		const mod = Math.floor((Number(val) - 10) / 2);
 		return mod >= 0 ? `+${mod}` : `${mod}`;
@@ -34,7 +44,7 @@ function CharacterViewer({ requestedCharacterID }: CharacterViewerProps) {
 	return (
 		<div className="flex-down">
 			<div className="character-info-container">
-				<img src="src/gandalf.png" alt="" />
+				{/* <img src="src/gandalf.png" alt="" /> */}
 				<div className="character-info">
 					<div className="name-container">
 						<h1>{char.name}</h1>
@@ -69,7 +79,7 @@ function CharacterViewer({ requestedCharacterID }: CharacterViewerProps) {
 					<label htmlFor="HP">HP</label>
 					<p id="HP">
 						<strong>
-							{char.maxHP}/{char.maxHP}
+							{char.currentHP}/{char.maxHP}
 						</strong>
 					</p>
 				</div>
@@ -118,6 +128,7 @@ function CharacterViewer({ requestedCharacterID }: CharacterViewerProps) {
 							<p>&nbsp;({getModifier(char["wisdom"])})</p>
 						</div>
 					</div>
+					<hr />
 					<div>
 						<label htmlFor="charisma">Charisma</label>
 						<div className="attribute-container">

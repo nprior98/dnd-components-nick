@@ -1,0 +1,11 @@
+node_modules
+build
+dist
+.git
+.github
+.fallow
+.react-router
+data
+npm-debug.log*
+Dockerfile*
+docker-compose.yml

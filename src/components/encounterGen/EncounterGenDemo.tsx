@@ -5,7 +5,10 @@ import {
   Button,
   Card,
   Col,
+  Dropdown,
+  DropdownItem,
   Form,
+  Modal,
   Row,
   Spinner,
   Table,
@@ -17,6 +20,17 @@ import {
   type Difficulty,
   type EncounterResult,
 } from "../../modules/encounter-gen";
+import {
+  addCombatant,
+  addEncounter,
+  Encounter,
+} from "../../modules/encounter-api";
+import { creatureToCombatantRequest } from "../handbook/creatureEncounter";
+
+type EncounterGenProps = {
+  encounterList: Encounter[];
+  refreshEncounters: () => Promise<void>;
+};
 
 const DIFFICULTIES: Difficulty[] = ["easy", "medium", "hard", "deadly"];
 
@@ -28,7 +42,10 @@ function parseLevels(raw: string): number[] {
     .map((s) => Number.parseInt(s, 10));
 }
 
-export default function EncounterGenDemo() {
+export default function EncounterGenDemo({
+  encounterList,
+  refreshEncounters,
+}: EncounterGenProps) {
   const [levelsInput, setLevelsInput] = useState("3,3,3,3");
   const [difficulty, setDifficulty] = useState<Difficulty>("medium");
   const [uniqueLimit, setUniqueLimit] = useState(4);
@@ -39,6 +56,7 @@ export default function EncounterGenDemo() {
 
   useEffect(() => {
     let cancelled = false;
+    refreshEncounters();
     listCreatureTypes().then((types) => {
       if (!cancelled) setCreatureTypes(types);
     });
@@ -51,13 +69,16 @@ export default function EncounterGenDemo() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  async function onGenerate(e: React.FormEvent) {
+  async function onGenerate(e: React.SubmitEvent) {
     e.preventDefault();
     setError(null);
     setResults([]);
 
     const partyLevels = parseLevels(levelsInput);
-    if (partyLevels.length === 0 || partyLevels.some((n) => !Number.isFinite(n))) {
+    if (
+      partyLevels.length === 0 ||
+      partyLevels.some((n) => !Number.isFinite(n))
+    ) {
       setError("Enter at least one valid character level (e.g. 3,3,3,4).");
       return;
     }
@@ -87,13 +108,13 @@ export default function EncounterGenDemo() {
 
   return (
     <div className="p-3">
-      <h2>Encounter Generator — Demo</h2>
-      <p className="text-muted">
-        Pulls creatures from open5e, filtered by CR (and optionally type), then
-        fills an encounter to the DMG 2014 XP budget for the party.
-      </p>
-
       <Card className="mb-4">
+        <h2>Encounter Generator</h2>
+        <p className="text-muted">
+          Pulls creatures from open5e, filtered by CR (and optionally type),
+          then fills an encounter to the DMG 2014 XP budget for the party.
+        </p>
+
         <Card.Body>
           <Form onSubmit={onGenerate}>
             <Row className="g-3">
@@ -113,7 +134,9 @@ export default function EncounterGenDemo() {
                   <Form.Label>Difficulty</Form.Label>
                   <Form.Select
                     value={difficulty}
-                    onChange={(e) => setDifficulty(e.target.value as Difficulty)}
+                    onChange={(e) =>
+                      setDifficulty(e.target.value as Difficulty)
+                    }
                   >
                     {DIFFICULTIES.map((d) => (
                       <option key={d} value={d}>
@@ -194,7 +217,13 @@ export default function EncounterGenDemo() {
       {error && <Alert variant="danger">{error}</Alert>}
 
       {results.map((r, i) => (
-        <EncounterResultView key={i} index={i} result={r} />
+        <EncounterResultView
+          key={i}
+          index={i}
+          result={r}
+          encounterList={encounterList}
+          refreshEncounters={refreshEncounters}
+        />
       ))}
     </div>
   );
@@ -203,12 +232,43 @@ export default function EncounterGenDemo() {
 function EncounterResultView({
   index,
   result,
+  encounterList,
+  refreshEncounters,
 }: {
   index: number;
   result: EncounterResult;
+  encounterList: Encounter[];
+  refreshEncounters: () => Promise<void>;
 }) {
+  const [show, setShow] = useState<boolean>(false);
+  const [encounterName, setEncounterName] = useState<string>("");
   const totalMonsters = result.picks.reduce((n, p) => n + p.count, 0);
   const overBudget = result.adjustedXp > result.targetXp;
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  async function createEncounterAddCombatants(
+    result: EncounterResult,
+    encounterName: string
+  ) {
+    const encounter = await addEncounter({ name: encounterName });
+    const encounterId = encounter.id;
+
+    await refreshEncounters();
+
+    await handleAddToEncounter(encounterId, result);
+  }
+
+  async function handleAddToEncounter(
+    encounterId: string,
+    result: EncounterResult
+  ) {
+    result.picks.map((pick) => {
+      const combatant = creatureToCombatantRequest(pick.creature.source);
+      addCombatant(combatant, encounterId);
+    });
+  }
 
   return (
     <Card className="mb-3">
@@ -240,6 +300,54 @@ function EncounterResultView({
             <div className="text-muted small">Pool size</div>
             <div className="h5">{result.poolSize}</div>
           </Col>
+          <Col>
+            <Dropdown>
+              <Dropdown.Toggle variant="secondary" id="save">
+                Save Encounter
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                {encounterList?.map((encounter) => (
+                  <DropdownItem
+                    onClick={() => handleAddToEncounter(encounter.id, result)}
+                  >
+                    {encounter.name}
+                  </DropdownItem>
+                ))}
+                <DropdownItem onClick={handleShow}>New Encounter</DropdownItem>
+              </Dropdown.Menu>
+              <Modal show={show} onHide={handleClose} centered>
+                <Modal.Header closeButton>
+                  <Modal.Title>New Encounter</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <Form
+                    onSubmit={async (e) => {
+                      e.preventDefault();
+                      await createEncounterAddCombatants(result, encounterName);
+                      handleClose();
+                    }}
+                  >
+                    <Row>
+                      <Form.Group
+                        className="mb-3"
+                        controlId="newEncounterForm.ControlInput1"
+                      >
+                        <Form.Label>Encounter Name</Form.Label>
+                        <Form.Control
+                          type="text"
+                          value={encounterName}
+                          onChange={(e) => setEncounterName(e.target.value)}
+                          placeholder="Dark Forest"
+                          autoFocus
+                        />
+                      </Form.Group>
+                      <Button type="submit">Submit</Button>
+                    </Row>
+                  </Form>
+                </Modal.Body>
+              </Modal>
+            </Dropdown>
+          </Col>
         </Row>
 
         {result.picks.length === 0 ? (
@@ -266,7 +374,7 @@ function EncounterResultView({
                   <td>
                     <Badge bg="secondary">{creature.typeName}</Badge>
                   </td>
-                  <td>{creature.crText}</td>
+                  <td>{creature.cr}</td>
                   <td className="text-end">{creature.xp}</td>
                   <td className="text-end">{creature.xp * count}</td>
                 </tr>

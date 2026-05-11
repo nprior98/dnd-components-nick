@@ -4,10 +4,12 @@ import { Button } from "react-bootstrap";
 
 type TopbarProps = {
 	libraryOpen: boolean;
+	catalogueOpen: boolean;
 	onToggleLibrary: () => void;
+	onToggleCatalogue: () => void;
 };
 
-export default function Topbar({ libraryOpen, onToggleLibrary }: TopbarProps) {
+export default function Topbar({ libraryOpen, onToggleLibrary, catalogueOpen, onToggleCatalogue }: TopbarProps) {
 	return (
 		<header className="main-header">
 			<div className="header-left">
@@ -21,7 +23,15 @@ export default function Topbar({ libraryOpen, onToggleLibrary }: TopbarProps) {
 				>
 					☰ Library
 				</Button>
-				<div className="logo">Logo</div>
+
+				<div className="logo dnd-styled-logo">
+					<span className="logo-icon">🎲</span>
+					<span className="logo-text">
+						D<span className="logo-ampersand">&amp;</span>D
+					</span>
+					<span className="logo-subtext">Tracker</span>
+				</div>
+
 			</div>
 			{/* nav-bar at the top of the page, using routes from routes.tsx */}
 			<nav className="nav-tabs">
@@ -38,7 +48,18 @@ export default function Topbar({ libraryOpen, onToggleLibrary }: TopbarProps) {
 					Combat Tracker
 				</Link>
 			</nav>
-			<div className="user">👤</div>
+			<div className="header-right">
+				<Button
+					variant="dark"
+					size="sm"
+					className="library-toggle"
+					onClick={onToggleCatalogue}
+					aria-expanded={catalogueOpen}
+					aria-controls="sidebar-right"
+				>
+					☰ Encounters
+				</Button>
+			</div>
 		</header>
 	);
 }

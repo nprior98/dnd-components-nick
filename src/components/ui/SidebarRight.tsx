@@ -1,82 +1,67 @@
-import "../../styles/Style.css";
 import { useEffect, useState } from "react";
-import { DropdownButton, DropdownItem, ListGroup, Spinner } from "react-bootstrap";
-import { Link } from "react-router";
-import { categories, getCategory, warmAll, type Category } from "../../modules/open5e-cache";
+import { DropdownButton, DropdownItem } from "react-bootstrap";
+import { Encounter } from "../../modules/encounter-api/types";
+import EncounterSidebar from "../encounterTracker/EncounterSidebar";
 
-interface ListableItem {
-  key: string;
-  name: string;
-}
-
-type SidebarProps = {
+type RightBarProps = {
   isOpen: boolean;
+  onSelectEncounter?: (encounterId: string) => void;
   onClose: () => void;
+  encounterList: Encounter[];
+  refreshEncounters: () => Promise<void>;
 };
 
-export default function SidebarRight({ isOpen, onClose }: SidebarProps) {
-  const [category, setCategory] = useState<Category>("creatures");
-  const [items, setItems] = useState<ListableItem[] | null>(null);
+// all of this page is just one mega stub
+export default function SidebarRight({
+  isOpen,
+  onSelectEncounter,
+  encounterList,
+  refreshEncounters,
+}: RightBarProps) {
+  const [encounter, setEncounter] = useState<Encounter | null>(null);
+  const [selectedEncounter, setSelectedEncounter] = useState<string | null>(
+    null
+  );
 
   useEffect(() => {
-    let cancelled = false;
-    async function load() {
-      let result = await getCategory(category);
-      if (!result) {
-        await warmAll();
-        result = await getCategory(category);
-      }
-      if (!cancelled) {
-        setItems((result?.entries ?? []) as ListableItem[]);
-      }
-    }
-    load();
-    return () => { cancelled = true; };
-  }, [category]);
-
-  const currentLabel = categories.find((c) => c.key === category)?.label ?? category;
+    refreshEncounters();
+  }, [refreshEncounters]);
 
   return (
-    <aside 
-      id="sidebar-right" 
-      className={`sidebar sidebar-right${isOpen ? " open" : ""}`} 
+    <aside
+      id="sidebar-right"
+      className={`sidebar sidebar-right${isOpen ? " open" : ""}`}
       aria-hidden={!isOpen}
     >
-      <DropdownButton 
-        id="sidebar-right-dropdown" 
-        title={currentLabel} 
-        onSelect={(key) => { if (key) setCategory(key as Category); }}
+      <DropdownButton
+        id="sidebar-dropdown-selection"
+        title={encounter?.name ?? "Select encounter"}
+        onSelect={(id) => {
+          const selected = encounterList?.find((item) => item.id === id);
+          if (selected) {
+            setEncounter(selected);
+            setSelectedEncounter(selected.id);
+            onSelectEncounter?.(selected.id);
+          }
+        }}
       >
-        {categories.map(({ key, label }) => (
-          <DropdownItem key={key} eventKey={key}>
-            {label}
-          </DropdownItem>
-        ))}
-      </DropdownButton>
-
-      <div className="library-content">
-        {items === null ? (
-          <div className="text-center py-3">
-            <Spinner animation="border" size="sm" /> Loading…
-          </div>
-        ) : items.length === 0 ? (
-          <p className="text-center py-3">No entries</p>
+        {encounterList.length === 0 ? (
+          <DropdownItem disabled>Could not Load Encounters</DropdownItem>
+        ) : encounterList === null ? (
+          <DropdownItem disabled>Loading encounters</DropdownItem>
+        ) : encounterList.length === 0 ? (
+          <DropdownItem disabled>No encounters</DropdownItem>
         ) : (
-          <ListGroup variant="flush" className="library-list">
-            {items.map((item) => (
-              <ListGroup.Item 
-                key={item.key} 
-                action 
-                as={Link} 
-                to={`/encounter/${category}/${item.key}`} 
-                onClick={onClose}
-              >
-                {item.name}
-              </ListGroup.Item>
-            ))}
-          </ListGroup>
+          encounterList.map(({ id, name }) => (
+            <DropdownItem className="encounter" key={id} eventKey={id}>
+              {name}
+            </DropdownItem>
+          ))
         )}
-      </div>
+      </DropdownButton>
+      {selectedEncounter && (
+        <EncounterSidebar encounterId={selectedEncounter} />
+      )}
     </aside>
   );
 }

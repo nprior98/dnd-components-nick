@@ -1,5 +1,7 @@
 import { useState, type ChangeEvent, Fragment } from "react";
-import "./CharacterCreator.css";
+import "./Character.css";
+import { addCharacter } from "../../modules/character-api"
+import { Character } from "./CharacterInterface";
 
 const STAT_FIELDS = [
 	{ id: "armorClass", label: "Armor Class", placeholder: "15" },
@@ -17,12 +19,10 @@ const ATTRIBUTE_FIELDS = [
 	"charisma",
 ] as const;
 
-interface CreatorProps {
-	onCharacterCreated: () => void;
-}
+/* maybe cast char as Character later or change default fields if addCharacter breaks the hoover dam */
 
-function CharacterCreator({ onCharacterCreated }: CreatorProps) {
-	const [char, setChar] = useState({
+function CharacterCreator() {
+	const [char, setChar] = useState({ 
 		name: "",
 		level: "",
 		characterClass: "",
@@ -65,23 +65,28 @@ function CharacterCreator({ onCharacterCreated }: CreatorProps) {
 		setChar((prev) => ({ ...prev, [id]: value }));
 	};
 
-	const createCharacter = (e: React.SubmitEvent<HTMLFormElement>) => {
+	const createCharacter = async (e: React.SubmitEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
 		// Create a new character with a unique ID
 		const newCharacter = {
 			...char,
 			charID: crypto.randomUUID(),
+			currentHP: char.maxHP,
 		};
-
-		onCharacterCreated();
-
-		console.log("Created character:", newCharacter);
-		const existing = JSON.parse(localStorage.getItem("characters") || "[]");
-		localStorage.setItem(
-			"characters",
-			JSON.stringify([...existing, newCharacter]),
-		);
+		const result = await addCharacter(((newCharacter as unknown) as Character));
+		if (result == 201) {
+			console.log("Created character:", newCharacter);
+		} else if (result == 400) {
+			console.error("Data was bad?", newCharacter);
+		} else {
+			console.error("Yeah I don't know what happened here, but:", newCharacter);
+		}
+		// const existing = JSON.parse(localStorage.getItem("characters") || "[]");
+		// localStorage.setItem(
+		// 	"characters",
+		// 	JSON.stringify([...existing, newCharacter]),
+		// );
 
 		// Reset form
 		setChar({
@@ -105,6 +110,7 @@ function CharacterCreator({ onCharacterCreated }: CreatorProps) {
 	return (
 		<form onSubmit={createCharacter}>
 			<div className="flex-down">
+				<h1>Character Creator</h1>
 				<div className="character-info-container">
 					<img src="src/gandalf.png" alt="" />
 					<div className="character-info">

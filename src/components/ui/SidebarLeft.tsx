@@ -1,12 +1,15 @@
 import "../../styles/Style.css";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import {
   DropdownButton,
   DropdownItem,
+  FormControl,
+  FormLabel,
+  FormText,
   ListGroup,
   Spinner,
 } from "react-bootstrap";
-import { Link } from "react-router";
+import { Form, Link } from "react-router";
 import {
   categories,
   getCategory,
@@ -24,9 +27,14 @@ type SidebarProps = {
   onClose: () => void;
 };
 
-export default function Sidebar({ isOpen, onClose }: SidebarProps) {
+export default function LeftSidebar({ isOpen, onClose }: SidebarProps) {
   const [category, setCategory] = useState<Category>("creatures");
   const [items, setItems] = useState<ListableItem[] | null>(null);
+  const [search, setSearch] = useState<string>("");
+
+  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+  };
 
   useEffect(() => {
     let cancelled = false;
@@ -60,6 +68,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
         title={currentLabel}
         onSelect={(key) => {
           if (key) setCategory(key as Category);
+          setSearch("");
         }}
       >
         {categories.map(({ key, label }) => (
@@ -68,6 +77,20 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
           </DropdownItem>
         ))}
       </DropdownButton>
+
+      <FormLabel htmlFor="search">Search</FormLabel>
+      <FormControl
+        type="text"
+        value={search}
+        id="search"
+        placeholder={
+          items !== null
+            ? items[Math.floor(Math.random() * items.length)].name
+            : ""
+        }
+        onChange={handleSearch}
+      />
+      <FormText id="searchHelp">Search {category}</FormText>
 
       <div className="library-content">
         {items === null ? (
@@ -78,17 +101,21 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
           <p className="text-center py-3">No entries</p>
         ) : (
           <ListGroup variant="flush" className="library-list">
-            {items.map((item) => (
-              <ListGroup.Item
-                key={item.key}
-                action
-                as={Link}
-                to={`/encounter/${category}/${item.key}`}
-                onClick={onClose}
-              >
-                {item.name}
-              </ListGroup.Item>
-            ))}
+            {items
+              .filter((item): boolean => {
+                return item.name.toLowerCase().includes(search.toLowerCase());
+              })
+              .map((item) => (
+                <ListGroup.Item
+                  key={item.key}
+                  action
+                  as={Link}
+                  to={`/encounter/${category}/${item.key}`}
+                  onClick={onClose}
+                >
+                  {item.name}
+                </ListGroup.Item>
+              ))}
           </ListGroup>
         )}
       </div>

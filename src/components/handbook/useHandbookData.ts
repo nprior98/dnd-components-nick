@@ -14,7 +14,7 @@ function cacheKey(method: RetrieveMethod, id: string) {
 export function useHandbookData<T>(
   id: string | undefined,
   retrieveMethod: RetrieveMethod,
-  typeGuard: (data: unknown) => data is T,
+  typeGuard: (data: unknown) => data is T
 ): { data: T | null; loading: boolean } {
   const key = id ? cacheKey(retrieveMethod, id) : null;
 

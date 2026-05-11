@@ -2,13 +2,17 @@ import { db } from "../db/connection";
 import { sql } from "../db/sql";
 import { id } from "../utils/ids";
 import { nowIso } from "../utils/time";
+import type { Combatant, CombatantKind, Encounter } from "./encounter.types";
 
-export function createEncounter(name: string) {
-  const encounter = {
+// Create the top-level encounter row. Combatants and events are added later.
+export function createEncounter(name: string): Encounter {
+  const encounter: Encounter = {
     id: id("enc"),
     name,
     status: "setup",
     roundNumber: 1,
+    activeTurnIndex: 0,
+    version: 1,
     createdAt: nowIso(),
   };
 
@@ -16,14 +20,15 @@ export function createEncounter(name: string) {
     sql`
     insert into encounters
     (id, name, status, round_number, active_turn_index, version, created_at)
-    valuse (@id, @name, @status, @roundNumber, @activeTurnIndex, @version, @createdAt)
-`,
+    values (@id, @name, @status, @roundNumber, @activeTurnIndex, @version, @createdAt)
+`
   ).run(encounter);
 
   return encounter;
 }
 
-export function getEncounter(id: string) {
+// Fetch one encounter using API-facing camelCase aliases.
+export function getEncounter(id: string): Encounter | undefined {
   return db
     .prepare(
       sql`
@@ -37,12 +42,21 @@ export function getEncounter(id: string) {
         created_at as createdAt
       from encounters
       where id = ?
-`,
+`
     )
-    .get(id);
+    .get(id) as Encounter | undefined;
 }
 
-export function listCombatants(encounterID: string) {
+export function listEncounters(): Encounter[] {
+  return db
+    .prepare(
+      sql` select id, name, status, round_number as roundNumber, active_turn_index as activeTurnIndex, version, created_at as createdAt from encounters`
+    )
+    .all() as Encounter[];
+}
+
+// Return combatants in their current initiative order with JSON fields decoded.
+export function listCombatants(encounterID: string): Combatant[] {
   const rows = db
     .prepare(
       sql`
@@ -62,7 +76,7 @@ export function listCombatants(encounterID: string) {
     from encounter_combatants
     where encounter_id = ?
     order by initiative_order asc
-`,
+`
     )
     .all(encounterID);
   return rows.map((row: any) => ({
@@ -72,14 +86,18 @@ export function listCombatants(encounterID: string) {
   }));
 }
 
+// Add a combatant to an existing encounter with default ordering and metadata.
 export function addCombatant(input: {
   encounterId: string;
-  kind: string;
+  kind: CombatantKind;
   displayName: string;
   initiative?: number;
   currentHp: number;
   maxHp: number;
-}) {
+  armorClass: number;
+  attackBonus: number;
+  conditions?: string[];
+}): Combatant {
   const combatant = {
     id: id("cmb"),
     encounterId: input.encounterId,
@@ -89,8 +107,8 @@ export function addCombatant(input: {
     initiativeOrder: 999,
     currentHp: input.currentHp,
     maxHp: input.maxHp,
-    armorClass: null,
-    attackBonus: null,
+    armorClass: input.armorClass,
+    attackBonus: input.attackBonus,
     conditions: "[]",
     isDefeated: 0,
   };
@@ -114,8 +132,12 @@ export function addCombatant(input: {
       )
       values
       (@id, @encounterId, @kind, @displayName, @initiative, @initiativeOrder, @currentHp, @maxHp, @armorClass, @attackBonus, @conditions, @isDefeated)
-    `,
+    `
   ).run(combatant);
 
-  return combatant;
+  return {
+    ...combatant,
+    conditions: JSON.parse(combatant.conditions),
+    isDefeated: Boolean(combatant.isDefeated),
+  };
 }

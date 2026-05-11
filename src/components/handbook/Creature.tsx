@@ -7,6 +7,15 @@ import {
 } from "../../modules/open5e/types.gen";
 import { useParams } from "react-router";
 import HandbookPage from "./HandbookPage";
+import {
+  addCombatant,
+  getEncounterSnapshot,
+  listEncounters,
+} from "../../modules/encounter-api";
+import { Alert, Dropdown } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import type { Encounter } from "../../modules/encounter-api";
+import { creatureToCombatantRequest } from "./creatureEncounter";
 
 function SpeedBlock({ speed }: { speed: SpeedAll }) {
   const unit = speed.unit;
@@ -37,11 +46,46 @@ function SpeedBlock({ speed }: { speed: SpeedAll }) {
 
 export default function CreaturePage() {
   let { stub } = useParams<{ stub: string }>();
+  const [encounters, setEncounters] = useState<Encounter[]>([]);
+  const [encounterLoadError, setEncounterLoadError] = useState<string | null>(
+    null
+  );
+  const [addStatus, setAddStatus] = useState<string | null>(null);
+  const [isAdding, setIsAdding] = useState(false);
   const { data: creature, loading } = useHandbookData(
     stub,
     creaturesRetrieve,
-    (data): data is Creature => (data as Creature)?.name !== undefined,
+    (data): data is Creature => (data as Creature)?.name !== undefined
   );
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadEncounters() {
+      const result = await listEncounters();
+      if (cancelled) return;
+
+      if (result.status === 200) {
+        const nextEncounters = result.data ?? [];
+        setEncounters(nextEncounters);
+        setEncounterLoadError(null);
+      } else {
+        setEncounters([]);
+        setEncounterLoadError("Could not load encounters");
+      }
+    }
+
+    loadEncounters().catch(() => {
+      if (!cancelled) {
+        setEncounters([]);
+        setEncounterLoadError("Could not load encounters");
+      }
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   if (loading) {
     return (
@@ -59,8 +103,63 @@ export default function CreaturePage() {
     );
   }
 
+  const addToEncounter = async (encounterId: string) => {
+    if (!encounterId) return;
+
+    setIsAdding(true);
+    setAddStatus(null);
+
+    try {
+      const result = await addCombatant(
+        creatureToCombatantRequest(creature),
+        encounterId
+      );
+      const selectedEncounter = encounters.find(
+        (encounter) => encounter.id === encounterId
+      );
+
+      if (result.status === 201) {
+        setAddStatus(`Added to ${selectedEncounter?.name ?? "encounter"}`);
+      } else {
+        setAddStatus("Could not add creature");
+      }
+    } catch {
+      setAddStatus("Could not add creature");
+    } finally {
+      setIsAdding(false);
+    }
+  };
+
   return (
     <HandbookPage>
+      <div className="creature-encounter-actions">
+        {encounterLoadError && (
+          <Alert variant="danger">{encounterLoadError}</Alert>
+        )}
+        {addStatus && <Alert variant="secondary">{addStatus}</Alert>}
+        <Dropdown>
+          <Dropdown.Toggle
+            className="creature-encounter-toggle"
+            disabled={encounters.length === 0 || isAdding}
+          >
+            {isAdding ? "Adding..." : "Add to Encounter"}
+          </Dropdown.Toggle>
+          <Dropdown.Menu>
+            {encounters.length === 0 ? (
+              <Dropdown.Item disabled>No encounters</Dropdown.Item>
+            ) : (
+              encounters.map((encounter) => (
+                <Dropdown.Item
+                  key={encounter.id}
+                  onClick={() => addToEncounter(encounter.id)}
+                >
+                  {encounter.name}
+                </Dropdown.Item>
+              ))
+            )}
+          </Dropdown.Menu>
+        </Dropdown>
+      </div>
       <div id="p1" data-index="0">
         <h1>creature</h1>
         <div className="columnWrapper">
@@ -131,14 +230,14 @@ export default function CreaturePage() {
 
             {creature.actions.some(
               (actionType: CreatureAction): boolean =>
-                actionType.action_type == "LEGENDARY_ACTION",
+                actionType.action_type == "LEGENDARY_ACTION"
             ) ? (
               <h3 id="actions">Legendary Actions</h3>
             ) : null}
             {creature.actions
               .filter(
                 (action: CreatureAction): boolean =>
-                  action.action_type == "LEGENDARY_ACTION",
+                  action.action_type == "LEGENDARY_ACTION"
               )
               .map((action) => (
                 <dl>
@@ -152,7 +251,7 @@ export default function CreaturePage() {
                 </dl>
               ))}
             {creature.actions.some(
-              (actionType) => actionType.action_type == "LAIR_ACTION",
+              (actionType) => actionType.action_type == "LAIR_ACTION"
             ) ? (
               <h3 id="actions">Lair Actions</h3>
             ) : null}
@@ -168,7 +267,7 @@ export default function CreaturePage() {
                 </dl>
               ))}
             {creature.actions.some(
-              (actionType) => actionType.action_type == "REACTION",
+              (actionType) => actionType.action_type == "REACTION"
             ) ? (
               <h3 id="actions">Reactions</h3>
             ) : null}
@@ -184,7 +283,7 @@ export default function CreaturePage() {
                 </dl>
               ))}
             {creature.actions.some(
-              (actionType) => actionType.action_type == "ACTION",
+              (actionType) => actionType.action_type == "ACTION"
             ) ? (
               <h3 id="actions">Actions</h3>
             ) : null}
@@ -200,7 +299,7 @@ export default function CreaturePage() {
                 </dl>
               ))}
             {creature.actions.some(
-              (actionType) => actionType.action_type == "BONUS_ACTION",
+              (actionType) => actionType.action_type == "BONUS_ACTION"
             ) ? (
               <h3 id="actions">Bonus Actions</h3>
             ) : null}
