@@ -7,7 +7,6 @@ export type NormalizedCreature = {
   key: string;
   name: string;
   cr: number;
-  crText: string;
   xp: number;
   type: string;
   typeName: string;
@@ -78,7 +77,7 @@ const DIFFICULTY_INDEX: Record<Difficulty, number> = {
 
 export function partyXpBudget(
   levels: number[],
-  difficulty: Difficulty,
+  difficulty: Difficulty
 ): number {
   const idx = DIFFICULTY_INDEX[difficulty];
   let total = 0;
@@ -103,8 +102,7 @@ export function normalizeCreature(c: Creature): NormalizedCreature {
   return {
     key: c.key,
     name: c.name,
-    cr: Number(c.challenge_rating_decimal),
-    crText: c.challenge_rating_text,
+    cr: Number(c.challenge_rating),
     xp: c.experience_points,
     type: c.type.key,
     typeName: c.type.name,
@@ -130,7 +128,7 @@ function loadAll(): Promise<NormalizedCreature[]> {
 }
 
 export async function fetchCreaturePool(
-  opts: FetchPoolOptions = {},
+  opts: FetchPoolOptions = {}
 ): Promise<NormalizedCreature[]> {
   const all = await loadAll();
   return all.filter((c) => {
@@ -159,7 +157,7 @@ export async function listCreatureTypes(): Promise<CreatureTypeOption[]> {
 }
 
 export async function generateEncounter(
-  opts: GenerateEncounterOptions,
+  opts: GenerateEncounterOptions
 ): Promise<EncounterResult> {
   const {
     partyLevels,
@@ -230,7 +228,7 @@ export async function generateEncounter(
 }
 
 export async function generateEncounters(
-  opts: GenerateEncounterOptions & { count: number },
+  opts: GenerateEncounterOptions & { count: number }
 ): Promise<EncounterResult[]> {
   const { count, ...rest } = opts;
   if (count <= 0) return [];
