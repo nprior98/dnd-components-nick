@@ -90,7 +90,8 @@ p {
 /* Page Layout */
 .character-page {
 	display: grid;
-	height: 90vh;
+	min-height: 90vh;
+	height: auto;
 	width: 90vw;
 	grid-template-columns: max-content 1fr;
 	background-color: hsl(var(--clr-background));
